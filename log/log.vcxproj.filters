@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="head_file">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="source_file">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="g3log">
+      <UniqueIdentifier>{247c10b2-51dd-436f-8267-9bcdd442898d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="crashhandler_windows.cpp">
+      <Filter>source_file</Filter>
+    </ClCompile>
+    <ClCompile Include="filesink.cpp">
+      <Filter>source_file</Filter>
+    </ClCompile>
+    <ClCompile Include="g3log.cpp">
+      <Filter>source_file</Filter>
+    </ClCompile>
+    <ClCompile Include="logcapture.cpp">
+      <Filter>source_file</Filter>
+    </ClCompile>
+    <ClCompile Include="loglevels.cpp">
+      <Filter>source_file</Filter>
+    </ClCompile>
+    <ClCompile Include="logmessage.cpp">
+      <Filter>source_file</Filter>
+    </ClCompile>
+    <ClCompile Include="logworker.cpp">
+      <Filter>source_file</Filter>
+    </ClCompile>
+    <ClCompile Include="stacktrace_windows.cpp">
+      <Filter>source_file</Filter>
+    </ClCompile>
+    <ClCompile Include="time.cpp">
+      <Filter>source_file</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="filesinkhelper.ipp">
+      <Filter>head_file</Filter>
+    </ClInclude>
+    <ClInclude Include="g2log.hpp">
+      <Filter>head_file</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\active.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\atomicbool.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\crashhandler.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\filesink.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\future.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\g3log.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\generated_definitions.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\logcapture.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\loglevels.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\logmessage.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\logworker.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\moveoncopy.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\shared_queue.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\sink.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\sinkhandle.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\sinkwrapper.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\stacktrace_windows.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\stlpatch_future.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+    <ClInclude Include="g3log\time.hpp">
+      <Filter>g3log</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
