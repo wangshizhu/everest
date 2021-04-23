@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="calculator">
+      <UniqueIdentifier>{a362793a-4a86-447f-8d1d-4147a3e58a26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="non_copyable">
+      <UniqueIdentifier>{879174e5-ba54-4f77-8e1b-1ce98e6ab014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="singleton">
+      <UniqueIdentifier>{852327b6-d420-425e-966e-168d6c1121db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cmd_line">
+      <UniqueIdentifier>{fc8b3475-4c77-4288-9d21-20891e2cac85}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="calculator\safe_integral_calculator.h">
+      <Filter>calculator</Filter>
+    </ClInclude>
+    <ClInclude Include="non_copyable\non_copyable.h">
+      <Filter>non_copyable</Filter>
+    </ClInclude>
+    <ClInclude Include="singleton\singleton.h">
+      <Filter>singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_line\command_line_parser.h">
+      <Filter>cmd_line</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd_line\cmdline.h">
+      <Filter>cmd_line</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cmd_line\command_line_parser.cpp">
+      <Filter>cmd_line</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
