@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cmd_line", "cmd_line.vcxproj", "{FDE9FB28-22FB-48B1-BF38-4AD9F2D20033}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1429765D-9325-4A13-9447-82F537068A86} = {1429765D-9325-4A13-9447-82F537068A86}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "everest", "..\..\..\everest.vcxproj", "{1429765D-9325-4A13-9447-82F537068A86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +26,14 @@ Global
 		{FDE9FB28-22FB-48B1-BF38-4AD9F2D20033}.Release|x64.Build.0 = Release|x64
 		{FDE9FB28-22FB-48B1-BF38-4AD9F2D20033}.Release|x86.ActiveCfg = Release|Win32
 		{FDE9FB28-22FB-48B1-BF38-4AD9F2D20033}.Release|x86.Build.0 = Release|Win32
+		{1429765D-9325-4A13-9447-82F537068A86}.Debug|x64.ActiveCfg = Debug|x64
+		{1429765D-9325-4A13-9447-82F537068A86}.Debug|x64.Build.0 = Debug|x64
+		{1429765D-9325-4A13-9447-82F537068A86}.Debug|x86.ActiveCfg = Debug|Win32
+		{1429765D-9325-4A13-9447-82F537068A86}.Debug|x86.Build.0 = Debug|Win32
+		{1429765D-9325-4A13-9447-82F537068A86}.Release|x64.ActiveCfg = Release|x64
+		{1429765D-9325-4A13-9447-82F537068A86}.Release|x64.Build.0 = Release|x64
+		{1429765D-9325-4A13-9447-82F537068A86}.Release|x86.ActiveCfg = Release|Win32
+		{1429765D-9325-4A13-9447-82F537068A86}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,16 +12,24 @@ namespace everest
 		CommandLineParser();
 
 	public:
-		void ParseAndCheck(int argc, char** argv);
+		void ParseGetOrSetBehavior(int argc, char** argv);
 
 		template<class T,typename... Args>
 		void Add(Args&&... args)
 		{
-			parser_.add<T>(std::forward<decltype(args)>(args)...);
+			try
+			{
+				parser_.add<T>(std::forward<decltype(args)>(args)...);
+			}
+			catch (const std::exception& e)
+			{
+				std::cerr << e.what() << std::endl;
+				exit(EXIT_FAILURE);
+			}
 		}
 
 		template<class T>
-		const T& Get(const std::string& arg_name) const
+		const T Get(const std::string& arg_name) const
 		{
 			try
 			{
@@ -29,13 +37,21 @@ namespace everest
 				{
 					return parser_.get<T>(arg_name);
 				}
+				else
+				{
+					std::cerr << "there is no flag: --" + arg_name << std::endl;
+					return T();
+				}
 			}
 			catch (const std::exception& e)
 			{
 				std::cerr << e.what() << std::endl<< parser_.usage();
-				exit(0);
+				exit(EXIT_FAILURE);
 			}
 		}
+
+	private:
+		void ParseSetBehavior(int argc, char** argv);
 
 	private:
 		cmdline::parser parser_;

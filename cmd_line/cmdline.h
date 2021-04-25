@@ -367,9 +367,12 @@ public:
     prog_name=name;
   }
 
+  // fixed by wangshizhu,for only check name in options,dont check whether has set or not
   bool exist(const std::string &name) const {
-    if (options.count(name)==0) throw cmdline_error("there is no flag: --"+name);
-    return options.find(name)->second->has_set();
+    /*if (options.count(name)==0) throw cmdline_error("there is no flag: --"+name);
+    return options.find(name)->second->has_set();*/
+
+      return options.count(name) != 0;
   }
 
   template <class T>
@@ -382,6 +385,40 @@ public:
 
   const std::vector<std::string> &rest() const {
     return others;
+  }
+
+  // added by wangshizhu,for print value of command line param
+  void print(const std::string& full_name)const
+  {
+      if (exist(full_name))
+      {
+          options.find(full_name)->second->print();
+          exit(EXIT_SUCCESS);
+      }
+      else
+      {
+          std::cerr << "there is no flag: --" + full_name << std::endl << usage();
+          exit(EXIT_FAILURE);
+      }
+  }
+
+  // added by wangshizhu,for print value of command line param
+  void print(const char short_name)const
+  {
+      for (auto p = options.begin();p != options.end(); p++) 
+      {
+          if (p->first.length() == 0) continue;
+
+          char initial = p->second->short_name();
+          if (initial == short_name)
+          {
+              print(p->first);
+          }
+      }
+
+      std::cerr << "there is no flag: -" + short_name << std::endl << usage();
+
+      exit(EXIT_FAILURE);
   }
 
   bool parse(const std::string &arg){
@@ -598,17 +635,19 @@ public:
   }
 
 private:
-
+  
+  //fixed by wangshizhu,for only check return value
   void check(int argc, bool ok){
-    if ((argc==1 && !ok) || exist("help")){
+    /*if ((argc==1 && !ok) || exist("help")){
       std::cerr<<usage();
       exit(0);
-    }
+    }*/
 
     if (!ok){
       std::cerr<<error()<<std::endl<<usage();
-      exit(1);
+      exit(EXIT_FAILURE);
     }
+
   }
 
   void set_option(const std::string &name){
@@ -648,6 +687,7 @@ private:
     virtual char short_name() const=0;
     virtual const std::string &description() const=0;
     virtual std::string short_description() const=0;
+    virtual void print() const = 0;
   };
 
   class option_without_value : public option_base {
@@ -696,6 +736,11 @@ private:
 
     std::string short_description() const{
       return "--"+nam;
+    }
+
+    void print() const
+    {
+        std::cout << "this command line param no value" << std::endl;
     }
 
   private:
@@ -767,6 +812,11 @@ private:
 
     std::string short_description() const{
       return "--"+nam+"="+detail::readable_typename<T>();
+    }
+
+    void print() const
+    {
+        std::cout << actual << std::endl;
     }
 
   protected:
