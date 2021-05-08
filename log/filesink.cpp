@@ -15,7 +15,7 @@ namespace g3 {
    using namespace internal;
 
    FileSink::FileSink(const std::string &log_prefix, const std::string &log_directory, const std::string& logger_id)
-      : _log_details_func(&LogMessage::DefaultLogDetailsToString)
+      : _log_details_func(&LogMessage::FullLogDetailsToString)
       ,_log_file_with_path(log_directory)
       , _log_prefix_backup(log_prefix)
       , _outptr(new std::ofstream)
