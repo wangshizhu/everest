@@ -36,23 +36,38 @@ namespace g3 {
       // Asynchronous call to the real sink. If the real sink is already deleted
       // the returned future will contain a bad_weak_ptr exception instead of the
       // call result.
-      template<typename AsyncCall, typename... Args>
-      auto call(AsyncCall func , Args&& ... args) -> std::future<std::invoke_result_t<decltype(func), T, Args...>> {
-         try {
-            std::shared_ptr<internal::Sink<T>> sink(_sink);
-            return sink->async(func, std::forward<Args>(args)...);
-         } catch (const std::bad_weak_ptr& e) {
-            typedef std::invoke_result_t<decltype(func), T, Args...> PromiseType;
-            std::promise<PromiseType> promise;
-            promise.set_exception(std::make_exception_ptr(e));
-            return std::move(promise.get_future());
-         }
+	  template<typename AsyncCall, typename... Args>
+	  auto call(AsyncCall func, Args&& ... args) -> std::future<std::invoke_result_t<decltype(func), Args...>> {
+		  try {
+			  std::shared_ptr<internal::Sink<T>> sink(_sink);
+			  return sink->async(func, std::forward<Args>(args)...);
+		  }
+		  catch (const std::bad_weak_ptr& e) {
+			  typedef std::invoke_result_t<decltype(func), Args...> PromiseType;
+			  std::promise<PromiseType> promise;
+			  promise.set_exception(std::make_exception_ptr(e));
+			  return std::move(promise.get_future());
+		  }
+	  }
+
+	  auto SendLogMsg(LogMessagePtr incoming)
+      {
+		  try {
+			  std::shared_ptr<internal::Sink<T>> sink(_sink);
+			  return sink->async(std::bind(&internal::Sink<T>::AsyncSend, sink.get(),incoming));
+		  }
+		  catch (const std::bad_weak_ptr& e) {
+			  typedef std::invoke_result_t<decltype(&internal::Sink<T>::AsyncSend), internal::Sink<T>, decltype(incoming)> PromiseType;
+			  std::promise<PromiseType> promise;
+			  promise.set_exception(std::make_exception_ptr(e));
+			  return std::move(promise.get_future());
+		  }
       }
 
       /// Get weak_ptr access to the sink(). Make sure to check that the returned pointer is valid,
       /// auto p = sink(); auto ptr = p.lock(); if (ptr) { .... }
       /// ref: https://en.cppreference.com/w/cpp/memory/weak_ptr/lock
-      std::weak_ptr<internal::Sink<T>> sink() {
+      std::shared_ptr<internal::Sink<T>> sink() {
          return _sink.lock();
       }
    };

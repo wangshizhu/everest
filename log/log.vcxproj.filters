@@ -110,5 +110,11 @@
     <ClInclude Include="g3log\time.hpp">
       <Filter>g3log</Filter>
     </ClInclude>
+    <ClInclude Include="everest_log.h">
+      <Filter>head_file</Filter>
+    </ClInclude>
+    <ClInclude Include="custom_level.h">
+      <Filter>head_file</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

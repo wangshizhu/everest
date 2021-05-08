@@ -3,6 +3,7 @@
 
 #include "g3log/g3log.hpp"
 #include "g3log/logworker.hpp"
+#include "everest_log.h"
 
 const std::string path_to_log_file = "./log/";
 
@@ -12,24 +13,31 @@ void breakHere() {
 	oss << " through g3::setFatalPreLoggingHook(). setFatalPreLoggingHook should be called AFTER g3::initializeLogging()" << std::endl;
 	LOG(G3LOG_DEBUG) << oss.str();
 #if (defined(WIN32) || defined(_WIN32) || defined(__WIN32__))
-	__debugbreak();
+	//__debugbreak();
 #endif
 }
 
-int main()
+int main(int argc, char** argv)
 {
 	{
+		int i = 1;
 		auto worker = g3::LogWorker::createLogWorker();
-		auto handle = worker->addDefaultLogger("test", path_to_log_file);
 		g3::initializeLogging(worker.get());
 		g3::setFatalPreLoggingHook(&breakHere);
-		std::future<std::string> log_file_name = handle->call(&g3::FileSink::fileName);
+		everest::AddCustomLogLevel();
+		//std::future<std::string> log_file_name = handle->call(std::bind(&g3::FileSink::fileName, handle->sink()->RealSink()));
 
-		worker->addSink(std::make_unique<g3::FileSink>("sink", path_to_log_file, "sink"), &g3::FileSink::fileWrite);
+		CREATE_LOGGER(worker.get(), PROGRAM_NAME, path_to_log_file);
+		CREATE_LOGGER(worker.get(),"world", path_to_log_file);
+		CREATE_LOGGER(worker.get(), "gate", path_to_log_file);
+		
+		NAMED_LOG_INFO("world") <<"test named log";
+		LOG_INFO << "main log msg";
+		NAMED_LOG_ERROR("gate") << "second test named log";
 
-		LOGF(G3LOG_DEBUG, "Fatal exit example starts now, it's as easy as  %d", 123);
-		LOG(INFO) << "Feel free to read the source code also in g3log/example/main_fatal_choice.cpp";
+		//CHECK(i == 0)<<"error value";
 	}
+
 	system("pause");
 	return 0;
 }

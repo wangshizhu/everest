@@ -21,6 +21,7 @@ namespace g3 {
       , _outptr(new std::ofstream)
       , _header("\t\tLOG format: [YYYY/MM/DD hh:mm:ss uuu* LEVEL FILE->FUNCTION:LINE] message\n\n\t\t(uuu*: microseconds fractions of the seconds value)\n\n")
       , _firstEntry(true)
+      ,_stdout(true)
    {
       _log_prefix_backup = prefixSanityFix(log_prefix);
       if (!isValidFilename(_log_prefix_backup)) {
@@ -58,8 +59,15 @@ namespace g3 {
          _firstEntry = false;
       }
 
+      auto&& final_msg = message.get().toString(_log_details_func);
+
+      if (_stdout)
+      {
+          std::cout << final_msg.c_str() << std::endl;
+      }
+
       std::ofstream &out(filestream());
-      out << message.get().toString(_log_details_func) << std::flush;
+      out << final_msg << std::flush;
    }
 
    std::string FileSink::changeLogFile(const std::string &directory, const std::string &logger_id) {

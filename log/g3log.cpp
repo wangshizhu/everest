@@ -156,40 +156,52 @@ namespace g3 {
       /** explicitly copy of all input. This is makes it possibly to use g3log across dynamically loaded libraries
       * i.e. (dlopen + dlsym)  */
       void saveMessage(const char* entry, const char* file, int line, const char* function, const LEVELS& level,
-                       const char* boolean_expression, int fatal_signal, const char* stack_trace) {
+                       const char* boolean_expression, int fatal_signal, const char* stack_trace,
+          g3::SinkHandle<g3::FileSink>* real_sink) 
+      {
          LEVELS msgLevel {level};
+
          LogMessagePtr message {std::make_unique<LogMessage>(file, line, function, msgLevel)};
          message.get()->write().append(entry);
          message.get()->setExpression(boolean_expression);
 
-
-         if (internal::wasFatal(level)) {
+         if (internal::wasFatal(level)) 
+         {
             auto fatalhook = g_fatal_pre_logging_hook;
+
             // In case the fatal_pre logging actually will cause a crash in its turn
             // let's not do recursive crashing!
             setFatalPreLoggingHook(g_pre_fatal_hook_that_does_nothing);
+
             ++g_fatal_hook_recursive_counter; // thread safe counter
+
             // "benign" race here. If two threads crashes, with recursive crashes
             // then it's possible that the "other" fatal stack trace will be shown
             // that's OK since it was anyhow the first crash detected
             static const std::string first_stack_trace = stack_trace;
+
             fatalhook();
+
             message.get()->write().append(stack_trace);
 
-            if (g_fatal_hook_recursive_counter.load() > 1) {
+            if (g_fatal_hook_recursive_counter.load() > 1) 
+            {
                message.get()->write()
                .append("\n\n\nWARNING\n"
                        "A recursive crash detected. It is likely the hook set with 'setFatalPreLoggingHook(...)' is responsible\n\n")
                .append("---First crash stacktrace: ").append(first_stack_trace).append("\n---End of first stacktrace\n");
             }
+
             FatalMessagePtr fatal_message { std::make_unique<FatalMessage>(*(message._move_only.get()), fatal_signal) };
+
             // At destruction, flushes fatal message to g3LogWorker
             // either we will stay here until the background worker has received the fatal
             // message, flushed the crash message to the sinks and exits with the same fatal signal
             //..... OR it's in unit-test mode then we throw a std::runtime_error (and never hit sleep)
             fatalCall(fatal_message);
-         } else {
-            pushMessageToLogger(message);
+         } else 
+         {
+            pushMessageToLogger(message,real_sink);
          }
       }
 
@@ -201,7 +213,7 @@ namespace g3 {
        * The first initialized log entry will also save the first uninitialized log message, if any
        * @param log_entry to save to logger
        */
-      void pushMessageToLogger(LogMessagePtr incoming) { // todo rename to Push SavedMessage To Worker
+      void pushMessageToLogger(LogMessagePtr incoming, g3::SinkHandle<g3::FileSink>* sink_handle) { // todo rename to Push SavedMessage To Worker
          // Uninitialized messages are ignored but does not CHECK/crash the logger
          if (!internal::isLoggingInitialized()) {
             std::call_once(g_set_first_uninitialized_flag, [&] {
@@ -216,8 +228,15 @@ namespace g3 {
             return;
          }
 
-         // logger is initialized
-         g_logger_instance->save(incoming);
+         if (nullptr == sink_handle)
+         {
+             // logger is initialized
+             g_logger_instance->save(incoming);
+         }
+         else
+         {
+             sink_handle->SendLogMsg(incoming);
+         }
       }
 
       /** Fatal call saved to logger. This will trigger SIGABRT or other fatal signal
@@ -234,7 +253,9 @@ namespace g3 {
             std::cerr << error.str() << std::flush;
             internal::exitWithDefaultSignalHandler(message.get()->_level, message.get()->_signal_id);
          }
+
          g_logger_instance->fatal(message);
+
          while (shouldBlockForFatalHandling()) {
             std::this_thread::sleep_for(std::chrono::seconds(1));
          }

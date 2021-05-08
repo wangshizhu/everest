@@ -12,6 +12,7 @@
 
 #ifdef G3_DYNAMIC_MAX_MESSAGE_SIZE
 #include <vector>
+#include <iostream>
 #endif /* G3_DYNAMIC_MAX_MESSAGE_SIZE */
 
 // For Windows we need force a thread_local install per thread of three
@@ -41,12 +42,12 @@ void g3::only_change_at_initialization::setMaxMessageSize(size_t max_size) {
 LogCapture::~LogCapture() noexcept (false) {
    using namespace g3::internal;
    SIGNAL_HANDLER_VERIFY();
-   saveMessage(_stream.str().c_str(), _file, _line, _function, _level, _expression, _fatal_signal, _stack_trace.c_str());
+   saveMessage(_stream.str().c_str(), _file, _line, _function, _level, _expression, _fatal_signal, _stack_trace.c_str(), _sink_handle);
 }
 
 
 /// Called from crash handler when a fatal signal has occurred (SIGSEGV etc)
-LogCapture::LogCapture(const LEVELS &level, g3::SignalType fatal_signal, const char *dump) : LogCapture("", 0, "", level, "", fatal_signal, dump) {
+LogCapture::LogCapture(const LEVELS &level, g3::SignalType fatal_signal, const char *dump) : LogCapture("", 0, "", level,nullptr, "", fatal_signal, dump) {
 }
 
 /**
@@ -56,8 +57,9 @@ LogCapture::LogCapture(const LEVELS &level, g3::SignalType fatal_signal, const c
  * @fatal_signal for failed CHECK:SIGABRT or fatal signal caught in the signal handler
  */
 LogCapture::LogCapture(const char *file, const int line, const char *function, const LEVELS &level,
-                       const char *expression, g3::SignalType fatal_signal, const char *dump)
-   : _file(file), _line(line), _function(function), _level(level), _expression(expression), _fatal_signal(fatal_signal) {
+    g3::SinkHandle<g3::FileSink>* sink_handle,const char *expression, g3::SignalType fatal_signal, const char *dump)
+    : _file(file), _line(line), _function(function), _level(level), _sink_handle(sink_handle), _expression(expression), _fatal_signal(fatal_signal)
+{
 
    if (g3::internal::wasFatal(level)) {
       _stack_trace = std::string{"\n*******\tSTACKDUMP *******\n"};

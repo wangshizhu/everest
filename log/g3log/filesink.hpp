@@ -33,6 +33,7 @@ namespace g3 {
       std::unique_ptr<std::ofstream> _outptr;
       std::string _header;
       bool _firstEntry;
+      bool _stdout;
 
       void addLogFileHeader();
       std::ofstream &filestream() {

@@ -9,7 +9,9 @@
 #pragma once
 
 #include "g3log/loglevels.hpp"
+#include "g3log/filesink.hpp"
 #include "g3log/crashhandler.hpp"
+#include "g3log/sinkhandle.hpp"
 
 #include <string>
 #include <sstream>
@@ -36,7 +38,10 @@ struct LogCapture {
     * @expression for CHECK calls
     * @fatal_signal for failed CHECK:SIGABRT or fatal signal caught in the signal handler
     */
-   LogCapture(const char *file, const int line, const char *function, const LEVELS &level, const char *expression = "", g3::SignalType fatal_signal = SIGABRT, const char *dump = nullptr);
+   LogCapture(const char *file, const int line, const char *function, const LEVELS &level, 
+       g3::SinkHandle<g3::FileSink>* real_sink = nullptr,
+       const char *expression = "", g3::SignalType fatal_signal = SIGABRT, 
+       const char *dump = nullptr);
 
 
    // At destruction the message will be forwarded to the g3log worker.
@@ -78,6 +83,7 @@ struct LogCapture {
    const LEVELS &_level;
    const char* _expression;
    const g3::SignalType _fatal_signal;
+   g3::SinkHandle<g3::FileSink>* _sink_handle;
 
 };
 //} // g3

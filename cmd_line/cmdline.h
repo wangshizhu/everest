@@ -416,7 +416,8 @@ public:
           }
       }
 
-      std::cerr << "there is no flag: -" + short_name << std::endl << usage();
+      printf("there is no flag : -%c\n",short_name);
+      std::cout << usage() << std::endl;
 
       exit(EXIT_FAILURE);
   }

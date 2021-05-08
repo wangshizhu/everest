@@ -105,10 +105,10 @@ namespace g3 {
 
       // Save the created LogMessage to any existing sinks
       void saveMessage(const char *message, const char *file, int line, const char *function, const LEVELS &level,
-                       const char *boolean_expression, int fatal_signal, const char *stack_trace);
+                       const char *boolean_expression, int fatal_signal, const char *stack_trace, g3::SinkHandle<g3::FileSink>* real_sink);
 
       // forwards the message to all sinks
-      void pushMessageToLogger(LogMessagePtr log_entry);
+      void pushMessageToLogger(LogMessagePtr log_entry, g3::SinkHandle<g3::FileSink>* sink_handle);
 
 
       // forwards a FATAL message to all sinks,. after which the g3logworker
@@ -141,7 +141,7 @@ namespace g3 {
 #define INTERNAL_LOG_MESSAGE(level) LogCapture(__FILE__, __LINE__, static_cast<const char*>(__PRETTY_FUNCTION__), level)
 
 #define INTERNAL_CONTRACT_MESSAGE(boolean_expression)  \
-   LogCapture(__FILE__, __LINE__, __PRETTY_FUNCTION__, g3::internal::CONTRACT, boolean_expression)
+   LogCapture(__FILE__, __LINE__, __PRETTY_FUNCTION__, g3::internal::CONTRACT,nullptr, boolean_expression)
 
 
 // LOG(level) is the API for the stream log
@@ -149,8 +149,9 @@ namespace g3 {
 
 
 // 'Conditional' stream log
-#define LOG_IF(level, boolean_expression)  \
-   if (!g3::logLevel(level) || false == (boolean_expression)) {} else INTERNAL_LOG_MESSAGE(level).stream()
+// fixed by wangshizhu
+//#define LOG_IF(level, boolean_expression)  \
+//   if (!g3::logLevel(level) || false == (boolean_expression)) {} else INTERNAL_LOG_MESSAGE(level).stream()
 
 // 'Design By Contract' stream API. Broken Contracts will exit the application by using fatal signal SIGABRT
 //  For unit testing, you can override the fatal handling using setFatalExitHandler(...). See tes_io.cpp for examples
@@ -206,22 +207,26 @@ And here is possible output
 :      floats: 3.14 +3e+000 3.141600E+000
 :      Width trick:    10
 :      A string  \endverbatim */
-#define LOGF(level, printf_like_message, ...)                 \
-   if (!g3::logLevel(level)) {} else INTERNAL_LOG_MESSAGE(level).capturef(printf_like_message, ##__VA_ARGS__)
+// fixed by wangshizhu
+//#define LOGF(level, printf_like_message, ...)                 \
+//   if (!g3::logLevel(level)) {} else INTERNAL_LOG_MESSAGE(level).capturef(printf_like_message, ##__VA_ARGS__)
 
 // Conditional log printf syntax
-#define LOGF_IF(level,boolean_expression, printf_like_message, ...) \
-   if (!g3::logLevel(level) || false == (boolean_expression)) {} else INTERNAL_LOG_MESSAGE(level).capturef(printf_like_message, ##__VA_ARGS__)
+// fixed by wangshizhu
+//#define LOGF_IF(level,boolean_expression, printf_like_message, ...) \
+//   if (!g3::logLevel(level) || false == (boolean_expression)) {} else INTERNAL_LOG_MESSAGE(level).capturef(printf_like_message, ##__VA_ARGS__)
 
 // Design By Contract, printf-like API syntax with variadic input parameters.
 // Calls the signal handler if the contract failed with the default exit for a failed contract. This is typically SIGABRT
 // See g3log, setFatalExitHandler(...) which can be overriden for unit tests (ref test_io.cpp)
-#define CHECKF(boolean_expression, printf_like_message, ...)    \
-   if (true == (boolean_expression)) {} else INTERNAL_CONTRACT_MESSAGE(#boolean_expression).capturef(printf_like_message, ##__VA_ARGS__)
+// fixed by wangshizhu
+//#define CHECKF(boolean_expression, printf_like_message, ...)    \
+//   if (true == (boolean_expression)) {} else INTERNAL_CONTRACT_MESSAGE(#boolean_expression).capturef(printf_like_message, ##__VA_ARGS__)
 
 // Backwards compatible. The same as CHECKF.
 // Design By Contract, printf-like API syntax with variadic input parameters.
 // Calls the signal handler if the contract failed. See g3log, setFatalExitHandler(...) which can be overriden for unit tests
 // (ref test_io.cpp)
-#define CHECK_F(boolean_expression, printf_like_message, ...)    \
-   if (true == (boolean_expression)) {} else INTERNAL_CONTRACT_MESSAGE(#boolean_expression).capturef(printf_like_message, ##__VA_ARGS__)
+// fixed by wangshizhu
+//#define CHECK_F(boolean_expression, printf_like_message, ...)    \
+//   if (true == (boolean_expression)) {} else INTERNAL_CONTRACT_MESSAGE(#boolean_expression).capturef(printf_like_message, ##__VA_ARGS__)

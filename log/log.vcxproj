@@ -30,6 +30,8 @@
     <ClCompile Include="time.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="custom_level.h" />
+    <ClInclude Include="everest_log.h" />
     <ClInclude Include="filesinkhelper.ipp" />
     <ClInclude Include="g2log.hpp" />
     <ClInclude Include="g3log\active.hpp" />

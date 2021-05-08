@@ -69,9 +69,19 @@ namespace g3 {
             });
          }
 
+         auto AsyncSend(LogMessagePtr incoming)
+         {
+             return _default_log_call(LogMessageMover(std::move(*incoming.release())));
+         }
+
+         T* RealSink()
+         {
+             return _real_sink.get();
+         }
+
          template<typename Call, typename... Args>
-         auto async(Call call, Args &&... args)-> std::future<std::invoke_result_t<decltype(call), T, Args...>> {
-            return g3::spawn_task(std::bind(call, _real_sink.get(), std::forward<Args>(args)...), _bg.get());
+         auto async(Call call, Args &&... args)-> std::future<std::invoke_result_t<decltype(call), Args...>> {
+            return g3::spawn_task(std::bind(call, std::forward<Args>(args)...), _bg.get());
          }
       };
    } // internal
