@@ -152,7 +152,7 @@ namespace g3 {
    }
 
 
-   LogMessage::LogMessage(std::string file, const int line,
+   LogMessage::LogMessage(std::string&& message,std::string file, const int line,
                           std::string function, const LEVELS level)
       : _logDetailsToStringFunc(LogMessage::DefaultLogDetailsToString)
       , _timestamp(std::chrono::high_resolution_clock::now())
@@ -162,15 +162,17 @@ namespace g3 {
 #else
 	   , _file(LogMessage::splitFileName(file))
 #endif
-      , _file_path(file)
+      , _file_path(std::move(file))
       , _line(line)
-      , _function(function)
-      , _level(level) {
+      , _function(std::move(function))
+      , _level(level)
+      , _message(std::move(message))
+   {
    }
 
 
    LogMessage::LogMessage(const std::string& fatalOsSignalCrashMessage)
-      : LogMessage( {""}, 0, {""}, internal::FATAL_SIGNAL) {
+      : LogMessage("", {""}, 0, {""}, internal::FATAL_SIGNAL) {
       _message.append(fatalOsSignalCrashMessage);
    }
 

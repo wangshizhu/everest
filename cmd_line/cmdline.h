@@ -393,6 +393,7 @@ public:
       if (exist(full_name))
       {
           options.find(full_name)->second->print();
+          std::cerr << usage() << std::endl;
           exit(EXIT_SUCCESS);
       }
       else
@@ -741,7 +742,7 @@ private:
 
     void print() const
     {
-        std::cout << "this command line param no value" << std::endl;
+        std::cout << desc.c_str() << std::endl;
     }
 
   private:

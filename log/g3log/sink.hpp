@@ -69,6 +69,13 @@ namespace g3 {
             });
          }
 
+         void SendMessagePtr(LogMessagePtr incoming)
+         {
+			 _bg->send([this, incoming]() mutable {
+				 _default_log_call(LogMessageMover(std::move(*incoming.release())));
+				});
+         }
+
          auto AsyncSend(LogMessagePtr incoming)
          {
              return _default_log_call(LogMessageMover(std::move(*incoming.release())));

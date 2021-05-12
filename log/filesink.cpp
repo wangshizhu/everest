@@ -21,7 +21,7 @@ namespace g3 {
       , _outptr(new std::ofstream)
       , _header("\t\tLOG format: [YYYY/MM/DD hh:mm:ss uuu* LEVEL FILE->FUNCTION:LINE] message\n\n\t\t(uuu*: microseconds fractions of the seconds value)\n\n")
       , _firstEntry(true)
-      ,_stdout(true)
+      ,_stdout(false)
    {
       _log_prefix_backup = prefixSanityFix(log_prefix);
       if (!isValidFilename(_log_prefix_backup)) {

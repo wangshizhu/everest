@@ -11,16 +11,16 @@
 #define PROGRAM_NAME "test"
 
 template <typename T, std::size_t ...N>
-constexpr decltype(auto) MakeSequenceByType(T, std::index_sequence<N...>)
+constexpr decltype(auto) MakeSequenceByType(T&&, std::index_sequence<N...>)
 {
 	using t = std::integer_sequence<char, T::get()[N]...>;
 	return std::integer_sequence<char, T::get()[N]...>();
 }
 
 template <typename T>
-constexpr decltype(auto) MakeIndexSequenceImpl(T t)
+constexpr decltype(auto) MakeIndexSequenceImpl(T&& t)
 {
-	return MakeSequenceByType(t, std::make_index_sequence<sizeof(T::get()) - 1>());
+	return MakeSequenceByType(std::move(t), std::make_index_sequence<sizeof(T::get()) - 1>());
 }
 
 #define STRING_LITERAL_TO_SEQUENCE(s) \

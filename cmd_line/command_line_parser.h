@@ -28,6 +28,20 @@ namespace everest
 			}
 		}
 
+		template<typename... Args>
+		void AddWithoutValueCommand(Args&&... args)
+		{
+			try
+			{
+				parser_.add(std::forward<decltype(args)>(args)...);
+			}
+			catch (const std::exception& e)
+			{
+				std::cerr << e.what() << std::endl;
+				exit(EXIT_FAILURE);
+			}
+		}
+
 		template<class T>
 		const T Get(const std::string& arg_name) const
 		{

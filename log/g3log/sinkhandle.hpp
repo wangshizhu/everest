@@ -52,16 +52,20 @@ namespace g3 {
 
 	  auto SendLogMsg(LogMessagePtr incoming)
       {
-		  try {
-			  std::shared_ptr<internal::Sink<T>> sink(_sink);
-			  return sink->async(std::bind(&internal::Sink<T>::AsyncSend, sink.get(),incoming));
-		  }
-		  catch (const std::bad_weak_ptr& e) {
-			  typedef std::invoke_result_t<decltype(&internal::Sink<T>::AsyncSend), internal::Sink<T>, decltype(incoming)> PromiseType;
-			  std::promise<PromiseType> promise;
-			  promise.set_exception(std::make_exception_ptr(e));
-			  return std::move(promise.get_future());
-		  }
+		  //try {
+			 // std::shared_ptr<internal::Sink<T>> sink(_sink);
+			 // //sink->send(LogMessageMover(std::move(*incoming.release())));
+			 // return sink->async(std::bind(&internal::Sink<T>::AsyncSend, sink.get(),incoming));
+		  //}
+		  //catch (const std::bad_weak_ptr& e) {
+			 // typedef std::invoke_result_t<decltype(&internal::Sink<T>::AsyncSend), internal::Sink<T>, decltype(incoming)> PromiseType;
+			 // std::promise<PromiseType> promise;
+			 // promise.set_exception(std::make_exception_ptr(e));
+			 // return std::move(promise.get_future());
+		  //}
+
+		  std::shared_ptr<internal::Sink<T>> sink(_sink);
+		  sink->SendMessagePtr(incoming);
       }
 
       /// Get weak_ptr access to the sink(). Make sure to check that the returned pointer is valid,

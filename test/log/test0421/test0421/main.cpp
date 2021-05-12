@@ -20,7 +20,6 @@ void breakHere() {
 int main(int argc, char** argv)
 {
 	{
-		int i = 1;
 		auto worker = g3::LogWorker::createLogWorker();
 		g3::initializeLogging(worker.get());
 		g3::setFatalPreLoggingHook(&breakHere);

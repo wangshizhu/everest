@@ -116,5 +116,8 @@
     <ClInclude Include="custom_level.h">
       <Filter>head_file</Filter>
     </ClInclude>
+    <ClInclude Include="concurrentqueue.h">
+      <Filter>head_file</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

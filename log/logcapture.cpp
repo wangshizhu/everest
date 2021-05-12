@@ -42,7 +42,7 @@ void g3::only_change_at_initialization::setMaxMessageSize(size_t max_size) {
 LogCapture::~LogCapture() noexcept (false) {
    using namespace g3::internal;
    SIGNAL_HANDLER_VERIFY();
-   saveMessage(_stream.str().c_str(), _file, _line, _function, _level, _expression, _fatal_signal, _stack_trace.c_str(), _sink_handle);
+   saveMessage(_stream.str(), _file, _line, _function, _level, _expression, _fatal_signal, _stack_trace.c_str(), _sink_handle);
 }
 
 
