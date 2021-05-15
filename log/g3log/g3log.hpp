@@ -107,6 +107,7 @@ namespace g3 {
       void saveMessage(std::string&& entry, const char *file, int line, const char *function, const LEVELS &level,
                        const char *boolean_expression, int fatal_signal, const char *stack_trace, g3::SinkHandle<g3::FileSink>* real_sink);
 
+
       // forwards the message to all sinks
       void pushMessageToLogger(LogMessagePtr log_entry, g3::SinkHandle<g3::FileSink>* sink_handle);
 

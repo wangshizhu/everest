@@ -154,11 +154,15 @@
     <ClInclude Include="calculator\safe_integral_calculator.h" />
     <ClInclude Include="cmd_line\cmdline.h" />
     <ClInclude Include="cmd_line\command_line_parser.h" />
+    <ClInclude Include="format\core.h" />
+    <ClInclude Include="format\format-inl.h" />
+    <ClInclude Include="format\format.h" />
     <ClInclude Include="non_copyable\non_copyable.h" />
     <ClInclude Include="singleton\singleton.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cmd_line\command_line_parser.cpp" />
+    <ClCompile Include="format\format.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

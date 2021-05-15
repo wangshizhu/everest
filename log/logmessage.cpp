@@ -9,6 +9,7 @@
 #include "g3log/logmessage.hpp"
 #include "g3log/crashhandler.hpp"
 #include "g3log/time.hpp"
+#include "format/format.h"
 #include <mutex>
 
 
@@ -61,72 +62,63 @@ namespace g3 {
    }
 
    // helper for setting the normal log details in an entry
-   std::string LogMessage::DefaultLogDetailsToString(const LogMessage& msg) {
-      std::string out;
-      out.append(msg.timestamp() + "\t"
-                 + msg.level() 
-                 + " [" 
-                 + msg.file() 
-                 + "->" 
-                 + msg.function() 
-                 + ":" + msg.line() + "]\t");
-      return out;
+   std::string LogMessage::DefaultLogDetailsToString(const LogMessage& msg) 
+   {
+	   return fmt::format("{}\t{} [{}->{}:{}]\t{}\n", 
+           msg.timestamp(),
+		   msg.level(),
+		   msg.file(),
+		   msg.function(),
+		   msg.line(),
+           msg.message());
    }
 
 
-   std::string LogMessage::FullLogDetailsToString(const LogMessage& msg) {
-      std::string out;
-      out.append(msg.timestamp() + "\t"
-                 + msg.level() 
-                 + " [" 
-                 + msg.threadID() 
-                 + " "
-                 + msg.file() 
-                 + "->"+ msg.function() 
-                 + ":" + msg.line() + "]\t");
-      return out;
+   std::string LogMessage::FullLogDetailsToString(const LogMessage& msg) 
+   {
+	   return fmt::format("{}\t{} [{} {}->{}:{}]\t{}\n",
+		   msg.timestamp(),
+		   msg.level(),
+		   msg.threadID(),
+		   msg.file(),
+		   msg.function(),
+		   msg.line(), 
+           msg.message());
    }
-
-
-   // helper for normal
-   std::string LogMessage::normalToString(const LogMessage& msg) {
-      auto out = msg._logDetailsToStringFunc(msg);
-      out.append(msg.message() + '\n');
-      return out;
-   }
-
-
 
  // end static functions section
-
    void LogMessage::overrideLogDetailsFunc(LogDetailsFunc func) const{
       _logDetailsToStringFunc = func;
    }
 
-
-
    // Format the log message according to it's type
-   std::string LogMessage::toString(LogDetailsFunc formattingFunc) const {
+   std::string LogMessage::toString(LogDetailsFunc formattingFunc) const 
+   {
       overrideLogDetailsFunc(formattingFunc);
 
-      if (false == wasFatal()) {
-         return LogMessage::normalToString(*this);
+      if (false == wasFatal()) 
+      {
+          return _logDetailsToStringFunc(*this);
       }
 
       const auto level_value = _level.value;
-      if (internal::FATAL_SIGNAL.value == _level.value) {
+      if (internal::FATAL_SIGNAL.value == _level.value) 
+      {
          return LogMessage::fatalSignalToString(*this);
       }
 
-      if (internal::FATAL_EXCEPTION.value == _level.value) {
+      if (internal::FATAL_EXCEPTION.value == _level.value) 
+      {
          return LogMessage::fatalExceptionToString(*this);
       }
 
-      if (FATAL.value == _level.value) {
+      if (FATAL.value == _level.value) 
+      {
          return LogMessage::fatalLogToString(*this);
       }
 
-      if (internal::CONTRACT.value == level_value) {
+      if (internal::CONTRACT.value == level_value) 
+      {
          return LogMessage::fatalCheckToString(*this);
       }
 
@@ -134,12 +126,12 @@ namespace g3 {
       auto out = _logDetailsToStringFunc(*this);
       static const std::string errorUnknown = {"UNKNOWN or Custom made Log Message Type"};
       out.append("\t*******" + errorUnknown + "\n\t" + message() + '\n');
+
       return out;
    }
 
-
-
-   std::string LogMessage::timestamp(const std::string& time_look) const {
+   std::string LogMessage::timestamp(const std::string& time_look) const 
+   {
       return g3::localtime_formatted(to_system_time(_timestamp), time_look);
    }
 
@@ -202,6 +194,10 @@ namespace g3 {
       , _message(std::move(other._message)) {
    }
 
+   LogMessage& LogMessage::operator=(LogMessage&& other) {
+       swap(*this, other);
+	   return *this;
+   }
 
 
    std::string LogMessage::threadID() const {

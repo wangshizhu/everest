@@ -191,8 +191,8 @@ namespace {
 
 		std::cout << "model 0,total time: " << total_time_in_ms <<"ms" << std::endl;
 		// crash
-		std::vector<int> v;
-		v[0] = 5;
+		/*std::vector<int> v;
+		v[0] = 5;*/
 	}
 
 	void TestForModel1()
@@ -208,23 +208,7 @@ namespace {
 			threads_result[idx].reserve(g_iterations);
 		}
 
-		/*std::string filename_choice;
-		std::cout << "Choose filename prefix to log to" << std::endl;
-		std::getline(std::cin, filename_choice);
-		auto logger_n_handle = g2::LogWorker::createWithDefaultLogger(filename_choice, "./");
-		g2::initializeLogging(logger_n_handle.worker.get());
-		std::future<std::string> log_file_name = logger_n_handle.sink->call(&g2::FileSink::fileName);
-		auto filename = log_file_name.get();
-		auto filename_result = filename + ".result.csv";*/
-
 		auto filename_result = "test.result.csv";
-
-		auto worker = g3::LogWorker::createLogWorker();
-		g3::initializeLogging(worker.get());
-		g3::setFatalPreLoggingHook(&breakHere);
-		everest::AddCustomLogLevel();
-
-		CREATE_LOGGER(worker.get(), PROGRAM_NAME, path_to_log_file);
 
 		std::ostringstream oss;
 		oss << "Using " << number_of_threads;

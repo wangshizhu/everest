@@ -80,6 +80,7 @@ namespace g3 {
       explicit LogMessage(const std::string& fatalOsSignalCrashMessage);
       LogMessage(const LogMessage& other);
       LogMessage(LogMessage&& other);
+      LogMessage& operator=(LogMessage&& other);
       virtual ~LogMessage() {}
 
 
@@ -89,8 +90,7 @@ namespace g3 {
       // windows only: fatalExceptionToString
       static  std::string fatalExceptionToString(const LogMessage& msg);
       static std::string fatalLogToString(const LogMessage& msg);
-      static std::string fatalCheckToString(const LogMessage& msg);
-      static std::string normalToString(const LogMessage& msg);     
+      static std::string fatalCheckToString(const LogMessage& msg);  
 
 
 

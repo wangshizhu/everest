@@ -150,9 +150,6 @@ namespace g3 {
          return true;
       }
 
-
-
-
       /** explicitly copy of all input. This is makes it possibly to use g3log across dynamically loaded libraries
       * i.e. (dlopen + dlsym)  */
       void saveMessage(std::string&& entry, const char* file, int line, const char* function, const LEVELS& level,
@@ -162,7 +159,6 @@ namespace g3 {
          LEVELS msgLevel {level};
 
          LogMessagePtr message {std::make_unique<LogMessage>(std::move(entry),file, line, function, msgLevel)};
-         //message.get()->write().append(entry);
          message.get()->setExpression(boolean_expression);
 
          if (internal::wasFatal(level)) 

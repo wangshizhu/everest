@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="crashhandler_windows.cpp" />
     <ClCompile Include="filesink.cpp" />
+    <ClCompile Include="format\format.cc" />
     <ClCompile Include="g3log.cpp" />
     <ClCompile Include="logcapture.cpp" />
     <ClCompile Include="loglevels.cpp" />
@@ -34,6 +35,9 @@
     <ClInclude Include="custom_level.h" />
     <ClInclude Include="everest_log.h" />
     <ClInclude Include="filesinkhelper.ipp" />
+    <ClInclude Include="format\core.h" />
+    <ClInclude Include="format\format-inl.h" />
+    <ClInclude Include="format\format.h" />
     <ClInclude Include="g2log.hpp" />
     <ClInclude Include="g3log\active.hpp" />
     <ClInclude Include="g3log\atomicbool.hpp" />

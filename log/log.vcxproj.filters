@@ -16,6 +16,9 @@
     <Filter Include="g3log">
       <UniqueIdentifier>{247c10b2-51dd-436f-8267-9bcdd442898d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="format">
+      <UniqueIdentifier>{9ead847f-e156-4395-bd23-6c0209b065f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="crashhandler_windows.cpp">
@@ -44,6 +47,9 @@
     </ClCompile>
     <ClCompile Include="time.cpp">
       <Filter>source_file</Filter>
+    </ClCompile>
+    <ClCompile Include="format\format.cc">
+      <Filter>format</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +124,15 @@
     </ClInclude>
     <ClInclude Include="concurrentqueue.h">
       <Filter>head_file</Filter>
+    </ClInclude>
+    <ClInclude Include="format\core.h">
+      <Filter>format</Filter>
+    </ClInclude>
+    <ClInclude Include="format\format.h">
+      <Filter>format</Filter>
+    </ClInclude>
+    <ClInclude Include="format\format-inl.h">
+      <Filter>format</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

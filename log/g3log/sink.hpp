@@ -76,11 +76,6 @@ namespace g3 {
 				});
          }
 
-         auto AsyncSend(LogMessagePtr incoming)
-         {
-             return _default_log_call(LogMessageMover(std::move(*incoming.release())));
-         }
-
          T* RealSink()
          {
              return _real_sink.get();

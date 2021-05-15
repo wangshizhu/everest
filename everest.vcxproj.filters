@@ -25,6 +25,9 @@
     <Filter Include="cmd_line">
       <UniqueIdentifier>{fc8b3475-4c77-4288-9d21-20891e2cac85}</UniqueIdentifier>
     </Filter>
+    <Filter Include="format">
+      <UniqueIdentifier>{2246d5ac-38e7-4d3c-966a-180377ea3979}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="calculator\safe_integral_calculator.h">
@@ -42,10 +45,22 @@
     <ClInclude Include="cmd_line\cmdline.h">
       <Filter>cmd_line</Filter>
     </ClInclude>
+    <ClInclude Include="format\core.h">
+      <Filter>format</Filter>
+    </ClInclude>
+    <ClInclude Include="format\format.h">
+      <Filter>format</Filter>
+    </ClInclude>
+    <ClInclude Include="format\format-inl.h">
+      <Filter>format</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cmd_line\command_line_parser.cpp">
       <Filter>cmd_line</Filter>
+    </ClCompile>
+    <ClCompile Include="format\format.cc">
+      <Filter>format</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
