@@ -1,4 +1,3 @@
-#include <iostream>
 #include <thread>
 #include <vector>
 #include <atomic>
@@ -11,32 +10,21 @@
 #include <fstream>
 #include <cstdio>
 #include <map>
-#include <future>
-#include <string>
-
+#include <thread>
+#include "spdlog/spdlog.h"
+#include "spdlog/logger.h"
+#include "spdlog/logger.h"
+#include "spdlog/sinks/basic_file_sink.h"
+#include "spdlog/async.h"
 #include "singleton/singleton.h"
 #include "cmd_line/command_line_parser.h"
-#include "format/format.h"
-#include "log/g3log/g3log.hpp"
-#include "log/g3log/logworker.hpp"
-#include "log/everest_log.h"
+
+namespace spd = spdlog;
 
 #define CMD_LINE_SINGLETON everest::ThreadSafeSingleton<everest::CommandLineParser>::GetInstance()
-const std::string path_to_log_file = "./log/";
-
-void breakHere() {
-	std::ostringstream oss;
-	oss << "Fatal hook function: " << __FUNCTION__ << ":" << __LINE__ << " was called";
-	oss << " through g3::setFatalPreLoggingHook(). setFatalPreLoggingHook should be called AFTER g3::initializeLogging()" << std::endl;
-	LOG(G3LOG_DEBUG) << oss.str();
-#if (defined(WIN32) || defined(_WIN32) || defined(__WIN32__))
-	//__debugbreak();
-#endif
-}
-
 
 namespace {
-	uint64_t g_iterations = 1000000;
+	uint64_t g_iterations{ 1000000 };
 
 
 	std::atomic<size_t> g_counter = { 0 };
@@ -54,24 +42,29 @@ namespace {
 		std::cout << content;
 	}
 
+	void AddCmdLineParam()
+	{
+		CMD_LINE_SINGLETON->Add<int>("production_thread_num", 'p', "product log thread num", false, 1);
 
-	void MeasurePeakDuringLogWrites(const size_t id, std::vector<uint64_t>& result) {
+		CMD_LINE_SINGLETON->Add<int>("production_model", 'm',
+			"produce log model,0 is that single thread produce consistent num log,1 is that all production thread produce consistent num log", false, 0);
+
+		CMD_LINE_SINGLETON->Add<int>("production_log_num", 'l',
+			"product log num,when is 0 model that mean single thread produce log num,when is 1 model that mean all production thread produce log num", false, 100000);
+
+		CMD_LINE_SINGLETON->AddWithoutValueCommand("help", '?', "show usage");
+	}
+
+	void MeasurePeakDuringLogWrites(std::shared_ptr<spdlog::logger> logger, const size_t id, std::vector<uint64_t>& result) {
 
 		while (true) {
-
 			const size_t value_now = ++g_counter;
-
-			if (value_now > g_iterations) 
-			{
+			if (value_now > g_iterations) {
 				return;
 			}
-
 			auto start_time = std::chrono::high_resolution_clock::now();
-
-			LOG_INFO << "Some text to log for thread: " << id;
-
+			logger->info("Some text to log for thread: {}", id);
 			auto stop_time = std::chrono::high_resolution_clock::now();
-
 			uint64_t time_us = std::chrono::duration_cast<std::chrono::microseconds>(stop_time - start_time).count();
 			result.push_back(time_us);
 
@@ -140,36 +133,24 @@ namespace {
 		std::cout << "microsecond bucket result is in file: " << result_filename << std::endl;
 	}
 
-	void AddCmdLineParam()
-	{
-		CMD_LINE_SINGLETON->Add<int>("production_thread_num", 'p', "product log thread num", false, 1);
-
-		CMD_LINE_SINGLETON->Add<int>("production_model", 'm',
-			"produce log model,0 is that single thread produce consistent num log,1 is that all production thread produce consistent num log", false, 0);
-
-		CMD_LINE_SINGLETON->Add<int>("production_log_num", 'l',
-			"product log num,when is 0 model that mean single thread produce log num,when is 1 model that mean all production thread produce log num", false, 100000);
-
-		CMD_LINE_SINGLETON->AddWithoutValueCommand("help", '?', "show usage");
-	}
-
-	void WriteLog()
+	void WriteLog(std::shared_ptr<spdlog::logger> logger)
 	{
 		auto start_time_application_total = std::chrono::high_resolution_clock::now();
 
 		for (int i = 0; i < g_iterations; ++i)
 		{
-			LOG_INFO << "main log msg" << i;
+			SPDLOG_LOGGER_CALL(logger, spdlog::level::info, "Some text to log for thread: {}", i);
+			//logger->info("Some text to log for thread: {}", i);
 		}
 
 		auto stop_time_application_total = std::chrono::high_resolution_clock::now();
 
 		uint64_t total_time_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time_application_total - start_time_application_total).count();
 
-		std::cout << "thread id:" << std::this_thread::get_id() << " total time: " << total_time_in_ms<<"ms" << std::endl;
+		std::cout << "thread id:" << std::this_thread::get_id() << " total time: " << total_time_in_ms << "ms" << std::endl;
 	}
 
-	void TestForModel0()
+	void TestForModel0(std::shared_ptr<spdlog::logger> logger)
 	{
 		size_t number_of_threads = CMD_LINE_SINGLETON->Get<int>("production_thread_num");
 		std::vector<std::thread> all;
@@ -178,7 +159,7 @@ namespace {
 
 		for (int i = 0; i < number_of_threads; ++i)
 		{
-			all.push_back(std::thread(WriteLog));
+			all.push_back(std::thread(WriteLog, logger));
 		}
 
 		for (int i = 0; i < number_of_threads; i++)
@@ -190,17 +171,17 @@ namespace {
 
 		uint64_t total_time_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time_application_total - start_time_application_total).count();
 
-		std::cout << "model 0,total time: " << total_time_in_ms <<"ms" << std::endl;
+		std::cout << "model 0,total time: " << total_time_in_ms << "ms" << std::endl;
 		// crash
 		/*std::vector<int> v;
 		v[0] = 5;*/
 	}
 
-	void TestForModel1()
+	void TestForModel1(std::shared_ptr<spdlog::logger> logger)
 	{
 		size_t number_of_threads = CMD_LINE_SINGLETON->Get<int>("production_thread_num");
-		std::vector<std::thread> threads(number_of_threads);
 
+		std::vector<std::thread> threads(number_of_threads);
 		std::map<size_t, std::vector<uint64_t>> threads_result;
 
 		for (size_t idx = 0; idx < number_of_threads; ++idx) {
@@ -209,26 +190,21 @@ namespace {
 			threads_result[idx].reserve(g_iterations);
 		}
 
-		auto filename_result = fmt::format("test.result_g3_{}.csv", g_iterations);
+		auto filename_result = fmt::format("test.result_spd_{}.csv",g_iterations);
 
 		std::ostringstream oss;
 		oss << "Using " << number_of_threads;
-		oss << " to log in total " << g_iterations << " log entries to " << "test" << std::endl;
+		oss << " to log in total " << g_iterations << " log entries to " << filename_result << std::endl;
 		WriteToFile(filename_result, oss.str());
 
 
 		auto start_time_application_total = std::chrono::high_resolution_clock::now();
-
-		for (uint64_t idx = 0; idx < number_of_threads; ++idx) 
-		{
-			threads[idx] = std::thread(MeasurePeakDuringLogWrites, idx, std::ref(threads_result[idx]));
+		for (uint64_t idx = 0; idx < number_of_threads; ++idx) {
+			threads[idx] = std::thread(MeasurePeakDuringLogWrites, logger, idx, std::ref(threads_result[idx]));
 		}
-
-		for (size_t idx = 0; idx < number_of_threads; ++idx) 
-		{
+		for (size_t idx = 0; idx < number_of_threads; ++idx) {
 			threads[idx].join();
 		}
-
 		auto stop_time_application_total = std::chrono::high_resolution_clock::now();
 
 		uint64_t total_time_in_us = std::chrono::duration_cast<std::chrono::microseconds>(stop_time_application_total - start_time_application_total).count();
@@ -236,10 +212,20 @@ namespace {
 		PrintStats(filename_result, threads_result, total_time_in_us);
 		SaveResultToBucketFile(filename_result, threads_result);
 	}
-}
 
 
-int main(int argc,char** argv)
+} // anonymous
+
+
+// The purpose of this test is NOT to see how fast
+// each thread can possibly write. It is to see what
+// the worst latency is for writing a log entry
+//
+// In the test 1 million log entries will be written
+// an atomic counter is used to give each thread what
+// it is to write next. The overhead of atomic
+// synchronization between the threads are not counted in the worst case latency
+int main(int argc, char** argv)
 {
 	{
 		AddCmdLineParam();
@@ -247,23 +233,21 @@ int main(int argc,char** argv)
 
 		g_iterations = CMD_LINE_SINGLETON->Get<int>("production_log_num");
 
-		auto worker = g3::LogWorker::createLogWorker();
-		g3::initializeLogging(worker.get());
-		g3::setFatalPreLoggingHook(&breakHere);
-		everest::AddCustomLogLevel();
-
-		CREATE_LOGGER(worker.get(), PROGRAM_NAME, path_to_log_file);
+		//int queue_size = 1048576; // 2 ^ 20
+		//int queue_size = 524288;  // 2 ^ 19
+	   //spdlog::set_async_mode(queue_size); // default size is 1048576
+		auto logger = spdlog::basic_logger_mt<spdlog::async_factory>("async_file_logger", "test_spd.log", false);
+		//auto logger = spdlog::create<spd::sinks::basic_file_sink_mt>("file_logger", filename_choice + ".log", false);
 
 		int model = CMD_LINE_SINGLETON->Get<int>("production_model");
 		if (model == 0)
 		{
-			TestForModel0();
+			TestForModel0(logger);
 		}
 		else
 		{
-			TestForModel1();
+			TestForModel1(logger);
 		}
-		
 	}
 
 	system("pause");
