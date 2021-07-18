@@ -277,6 +277,6 @@ int main(int argc, char** argv)
 		NAMED_LOG_INFO("test", "named test info:{}", 1);
 	}*/
 
-	system("pause");
+	//system("pause");
 	return 0;
 }

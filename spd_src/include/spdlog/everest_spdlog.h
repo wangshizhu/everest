@@ -11,6 +11,7 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/sinks/rotating_file_sink.h"
 #include "spdlog/sinks/daily_file_sink.h"
+#include "spdlog/sinks/daily_rotating_file_sink.h"
 
 #define PROGRAM_NAME "test"
 
@@ -46,18 +47,26 @@ struct AsyncLoggerFactory
 			sinks.push_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
 		}
 
-		// 每天固定时间产生新log文件
-		if (is_daily)
+		if (is_daily && is_rotate)
 		{
-			auto daily_sink = std::make_shared<spdlog::sinks::daily_file_sink_mt>(logger_name, 0, 0, false);
+			auto daily_sink = std::make_shared<spdlog::sinks::daily_rotating_file_sink_mt>(logger_name, 1024 * 1024 * 10, 0, 0, false);
 			sinks.push_back(daily_sink);
 		}
-
-		// 按照文件大小产生新log文件
-		if (is_rotate)
+		else
 		{
-			auto rotating_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(logger_name, 1024 * 1024 * 10, 3);
-			sinks.push_back(rotating_sink);
+			// 每天固定时间产生新log文件
+			if (is_daily)
+			{
+				auto daily_sink = std::make_shared<spdlog::sinks::daily_file_sink_mt>(logger_name, 0, 0, false);
+				sinks.push_back(daily_sink);
+			}
+
+			// 按照文件大小产生新log文件
+			if (is_rotate)
+			{
+				auto rotating_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(logger_name, 1024 * 1024 * 10, 3);
+				sinks.push_back(rotating_sink);
+			}
 		}
 
 		spdlog::init_thread_pool(spdlog::details::default_async_q_size, 1);
@@ -98,7 +107,6 @@ CreateAsyncLogger<decltype(result)>(std::string(LOGGER_NAME),IS_STDOUT,IS_DAILY,
 
 #define NAMED_LOG_INFO(name,...) \
 auto&& logger = spdlog::get(name);if(logger != nullptr) logger->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::info, __VA_ARGS__)\
-
 
 #define NAMED_LOG_DEBUG(name,...) \
 auto&& logger = spdlog::get(name);if(logger != nullptr) logger->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::debug, __VA_ARGS__)\
