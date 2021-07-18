@@ -33,7 +33,15 @@ struct daily_filename_calculator
         filename_t basename, ext;
         std::tie(basename, ext) = details::file_helper::split_by_extension(filename);
         return fmt::format(
-            SPDLOG_FILENAME_T("{}_{:04d}-{:02d}-{:02d}{}"), basename, now_tm.tm_year + 1900, now_tm.tm_mon + 1, now_tm.tm_mday, ext);
+            SPDLOG_FILENAME_T("{}-{:04d}-{:02d}-{:02d}-{:02d}-{:02d}-{:02d}{}"), 
+            basename, 
+            now_tm.tm_year + 1900, 
+            now_tm.tm_mon + 1, 
+            now_tm.tm_mday,
+            now_tm.tm_hour,
+            now_tm.tm_min,
+            now_tm.tm_sec,
+            ext);
     }
 };
 

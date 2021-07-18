@@ -18,6 +18,7 @@
 #include "spdlog/async.h"
 #include "singleton/singleton.h"
 #include "cmd_line/command_line_parser.h"
+#include "spdlog/everest_spdlog.h"
 
 namespace spd = spdlog;
 
@@ -63,7 +64,8 @@ namespace {
 				return;
 			}
 			auto start_time = std::chrono::high_resolution_clock::now();
-			logger->info("Some text to log for thread: {}", id);
+			NAMED_LOG_INFO("test", "Some text to log for thread: {}", id);
+			//logger->info("Some text to log for thread: {}", id);
 			auto stop_time = std::chrono::high_resolution_clock::now();
 			uint64_t time_us = std::chrono::duration_cast<std::chrono::microseconds>(stop_time - start_time).count();
 			result.push_back(time_us);
@@ -139,7 +141,8 @@ namespace {
 
 		for (int i = 0; i < g_iterations; ++i)
 		{
-			SPDLOG_LOGGER_CALL(logger, spdlog::level::info, "Some text to log for thread: {}", i);
+			//SPDLOG_LOGGER_CALL(logger, spdlog::level::info, "Some text to log for thread: {}", i);
+			NAMED_LOG_INFO("test", "Some text to log for thread: {}", i);
 			//logger->info("Some text to log for thread: {}", i);
 		}
 
@@ -227,17 +230,36 @@ namespace {
 // synchronization between the threads are not counted in the worst case latency
 int main(int argc, char** argv)
 {
+	//{
+	//	AddCmdLineParam();
+	//	CMD_LINE_SINGLETON->ParseGetOrSetBehavior(argc, argv);
+
+	//	g_iterations = CMD_LINE_SINGLETON->Get<int>("production_log_num");
+
+	//	//int queue_size = 1048576; // 2 ^ 20
+	//	//int queue_size = 524288;  // 2 ^ 19
+	//   //spdlog::set_async_mode(queue_size); // default size is 1048576
+	//	auto logger = spdlog::basic_logger_mt<spdlog::async_factory>("async_file_logger", "test_spd.log", false);
+
+	//	int model = CMD_LINE_SINGLETON->Get<int>("production_model");
+	//	if (model == 0)
+	//	{
+	//		TestForModel0(logger);
+	//	}
+	//	else
+	//	{
+	//		TestForModel1(logger);
+	//	}
+	//}
+
 	{
 		AddCmdLineParam();
 		CMD_LINE_SINGLETON->ParseGetOrSetBehavior(argc, argv);
 
 		g_iterations = CMD_LINE_SINGLETON->Get<int>("production_log_num");
 
-		//int queue_size = 1048576; // 2 ^ 20
-		//int queue_size = 524288;  // 2 ^ 19
-	   //spdlog::set_async_mode(queue_size); // default size is 1048576
-		auto logger = spdlog::basic_logger_mt<spdlog::async_factory>("async_file_logger", "test_spd.log", false);
-		//auto logger = spdlog::create<spd::sinks::basic_file_sink_mt>("file_logger", filename_choice + ".log", false);
+		CREATE_ASYNCLOGGER("test", true, true, true);
+		auto&& logger = spd::get("test");
 
 		int model = CMD_LINE_SINGLETON->Get<int>("production_model");
 		if (model == 0)
@@ -249,6 +271,11 @@ int main(int argc, char** argv)
 			TestForModel1(logger);
 		}
 	}
+
+	/*{
+		CREATE_ASYNCLOGGER("test",true,true,true);
+		NAMED_LOG_INFO("test", "named test info:{}", 1);
+	}*/
 
 	system("pause");
 	return 0;

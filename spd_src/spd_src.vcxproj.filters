@@ -326,5 +326,14 @@
     <ClInclude Include="include\spdlog\sinks\wincolor_sink-inl.h">
       <Filter>include\spdlog\sinks</Filter>
     </ClInclude>
+    <ClInclude Include="include\spdlog\everest_spdlog.h">
+      <Filter>include\spdlog</Filter>
+    </ClInclude>
+    <ClInclude Include="include\spdlog\sinks\daily_rotating_file_sink.h">
+      <Filter>include\spdlog\sinks</Filter>
+    </ClInclude>
+    <ClInclude Include="include\spdlog\sinks\daily_rotating_file_sink-inl.h">
+      <Filter>include\spdlog\sinks</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

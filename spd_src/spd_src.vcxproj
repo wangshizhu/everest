@@ -202,6 +202,7 @@
     <ClInclude Include="include\spdlog\details\thread_pool-inl.h" />
     <ClInclude Include="include\spdlog\details\thread_pool.h" />
     <ClInclude Include="include\spdlog\details\windows_include.h" />
+    <ClInclude Include="include\spdlog\everest_spdlog.h" />
     <ClInclude Include="include\spdlog\fmt\bin_to_hex.h" />
     <ClInclude Include="include\spdlog\fmt\bundled\chrono.h" />
     <ClInclude Include="include\spdlog\fmt\bundled\color.h" />
@@ -232,6 +233,8 @@
     <ClInclude Include="include\spdlog\sinks\basic_file_sink-inl.h" />
     <ClInclude Include="include\spdlog\sinks\basic_file_sink.h" />
     <ClInclude Include="include\spdlog\sinks\daily_file_sink.h" />
+    <ClInclude Include="include\spdlog\sinks\daily_rotating_file_sink-inl.h" />
+    <ClInclude Include="include\spdlog\sinks\daily_rotating_file_sink.h" />
     <ClInclude Include="include\spdlog\sinks\dist_sink.h" />
     <ClInclude Include="include\spdlog\sinks\dup_filter_sink.h" />
     <ClInclude Include="include\spdlog\sinks\hourly_file_sink.h" />
