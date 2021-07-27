@@ -367,6 +367,11 @@ public:
     prog_name=name;
   }
 
+  const std::string& GetProgramName()const
+  {
+      return prog_name;
+  }
+
   // fixed by wangshizhu,for only check name in options,dont check whether has set or not
   bool exist(const std::string &name) const {
     /*if (options.count(name)==0) throw cmdline_error("there is no flag: --"+name);

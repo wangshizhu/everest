@@ -13,6 +13,7 @@ namespace everest
 
 	public:
 		void ParseGetOrSetBehavior(int argc, char** argv);
+		const std::string& GetProgramName()const;
 
 		template<class T,typename... Args>
 		void Add(Args&&... args)

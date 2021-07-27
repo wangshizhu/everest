@@ -69,6 +69,11 @@ namespace everest
 		}
 	}
 
+	const std::string& CommandLineParser::GetProgramName()const
+	{
+		return parser_.GetProgramName();
+	}
+
 	void CommandLineParser::ParseSetBehavior(int argc, char** argv)
 	{
 		parser_.parse_check(argc, argv);

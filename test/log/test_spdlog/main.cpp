@@ -56,7 +56,7 @@ namespace {
 		CMD_LINE_SINGLETON->AddWithoutValueCommand("help", '?', "show usage");
 	}
 
-	void MeasurePeakDuringLogWrites(std::shared_ptr<spdlog::logger> logger, const size_t id, std::vector<uint64_t>& result) {
+	void MeasurePeakDuringLogWrites(const size_t id, std::vector<uint64_t>& result) {
 
 		while (true) {
 			const size_t value_now = ++g_counter;
@@ -135,7 +135,7 @@ namespace {
 		std::cout << "microsecond bucket result is in file: " << result_filename << std::endl;
 	}
 
-	void WriteLog(std::shared_ptr<spdlog::logger> logger)
+	void WriteLog()
 	{
 		auto start_time_application_total = std::chrono::high_resolution_clock::now();
 
@@ -143,6 +143,7 @@ namespace {
 		{
 			//SPDLOG_LOGGER_CALL(logger, spdlog::level::info, "Some text to log for thread: {}", i);
 			NAMED_LOG_INFO("test", "Some text to log for thread: {}", i);
+			LOG_DEBUG("debug message {}",i);
 			//logger->info("Some text to log for thread: {}", i);
 		}
 
@@ -153,7 +154,7 @@ namespace {
 		std::cout << "thread id:" << std::this_thread::get_id() << " total time: " << total_time_in_ms << "ms" << std::endl;
 	}
 
-	void TestForModel0(std::shared_ptr<spdlog::logger> logger)
+	void TestForModel0()
 	{
 		size_t number_of_threads = CMD_LINE_SINGLETON->Get<int>("production_thread_num");
 		std::vector<std::thread> all;
@@ -162,7 +163,7 @@ namespace {
 
 		for (int i = 0; i < number_of_threads; ++i)
 		{
-			all.push_back(std::thread(WriteLog, logger));
+			all.push_back(std::thread(WriteLog));
 		}
 
 		for (int i = 0; i < number_of_threads; i++)
@@ -180,7 +181,7 @@ namespace {
 		v[0] = 5;*/
 	}
 
-	void TestForModel1(std::shared_ptr<spdlog::logger> logger)
+	void TestForModel1()
 	{
 		size_t number_of_threads = CMD_LINE_SINGLETON->Get<int>("production_thread_num");
 
@@ -203,7 +204,7 @@ namespace {
 
 		auto start_time_application_total = std::chrono::high_resolution_clock::now();
 		for (uint64_t idx = 0; idx < number_of_threads; ++idx) {
-			threads[idx] = std::thread(MeasurePeakDuringLogWrites, logger, idx, std::ref(threads_result[idx]));
+			threads[idx] = std::thread(MeasurePeakDuringLogWrites, idx, std::ref(threads_result[idx]));
 		}
 		for (size_t idx = 0; idx < number_of_threads; ++idx) {
 			threads[idx].join();
@@ -230,52 +231,26 @@ namespace {
 // synchronization between the threads are not counted in the worst case latency
 int main(int argc, char** argv)
 {
-	//{
-	//	AddCmdLineParam();
-	//	CMD_LINE_SINGLETON->ParseGetOrSetBehavior(argc, argv);
-
-	//	g_iterations = CMD_LINE_SINGLETON->Get<int>("production_log_num");
-
-	//	//int queue_size = 1048576; // 2 ^ 20
-	//	//int queue_size = 524288;  // 2 ^ 19
-	//   //spdlog::set_async_mode(queue_size); // default size is 1048576
-	//	auto logger = spdlog::basic_logger_mt<spdlog::async_factory>("async_file_logger", "test_spd.log", false);
-
-	//	int model = CMD_LINE_SINGLETON->Get<int>("production_model");
-	//	if (model == 0)
-	//	{
-	//		TestForModel0(logger);
-	//	}
-	//	else
-	//	{
-	//		TestForModel1(logger);
-	//	}
-	//}
-
 	{
 		AddCmdLineParam();
 		CMD_LINE_SINGLETON->ParseGetOrSetBehavior(argc, argv);
 
+		std::cout << CMD_LINE_SINGLETON->GetProgramName() << std::endl;
+
 		g_iterations = CMD_LINE_SINGLETON->Get<int>("production_log_num");
 
-		CREATE_ASYNCLOGGER("test", true, true, true);
-		auto&& logger = spd::get("test");
+		CREATE_DEFAULT_LOGGER("test_spd",spdlog::level::debug,true,true,true);
 
 		int model = CMD_LINE_SINGLETON->Get<int>("production_model");
 		if (model == 0)
 		{
-			TestForModel0(logger);
+			TestForModel0();
 		}
 		else
 		{
-			TestForModel1(logger);
+			TestForModel1();
 		}
 	}
-
-	/*{
-		CREATE_ASYNCLOGGER("test",true,true,true);
-		NAMED_LOG_INFO("test", "named test info:{}", 1);
-	}*/
 
 	//system("pause");
 	return 0;
