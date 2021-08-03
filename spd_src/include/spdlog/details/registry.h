@@ -9,6 +9,7 @@
 // This class is thread safe
 
 #include <spdlog/common.h>
+#include <spdlog/logger_create_info.h>
 
 #include <chrono>
 #include <functional>
@@ -49,6 +50,10 @@ public:
     void set_tp(std::shared_ptr<thread_pool> tp);
 
     std::shared_ptr<thread_pool> get_tp();
+
+    void set_logger_create_info(const everest::LoggerCreateInfo& info);
+
+    everest::LoggerCreateInfo get_logger_create_info();
 
     // Set global formatter. Each sink in each logger will get a clone of this object
     void set_formatter(std::unique_ptr<formatter> formatter);
@@ -105,6 +110,7 @@ private:
     std::shared_ptr<logger> default_logger_;
     bool automatic_registration_ = true;
     size_t backtrace_n_messages_ = 0;
+    everest::LoggerCreateInfo logger_create_info_ = {};
 };
 
 } // namespace details

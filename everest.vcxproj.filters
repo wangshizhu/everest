@@ -28,6 +28,9 @@
     <Filter Include="format">
       <UniqueIdentifier>{2246d5ac-38e7-4d3c-966a-180377ea3979}</UniqueIdentifier>
     </Filter>
+    <Filter Include="multi_producer_multi_consumer">
+      <UniqueIdentifier>{483358be-d14f-45eb-a23a-ea4ab76ad222}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="calculator\safe_integral_calculator.h">
@@ -53,6 +56,15 @@
     </ClInclude>
     <ClInclude Include="format\format-inl.h">
       <Filter>format</Filter>
+    </ClInclude>
+    <ClInclude Include="multi_producer_multi_consumer\multi_producer_multi_consumer.h">
+      <Filter>multi_producer_multi_consumer</Filter>
+    </ClInclude>
+    <ClInclude Include="multi_producer_multi_consumer\circular_queue.h">
+      <Filter>multi_producer_multi_consumer</Filter>
+    </ClInclude>
+    <ClInclude Include="multi_producer_multi_consumer\move_on_copy.h">
+      <Filter>multi_producer_multi_consumer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

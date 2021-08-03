@@ -230,6 +230,8 @@ struct source_loc
 };
 
 namespace details {
+
+static const size_t default_async_q_size = 8192;
 // make_unique support for pre c++14
 
 #if __cplusplus >= 201402L // C++14 and beyond

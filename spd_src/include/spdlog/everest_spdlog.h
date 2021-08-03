@@ -6,6 +6,7 @@
 #include "spdlog/spdlog.h"
 #include "spdlog/logger.h"
 #include "spdlog/logger.h"
+#include "spdlog/logger_create_info.h"
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/async.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
@@ -31,35 +32,34 @@ namespace everest
 	template<class T>
 	struct AsyncLoggerFactory
 	{
-		AsyncLoggerFactory(const std::string& logger_name, spdlog::level::level_enum level,
-			bool is_stdout, bool is_daily, bool is_rotate)
+		AsyncLoggerFactory(const std::string& logger_name,const LoggerCreateInfo& info)
 		{
 			std::vector<spdlog::sink_ptr> sinks;
 
 			// 是否输出到控制台
-			if (is_stdout)
+			if (info.to_stdout)
 			{
 				sinks.push_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
 			}
 
-			if (is_daily && is_rotate)
+			if (info.daily && info.rotate)
 			{
-				auto daily_sink = std::make_shared<spdlog::sinks::daily_rotating_file_sink_mt>(logger_name, 1024 * 1024 * 10, 0, 0, false);
+				auto daily_sink = std::make_shared<spdlog::sinks::daily_rotating_file_sink_mt>(logger_name, info.log_file_size, 0, 0, false);
 				sinks.push_back(daily_sink);
 			}
 			else
 			{
 				// 每天固定时间产生新log文件
-				if (is_daily)
+				if (info.daily)
 				{
 					auto daily_sink = std::make_shared<spdlog::sinks::daily_file_sink_mt>(logger_name, 0, 0, false);
 					sinks.push_back(daily_sink);
 				}
 
 				// 按照文件大小产生新log文件
-				if (is_rotate)
+				if (info.rotate)
 				{
-					auto rotating_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(logger_name, 1024 * 1024 * 10, 3);
+					auto rotating_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(logger_name, info.log_file_size, 3);
 					sinks.push_back(rotating_sink);
 				}
 			}
@@ -70,40 +70,23 @@ namespace everest
 			std::lock_guard<std::recursive_mutex> tp_lock(mutex);
 
 			auto tp = registry_inst.get_tp();
-			if (tp == nullptr)
+			if (nullptr == tp)
 			{
-				tp = std::make_shared<spdlog::details::thread_pool>(spdlog::details::default_async_q_size, 1);
+				tp = std::make_shared<spdlog::details::thread_pool>(info.async_queue_size, info.consumer_thread_num);
 				registry_inst.set_tp(tp);
 			}
 
 			auto logger = std::make_shared<spdlog::async_logger>(logger_name, sinks.begin(), sinks.end(), spdlog::thread_pool(), spdlog::async_overflow_policy::block);
-			logger->set_level(level);
+			logger->set_level(info.level);
 
 			spdlog::register_logger(logger);
 		}
 	};
 
 	template<class T>
-	struct CloneLoggerFactory
+	void CreateAsyncLogger(const std::string& logger_name,const LoggerCreateInfo& info)
 	{
-		CloneLoggerFactory(const std::string& logger_name)
-		{
-			auto&& default_logger = spdlog::default_logger();
-			spdlog::register_logger(default_logger->clone(logger_name));
-		}
-	};
-
-	template<class T>
-	void CreateAsyncLogger(const std::string& logger_name, spdlog::level::level_enum level,
-		bool is_stdout, bool is_daily, bool is_rotate)
-	{
-		static AsyncLoggerFactory<T> logger(logger_name, level, is_stdout, is_daily, is_rotate);
-	}
-
-	template<class T>
-	void CloneLogger(const std::string& logger_name)
-	{
-		static everest::CloneLoggerFactory<T> clone_logger(logger_name);
+		static AsyncLoggerFactory<T> logger(logger_name, info);
 	}
 }
 
@@ -114,19 +97,19 @@ namespace everest
         return tmp{}; \
     }()))\
 
-#define CREATE_ASYNC_LOGGER(LOGGER_NAME,LEVEL,IS_STDOUT,IS_DAILY,IS_ROTATE) \
+#define CREATE_ASYNC_LOGGER(LOGGER_NAME,LOGGER_CREATE_INFO) \
 {\
 auto result = STRING_LITERAL_TO_SEQUENCE(LOGGER_NAME); \
-everest::CreateAsyncLogger<decltype(result)>(std::string(LOGGER_NAME),LEVEL,IS_STDOUT,IS_DAILY,IS_ROTATE);\
+everest::CreateAsyncLogger<decltype(result)>(std::string(LOGGER_NAME),LOGGER_CREATE_INFO);\
 }\
 
-#define CLONE_LOGGER_FROM_DEFAULT_IF_NULL(LOGGER_NAME,LEVEL,...)\
+#define CREATE_LOGGER_IF_NULL(LOGGER_NAME,LEVEL,...)\
 {\
 auto&& logger = spdlog::get(LOGGER_NAME);\
 if(nullptr == logger)\
 {\
-auto result = STRING_LITERAL_TO_SEQUENCE(LOGGER_NAME); \
-everest::CloneLogger<decltype(result)>(std::string(LOGGER_NAME));\
+auto&& info = spdlog::details::registry::instance().get_logger_create_info();\
+CREATE_ASYNC_LOGGER(LOGGER_NAME,info);\
 logger = spdlog::get(LOGGER_NAME);\
 }\
 logger->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, LEVEL, __VA_ARGS__);\
@@ -137,29 +120,30 @@ logger->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, LEVEL, __VA
 #define CONCATENATE(s1, s2) CONCATENATE_DIRECT(s1, s2)
 #define ANONYMOUS_VARIABLE CONCATENATE(VARIABLE_PREFIX, __LINE__)
 
-#define CREATE_DEFAULT_LOGGER(LOGGER_NAME,LEVEL,IS_STDOUT,IS_DAILY,IS_ROTATE) \
+#define CREATE_DEFAULT_LOGGER(LOGGER_NAME,LOGGER_CREATE_INFO) \
 {\
 auto result = STRING_LITERAL_TO_SEQUENCE(LOGGER_NAME); \
-everest::CreateAsyncLogger<decltype(result)>(std::string(LOGGER_NAME),LEVEL,IS_STDOUT,IS_DAILY,IS_ROTATE);\
+everest::CreateAsyncLogger<decltype(result)>(std::string(LOGGER_NAME),LOGGER_CREATE_INFO);\
 auto&& logger = spdlog::get(LOGGER_NAME);\
 spdlog::set_default_logger(logger);\
-spdlog::set_level(LEVEL);\
+spdlog::set_level(LOGGER_CREATE_INFO.level);\
+spdlog::details::registry::instance().set_logger_create_info(LOGGER_CREATE_INFO);\
 }\
 
 #define NAMED_LOG_INFO(name,...) \
-CLONE_LOGGER_FROM_DEFAULT_IF_NULL(name,spdlog::level::info,__VA_ARGS__)\
+CREATE_LOGGER_IF_NULL(name,spdlog::level::info,__VA_ARGS__)\
 
 #define NAMED_LOG_DEBUG(name,...) \
-CLONE_LOGGER_FROM_DEFAULT_IF_NULL(name,spdlog::level::debug,__VA_ARGS__)\
+CREATE_LOGGER_IF_NULL(name,spdlog::level::debug,__VA_ARGS__)\
 
 #define NAMED_LOG_ERROR(name,...) \
-CLONE_LOGGER_FROM_DEFAULT_IF_NULL(name,spdlog::level::err,__VA_ARGS__)\
+CREATE_LOGGER_IF_NULL(name,spdlog::level::err,__VA_ARGS__)\
 
 #define NAMED_LOG_WARNING(name,...) \
-CLONE_LOGGER_FROM_DEFAULT_IF_NULL(name,spdlog::level::warn,__VA_ARGS__)\
+CREATE_LOGGER_IF_NULL(name,spdlog::level::warn,__VA_ARGS__)\
 
 #define NAMED_LOG_CRITICAL(name,...) \
-CLONE_LOGGER_FROM_DEFAULT_IF_NULL(name,spdlog::level::critical,__VA_ARGS__)\
+CREATE_LOGGER_IF_NULL(name,spdlog::level::critical,__VA_ARGS__)\
 
 #define LOG_INFO(...) \
 auto&& logger = spdlog::default_logger();logger->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, spdlog::level::info, __VA_ARGS__)\

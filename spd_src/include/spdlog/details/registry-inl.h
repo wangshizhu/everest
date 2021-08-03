@@ -136,6 +136,18 @@ SPDLOG_INLINE std::shared_ptr<thread_pool> registry::get_tp()
     return tp_;
 }
 
+SPDLOG_INLINE void registry::set_logger_create_info(const everest::LoggerCreateInfo& info)
+{
+    std::lock_guard<std::mutex> lock(logger_map_mutex_);
+	logger_create_info_ = info;
+}
+
+SPDLOG_INLINE everest::LoggerCreateInfo registry::get_logger_create_info()
+{
+    std::lock_guard<std::mutex> lock(logger_map_mutex_);
+    return logger_create_info_;
+}
+
 // Set global formatter. Each sink in each logger will get a clone of this object
 SPDLOG_INLINE void registry::set_formatter(std::unique_ptr<formatter> formatter)
 {

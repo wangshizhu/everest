@@ -335,5 +335,8 @@
     <ClInclude Include="include\spdlog\sinks\daily_rotating_file_sink-inl.h">
       <Filter>include\spdlog\sinks</Filter>
     </ClInclude>
+    <ClInclude Include="include\spdlog\logger_create_info.h">
+      <Filter>include\spdlog</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -19,6 +19,7 @@
 #include "singleton/singleton.h"
 #include "cmd_line/command_line_parser.h"
 #include "spdlog/everest_spdlog.h"
+#include "spdlog/logger_create_info.h"
 
 namespace spd = spdlog;
 
@@ -239,7 +240,10 @@ int main(int argc, char** argv)
 
 		g_iterations = CMD_LINE_SINGLETON->Get<int>("production_log_num");
 
-		CREATE_DEFAULT_LOGGER("test_spd",spdlog::level::debug,true,true,true);
+		everest::LoggerCreateInfo info;
+		info.level = spdlog::level::info;
+		
+		CREATE_DEFAULT_LOGGER("test_spd", info);
 
 		int model = CMD_LINE_SINGLETON->Get<int>("production_model");
 		if (model == 0)

@@ -24,9 +24,9 @@
 
 namespace spdlog {
 
-namespace details {
-static const size_t default_async_q_size = 8192;
-}
+//namespace details {
+//static const size_t default_async_q_size = 8192;
+//}
 
 // async logger factory - creates async loggers backed with thread pool.
 // if a global thread pool doesn't already exist, create it with default queue
