@@ -94,10 +94,10 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>./spd_src/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./3rd/yaml/include/;./3rd/spd/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -110,10 +110,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>./spd_src/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./3rd/yaml/include/;./3rd/spd/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -126,10 +126,10 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>./spd_src/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./3rd/yaml/include/;./3rd/spd/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,10 +142,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>./spd_src/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./3rd/yaml/include/;./3rd/spd/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -155,6 +155,159 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="3rd\spd\include\spdlog\async.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\async_logger-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\async_logger.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\cfg\argv.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\cfg\env.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\cfg\helpers-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\cfg\helpers.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\common-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\common.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\backtracer-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\backtracer.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\circular_q.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\console_globals.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\file_helper-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\file_helper.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\fmt_helper.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\log_msg-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\log_msg.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\log_msg_buffer-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\log_msg_buffer.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\mpmc_blocking_q.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\null_mutex.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\os-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\os.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\periodic_worker-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\periodic_worker.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\registry-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\registry.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\synchronous_factory.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\tcp_client-windows.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\tcp_client.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\thread_pool-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\thread_pool.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\details\windows_include.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\everest_spdlog.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\fmt\bin_to_hex.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\fmt\bundled\chrono.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\fmt\bundled\color.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\fmt\bundled\compile.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\fmt\bundled\core.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\fmt\bundled\format-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\fmt\bundled\format.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\fmt\bundled\locale.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\fmt\bundled\os.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\fmt\bundled\ostream.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\fmt\bundled\posix.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\fmt\bundled\printf.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\fmt\bundled\ranges.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\fmt\chrono.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\fmt\fmt.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\fmt\ostr.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\formatter.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\fwd.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\logger-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\logger.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\logger_create_info.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\pattern_formatter-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\pattern_formatter.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\android_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\ansicolor_sink-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\ansicolor_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\base_sink-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\base_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\basic_file_sink-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\basic_file_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\daily_file_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\daily_rotating_file_sink-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\daily_rotating_file_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\dist_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\dup_filter_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\hourly_file_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\msvc_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\null_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\ostream_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\ringbuffer_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\rotating_file_sink-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\rotating_file_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\sink-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\stdout_color_sinks-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\stdout_color_sinks.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\stdout_sinks-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\stdout_sinks.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\syslog_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\systemd_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\tcp_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\wincolor_sink-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\wincolor_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\sinks\win_eventlog_sink.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\spdlog-inl.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\spdlog.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\stopwatch.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\tweakme.h" />
+    <ClInclude Include="3rd\spd\include\spdlog\version.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\anchor.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\binary.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\contrib\anchordict.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\contrib\graphbuilder.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\depthguard.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\dll.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\emitfromevents.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\emitter.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\emitterdef.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\emittermanip.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\emitterstyle.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\eventhandler.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\exceptions.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\mark.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\node\convert.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\node\detail\impl.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\node\detail\iterator.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\node\detail\iterator_fwd.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\node\detail\memory.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\node\detail\node.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\node\detail\node_data.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\node\detail\node_iterator.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\node\detail\node_ref.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\node\emit.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\node\impl.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\node\iterator.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\node\node.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\node\parse.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\node\ptr.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\node\type.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\noexcept.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\null.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\ostream_wrapper.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\parser.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\stlemitter.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\traits.h" />
+    <ClInclude Include="3rd\yaml\include\yaml-cpp\yaml.h" />
+    <ClInclude Include="3rd\yaml\src\collectionstack.h" />
+    <ClInclude Include="3rd\yaml\src\contrib\graphbuilderadapter.h" />
+    <ClInclude Include="3rd\yaml\src\directives.h" />
+    <ClInclude Include="3rd\yaml\src\emitterstate.h" />
+    <ClInclude Include="3rd\yaml\src\emitterutils.h" />
+    <ClInclude Include="3rd\yaml\src\exp.h" />
+    <ClInclude Include="3rd\yaml\src\indentation.h" />
+    <ClInclude Include="3rd\yaml\src\nodebuilder.h" />
+    <ClInclude Include="3rd\yaml\src\nodeevents.h" />
+    <ClInclude Include="3rd\yaml\src\ptr_vector.h" />
+    <ClInclude Include="3rd\yaml\src\regeximpl.h" />
+    <ClInclude Include="3rd\yaml\src\regex_yaml.h" />
+    <ClInclude Include="3rd\yaml\src\scanner.h" />
+    <ClInclude Include="3rd\yaml\src\scanscalar.h" />
+    <ClInclude Include="3rd\yaml\src\scantag.h" />
+    <ClInclude Include="3rd\yaml\src\setting.h" />
+    <ClInclude Include="3rd\yaml\src\singledocparser.h" />
+    <ClInclude Include="3rd\yaml\src\stream.h" />
+    <ClInclude Include="3rd\yaml\src\streamcharsource.h" />
+    <ClInclude Include="3rd\yaml\src\stringsource.h" />
+    <ClInclude Include="3rd\yaml\src\tag.h" />
+    <ClInclude Include="3rd\yaml\src\token.h" />
     <ClInclude Include="calculator\safe_integral_calculator.h" />
     <ClInclude Include="cmd_line\cmdline.h" />
     <ClInclude Include="cmd_line\command_line_parser.h" />
@@ -168,6 +321,44 @@
     <ClInclude Include="singleton\singleton.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3rd\spd\src\async.cpp" />
+    <ClCompile Include="3rd\spd\src\cfg.cpp" />
+    <ClCompile Include="3rd\spd\src\color_sinks.cpp" />
+    <ClCompile Include="3rd\spd\src\file_sinks.cpp" />
+    <ClCompile Include="3rd\spd\src\fmt.cpp" />
+    <ClCompile Include="3rd\spd\src\spdlog.cpp" />
+    <ClCompile Include="3rd\spd\src\stdout_sinks.cpp" />
+    <ClCompile Include="3rd\yaml\src\binary.cpp" />
+    <ClCompile Include="3rd\yaml\src\contrib\graphbuilder.cpp" />
+    <ClCompile Include="3rd\yaml\src\contrib\graphbuilderadapter.cpp" />
+    <ClCompile Include="3rd\yaml\src\convert.cpp" />
+    <ClCompile Include="3rd\yaml\src\depthguard.cpp" />
+    <ClCompile Include="3rd\yaml\src\directives.cpp" />
+    <ClCompile Include="3rd\yaml\src\emit.cpp" />
+    <ClCompile Include="3rd\yaml\src\emitfromevents.cpp" />
+    <ClCompile Include="3rd\yaml\src\emitter.cpp" />
+    <ClCompile Include="3rd\yaml\src\emitterstate.cpp" />
+    <ClCompile Include="3rd\yaml\src\emitterutils.cpp" />
+    <ClCompile Include="3rd\yaml\src\exceptions.cpp" />
+    <ClCompile Include="3rd\yaml\src\exp.cpp" />
+    <ClCompile Include="3rd\yaml\src\memory.cpp" />
+    <ClCompile Include="3rd\yaml\src\node.cpp" />
+    <ClCompile Include="3rd\yaml\src\nodebuilder.cpp" />
+    <ClCompile Include="3rd\yaml\src\nodeevents.cpp" />
+    <ClCompile Include="3rd\yaml\src\node_data.cpp" />
+    <ClCompile Include="3rd\yaml\src\null.cpp" />
+    <ClCompile Include="3rd\yaml\src\ostream_wrapper.cpp" />
+    <ClCompile Include="3rd\yaml\src\parse.cpp" />
+    <ClCompile Include="3rd\yaml\src\parser.cpp" />
+    <ClCompile Include="3rd\yaml\src\regex_yaml.cpp" />
+    <ClCompile Include="3rd\yaml\src\scanner.cpp" />
+    <ClCompile Include="3rd\yaml\src\scanscalar.cpp" />
+    <ClCompile Include="3rd\yaml\src\scantag.cpp" />
+    <ClCompile Include="3rd\yaml\src\scantoken.cpp" />
+    <ClCompile Include="3rd\yaml\src\simplekey.cpp" />
+    <ClCompile Include="3rd\yaml\src\singledocparser.cpp" />
+    <ClCompile Include="3rd\yaml\src\stream.cpp" />
+    <ClCompile Include="3rd\yaml\src\tag.cpp" />
     <ClCompile Include="cmd_line\command_line_parser.cpp" />
     <ClCompile Include="format\format.cc" />
   </ItemGroup>
