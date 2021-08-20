@@ -44,6 +44,21 @@
     <Filter Include="3rd\spd\source">
       <UniqueIdentifier>{ecfa69a9-ab3b-4f73-8575-23e3dcca717e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rd\libuv">
+      <UniqueIdentifier>{b0707c1d-e708-49e6-a088-34c955616f1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\libuv\source">
+      <UniqueIdentifier>{2a8667ce-1398-48f3-93c8-4ca6ac57c02b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\hiredis">
+      <UniqueIdentifier>{1e45d475-7030-41a7-b7f3-b2e12952e6d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\redis++">
+      <UniqueIdentifier>{3d58a435-538a-4fc9-b2ec-45aee38102b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\redis++\source">
+      <UniqueIdentifier>{89248698-157e-4d2d-b341-3a0c9331e8ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="calculator\safe_integral_calculator.h">
@@ -538,6 +553,84 @@
     <ClInclude Include="3rd\spd\include\spdlog\version.h">
       <Filter>3rd\spd\include</Filter>
     </ClInclude>
+    <ClInclude Include="3rd\libuv-v1.x\src\win\atomicops-inl.h">
+      <Filter>3rd\libuv\source</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\libuv-v1.x\src\win\fs-fd-hash-inl.h">
+      <Filter>3rd\libuv\source</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\libuv-v1.x\src\win\handle-inl.h">
+      <Filter>3rd\libuv\source</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\libuv-v1.x\src\win\internal.h">
+      <Filter>3rd\libuv\source</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\libuv-v1.x\src\win\req-inl.h">
+      <Filter>3rd\libuv\source</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\libuv-v1.x\src\win\stream-inl.h">
+      <Filter>3rd\libuv\source</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\libuv-v1.x\src\win\winapi.h">
+      <Filter>3rd\libuv\source</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\libuv-v1.x\src\win\winsock.h">
+      <Filter>3rd\libuv\source</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\libuv-v1.x\src\heap-inl.h">
+      <Filter>3rd\libuv\source</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\libuv-v1.x\src\idna.h">
+      <Filter>3rd\libuv\source</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\libuv-v1.x\src\queue.h">
+      <Filter>3rd\libuv\source</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\libuv-v1.x\src\strscpy.h">
+      <Filter>3rd\libuv\source</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\libuv-v1.x\src\uv-common.h">
+      <Filter>3rd\libuv\source</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\hiredis\alloc.h">
+      <Filter>3rd\hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\hiredis\async.h">
+      <Filter>3rd\hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\hiredis\async_private.h">
+      <Filter>3rd\hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\hiredis\dict.h">
+      <Filter>3rd\hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\hiredis\fmacros.h">
+      <Filter>3rd\hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\hiredis\hiredis.h">
+      <Filter>3rd\hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\hiredis\hiredis_ssl.h">
+      <Filter>3rd\hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\hiredis\net.h">
+      <Filter>3rd\hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\hiredis\read.h">
+      <Filter>3rd\hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\hiredis\sds.h">
+      <Filter>3rd\hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\hiredis\sdsalloc.h">
+      <Filter>3rd\hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\hiredis\sockcompat.h">
+      <Filter>3rd\hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\hiredis\win32.h">
+      <Filter>3rd\hiredis</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cmd_line\command_line_parser.cpp">
@@ -659,6 +752,180 @@
     </ClCompile>
     <ClCompile Include="3rd\spd\src\stdout_sinks.cpp">
       <Filter>3rd\spd\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\core.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\detect-wakeup.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\dl.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\error.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\fs-event.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\fs.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\getaddrinfo.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\getnameinfo.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\handle.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\loop-watcher.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\pipe.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\poll.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\process-stdio.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\process.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\signal.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\snprintf.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\stream.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\tcp.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\thread.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\tty.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\udp.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\util.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\winapi.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\win\winsock.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\fs-poll.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\idna.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\inet.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\random.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\strscpy.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\threadpool.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\timer.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\uv-common.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\uv-data-getter-setters.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\libuv-v1.x\src\version.c">
+      <Filter>3rd\libuv\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\command.cpp">
+      <Filter>3rd\redis++\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\command_options.cpp">
+      <Filter>3rd\redis++\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\connection.cpp">
+      <Filter>3rd\redis++\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\connection_pool.cpp">
+      <Filter>3rd\redis++\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\crc16.cpp">
+      <Filter>3rd\redis++\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\errors.cpp">
+      <Filter>3rd\redis++\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\pipeline.cpp">
+      <Filter>3rd\redis++\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\redis.cpp">
+      <Filter>3rd\redis++\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\redis_cluster.cpp">
+      <Filter>3rd\redis++\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\reply.cpp">
+      <Filter>3rd\redis++\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\sentinel.cpp">
+      <Filter>3rd\redis++\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\shards.cpp">
+      <Filter>3rd\redis++\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\shards_pool.cpp">
+      <Filter>3rd\redis++\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\subscriber.cpp">
+      <Filter>3rd\redis++\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\transaction.cpp">
+      <Filter>3rd\redis++\source</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\hiredis\alloc.c">
+      <Filter>3rd\hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\hiredis\async.c">
+      <Filter>3rd\hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\hiredis\dict.c">
+      <Filter>3rd\hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\hiredis\hiredis.c">
+      <Filter>3rd\hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\hiredis\net.c">
+      <Filter>3rd\hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\hiredis\read.c">
+      <Filter>3rd\hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\hiredis\sds.c">
+      <Filter>3rd\hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\hiredis\sockcompat.c">
+      <Filter>3rd\hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd\hiredis\test.c">
+      <Filter>3rd\hiredis</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

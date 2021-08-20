@@ -43,14 +43,14 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -125,11 +125,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>./3rd/yaml/include/;./3rd/spd/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./3rd/yaml/include/;./3rd/libuv-v1.x/include/;./3rd/libuv-v1.x/src;./3rd/;./3rd/redis-plus-plus-1.3.1/src/sw/redis++;./3rd/redis-plus-plus-1.3.1/src/sw/redis++/no_tls;./3rd/redis-plus-plus-1.3.1/src/sw/redis++/cxx17;./3rd/spd/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4100;4127;4201;4206;4210;4232;4456;4457;4459;4706;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,11 +142,12 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>./3rd/yaml/include/;./3rd/spd/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./3rd/yaml/include/;./3rd/libuv-v1.x/include/;./3rd/libuv-v1.x/src;./3rd/;./3rd/redis-plus-plus-1.3.1/src/sw/redis++;./3rd/redis-plus-plus-1.3.1/src/sw/redis++/no_tls;./3rd/redis-plus-plus-1.3.1/src/sw/redis++/cxx17;./3rd/spd/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4100;4127;4201;4206;4210;4232;4456;4457;4459;4706;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -155,6 +157,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="3rd\hiredis\alloc.h" />
+    <ClInclude Include="3rd\hiredis\async.h" />
+    <ClInclude Include="3rd\hiredis\async_private.h" />
+    <ClInclude Include="3rd\hiredis\dict.h" />
+    <ClInclude Include="3rd\hiredis\fmacros.h" />
+    <ClInclude Include="3rd\hiredis\hiredis.h" />
+    <ClInclude Include="3rd\hiredis\hiredis_ssl.h" />
+    <ClInclude Include="3rd\hiredis\net.h" />
+    <ClInclude Include="3rd\hiredis\read.h" />
+    <ClInclude Include="3rd\hiredis\sds.h" />
+    <ClInclude Include="3rd\hiredis\sdsalloc.h" />
+    <ClInclude Include="3rd\hiredis\sockcompat.h" />
+    <ClInclude Include="3rd\hiredis\win32.h" />
+    <ClInclude Include="3rd\libuv-v1.x\src\heap-inl.h" />
+    <ClInclude Include="3rd\libuv-v1.x\src\idna.h" />
+    <ClInclude Include="3rd\libuv-v1.x\src\queue.h" />
+    <ClInclude Include="3rd\libuv-v1.x\src\strscpy.h" />
+    <ClInclude Include="3rd\libuv-v1.x\src\uv-common.h" />
+    <ClInclude Include="3rd\libuv-v1.x\src\win\atomicops-inl.h" />
+    <ClInclude Include="3rd\libuv-v1.x\src\win\fs-fd-hash-inl.h" />
+    <ClInclude Include="3rd\libuv-v1.x\src\win\handle-inl.h" />
+    <ClInclude Include="3rd\libuv-v1.x\src\win\internal.h" />
+    <ClInclude Include="3rd\libuv-v1.x\src\win\req-inl.h" />
+    <ClInclude Include="3rd\libuv-v1.x\src\win\stream-inl.h" />
+    <ClInclude Include="3rd\libuv-v1.x\src\win\winapi.h" />
+    <ClInclude Include="3rd\libuv-v1.x\src\win\winsock.h" />
     <ClInclude Include="3rd\spd\include\spdlog\async.h" />
     <ClInclude Include="3rd\spd\include\spdlog\async_logger-inl.h" />
     <ClInclude Include="3rd\spd\include\spdlog\async_logger.h" />
@@ -321,6 +349,64 @@
     <ClInclude Include="singleton\singleton.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3rd\hiredis\alloc.c" />
+    <ClCompile Include="3rd\hiredis\async.c" />
+    <ClCompile Include="3rd\hiredis\dict.c" />
+    <ClCompile Include="3rd\hiredis\hiredis.c" />
+    <ClCompile Include="3rd\hiredis\net.c" />
+    <ClCompile Include="3rd\hiredis\read.c" />
+    <ClCompile Include="3rd\hiredis\sds.c" />
+    <ClCompile Include="3rd\hiredis\sockcompat.c" />
+    <ClCompile Include="3rd\hiredis\test.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\fs-poll.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\idna.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\inet.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\random.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\strscpy.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\threadpool.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\timer.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\uv-common.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\uv-data-getter-setters.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\version.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\core.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\detect-wakeup.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\dl.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\error.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\fs-event.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\fs.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\getaddrinfo.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\getnameinfo.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\handle.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\loop-watcher.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\pipe.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\poll.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\process-stdio.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\process.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\signal.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\snprintf.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\stream.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\tcp.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\thread.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\tty.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\udp.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\util.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\winapi.c" />
+    <ClCompile Include="3rd\libuv-v1.x\src\win\winsock.c" />
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\command.cpp" />
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\command_options.cpp" />
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\connection.cpp" />
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\connection_pool.cpp" />
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\crc16.cpp" />
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\errors.cpp" />
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\pipeline.cpp" />
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\redis.cpp" />
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\redis_cluster.cpp" />
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\reply.cpp" />
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\sentinel.cpp" />
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\shards.cpp" />
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\shards_pool.cpp" />
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\subscriber.cpp" />
+    <ClCompile Include="3rd\redis-plus-plus-1.3.1\src\sw\redis++\transaction.cpp" />
     <ClCompile Include="3rd\spd\src\async.cpp" />
     <ClCompile Include="3rd\spd\src\cfg.cpp" />
     <ClCompile Include="3rd\spd\src\color_sinks.cpp" />
