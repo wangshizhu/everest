@@ -66,11 +66,11 @@ namespace {
 				return;
 			}
 
-			auto start_time = std::chrono::high_resolution_clock::now();
+			auto start_time = std::chrono::steady_clock::now();
 
 			LOG_INFO << "Some text to log for thread: " << id;
 
-			auto stop_time = std::chrono::high_resolution_clock::now();
+			auto stop_time = std::chrono::steady_clock::now();
 
 			uint64_t time_us = std::chrono::duration_cast<std::chrono::microseconds>(stop_time - start_time).count();
 			result.push_back(time_us);
@@ -155,14 +155,14 @@ namespace {
 
 	void WriteLog()
 	{
-		auto start_time_application_total = std::chrono::high_resolution_clock::now();
+		auto start_time_application_total = std::chrono::steady_clock::now();
 
 		for (int i = 0; i < g_iterations; ++i)
 		{
 			LOG_INFO << "main log msg" << i;
 		}
 
-		auto stop_time_application_total = std::chrono::high_resolution_clock::now();
+		auto stop_time_application_total = std::chrono::steady_clock::now();
 
 		uint64_t total_time_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time_application_total - start_time_application_total).count();
 
@@ -174,7 +174,7 @@ namespace {
 		size_t number_of_threads = CMD_LINE_SINGLETON->Get<int>("production_thread_num");
 		std::vector<std::thread> all;
 
-		auto start_time_application_total = std::chrono::high_resolution_clock::now();
+		auto start_time_application_total = std::chrono::steady_clock::now();
 
 		for (int i = 0; i < number_of_threads; ++i)
 		{
@@ -186,7 +186,7 @@ namespace {
 			all[i].join();
 		}
 
-		auto stop_time_application_total = std::chrono::high_resolution_clock::now();
+		auto stop_time_application_total = std::chrono::steady_clock::now();
 
 		uint64_t total_time_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time_application_total - start_time_application_total).count();
 
@@ -217,7 +217,7 @@ namespace {
 		WriteToFile(filename_result, oss.str());
 
 
-		auto start_time_application_total = std::chrono::high_resolution_clock::now();
+		auto start_time_application_total = std::chrono::steady_clock::now();
 
 		for (uint64_t idx = 0; idx < number_of_threads; ++idx) 
 		{
@@ -229,7 +229,7 @@ namespace {
 			threads[idx].join();
 		}
 
-		auto stop_time_application_total = std::chrono::high_resolution_clock::now();
+		auto stop_time_application_total = std::chrono::steady_clock::now();
 
 		uint64_t total_time_in_us = std::chrono::duration_cast<std::chrono::microseconds>(stop_time_application_total - start_time_application_total).count();
 
