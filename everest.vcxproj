@@ -126,7 +126,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;SPDLOG_COMPILED_LIB;USE_LOCK_FREE_QUEUE</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>./3rd/yaml/include/;./3rd/libuv-v1.x/include/;./3rd/libuv-v1.x/src;./3rd/;./3rd/redis-plus-plus-1.3.1/src/sw/redis++;./3rd/redis-plus-plus-1.3.1/src/sw/redis++/no_tls;./3rd/redis-plus-plus-1.3.1/src/sw/redis++/cxx17;./3rd/spd/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -183,6 +183,7 @@
     <ClInclude Include="3rd\libuv-v1.x\src\win\stream-inl.h" />
     <ClInclude Include="3rd\libuv-v1.x\src\win\winapi.h" />
     <ClInclude Include="3rd\libuv-v1.x\src\win\winsock.h" />
+    <ClInclude Include="3rd\lock-free-queue\concurrentqueue.h" />
     <ClInclude Include="3rd\spd\include\spdlog\async.h" />
     <ClInclude Include="3rd\spd\include\spdlog\async_logger-inl.h" />
     <ClInclude Include="3rd\spd\include\spdlog\async_logger.h" />

@@ -59,6 +59,9 @@
     <Filter Include="3rd\redis++\source">
       <UniqueIdentifier>{89248698-157e-4d2d-b341-3a0c9331e8ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rd\lock-free-queue">
+      <UniqueIdentifier>{0ee2675f-b2ac-480f-8ab6-a59a8bf13aca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="calculator\safe_integral_calculator.h">
@@ -630,6 +633,9 @@
     </ClInclude>
     <ClInclude Include="3rd\hiredis\win32.h">
       <Filter>3rd\hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\lock-free-queue\concurrentqueue.h">
+      <Filter>3rd\lock-free-queue</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
