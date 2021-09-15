@@ -25,7 +25,9 @@ class mpmc_blocking_queue
 public:
     using item_type = T;
     explicit mpmc_blocking_queue(size_t max_items)
-#ifndef USE_LOCK_FREE_QUEUE  
+#ifdef USE_LOCK_FREE_QUEUE  
+        : queue_(max_items)
+#else
         : q_(max_items)
 #endif
     {}
