@@ -637,6 +637,12 @@
     <ClInclude Include="3rd\lock-free-queue\concurrentqueue.h">
       <Filter>3rd\lock-free-queue</Filter>
     </ClInclude>
+    <ClInclude Include="3rd\lock-free-queue\blockingconcurrentqueue.h">
+      <Filter>3rd\lock-free-queue</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\lock-free-queue\lightweightsemaphore.h">
+      <Filter>3rd\lock-free-queue</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cmd_line\command_line_parser.cpp">

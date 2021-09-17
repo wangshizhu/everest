@@ -183,7 +183,9 @@
     <ClInclude Include="3rd\libuv-v1.x\src\win\stream-inl.h" />
     <ClInclude Include="3rd\libuv-v1.x\src\win\winapi.h" />
     <ClInclude Include="3rd\libuv-v1.x\src\win\winsock.h" />
+    <ClInclude Include="3rd\lock-free-queue\blockingconcurrentqueue.h" />
     <ClInclude Include="3rd\lock-free-queue\concurrentqueue.h" />
+    <ClInclude Include="3rd\lock-free-queue\lightweightsemaphore.h" />
     <ClInclude Include="3rd\spd\include\spdlog\async.h" />
     <ClInclude Include="3rd\spd\include\spdlog\async_logger-inl.h" />
     <ClInclude Include="3rd\spd\include\spdlog\async_logger.h" />
