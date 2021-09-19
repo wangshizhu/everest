@@ -29,40 +29,44 @@ namespace everest
 		return MakeSequenceByType(std::move(t), std::make_index_sequence<sizeof(T::get()) - 1>());
 	}
 
+	void GetSinksByLoggerCreateInfo(std::vector<spdlog::sink_ptr>& sinks, const std::string& logger_name,const LoggerCreateInfo& info)
+	{
+		// 是否输出到控制台
+		if (info.to_stdout)
+		{
+			sinks.push_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
+		}
+
+		if (info.daily && info.rotate)
+		{
+			auto daily_sink = std::make_shared<spdlog::sinks::daily_rotating_file_sink_mt>(logger_name, info.log_file_size, 0, 0, false);
+			sinks.push_back(daily_sink);
+		}
+		else
+		{
+			// 每天固定时间产生新log文件
+			if (info.daily)
+			{
+				auto daily_sink = std::make_shared<spdlog::sinks::daily_file_sink_mt>(logger_name, 0, 0, false);
+				sinks.push_back(daily_sink);
+			}
+
+			// 按照文件大小产生新log文件
+			if (info.rotate)
+			{
+				auto rotating_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(logger_name, info.log_file_size, 3);
+				sinks.push_back(rotating_sink);
+			}
+		}
+	}
+
 	template<class T>
 	struct AsyncLoggerFactory
 	{
 		AsyncLoggerFactory(const std::string& logger_name,const LoggerCreateInfo& info)
 		{
 			std::vector<spdlog::sink_ptr> sinks;
-
-			// 是否输出到控制台
-			if (info.to_stdout)
-			{
-				sinks.push_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
-			}
-
-			if (info.daily && info.rotate)
-			{
-				auto daily_sink = std::make_shared<spdlog::sinks::daily_rotating_file_sink_mt>(logger_name, info.log_file_size, 0, 0, false);
-				sinks.push_back(daily_sink);
-			}
-			else
-			{
-				// 每天固定时间产生新log文件
-				if (info.daily)
-				{
-					auto daily_sink = std::make_shared<spdlog::sinks::daily_file_sink_mt>(logger_name, 0, 0, false);
-					sinks.push_back(daily_sink);
-				}
-
-				// 按照文件大小产生新log文件
-				if (info.rotate)
-				{
-					auto rotating_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(logger_name, info.log_file_size, 3);
-					sinks.push_back(rotating_sink);
-				}
-			}
+			GetSinksByLoggerCreateInfo(sinks,logger_name,info);
 
 			auto& registry_inst = spdlog::details::registry::instance();
 
@@ -88,8 +92,28 @@ namespace everest
 	{
 		static AsyncLoggerFactory<T> logger(logger_name, info);
 	}
-}
 
+	template<class T>
+	struct SyncLoggerFactory
+	{
+		SyncLoggerFactory(const std::string& logger_name, const LoggerCreateInfo& info)
+		{
+			std::vector<spdlog::sink_ptr> sinks;
+			GetSinksByLoggerCreateInfo(sinks, logger_name, info);
+
+			auto logger = std::make_shared<spdlog::logger>(logger_name, sinks.begin(), sinks.end());
+			logger->set_level(info.level);
+
+			spdlog::register_logger(logger);
+		}
+	};
+
+	template<class T>
+	void CreateSyncLogger(const std::string& logger_name, const LoggerCreateInfo& info)
+	{
+		static SyncLoggerFactory<T> logger(logger_name, info);
+	}
+}
 
 #define STRING_LITERAL_TO_SEQUENCE(s) \
     (everest::MakeIndexSequenceImpl([] { \
@@ -103,13 +127,26 @@ auto result = STRING_LITERAL_TO_SEQUENCE(LOGGER_NAME); \
 everest::CreateAsyncLogger<decltype(result)>(std::string(LOGGER_NAME),LOGGER_CREATE_INFO);\
 }\
 
+#define CREATE_LOGGER(LOGGER_NAME,LOGGER_CREATE_INFO)\
+{\
+	auto result = STRING_LITERAL_TO_SEQUENCE(LOGGER_NAME); \
+	if (LOGGER_CREATE_INFO.async_logger)\
+	{\
+		everest::CreateAsyncLogger<decltype(result)>(std::string(LOGGER_NAME), LOGGER_CREATE_INFO); \
+	}\
+	else\
+	{\
+		everest::CreateSyncLogger<decltype(result)>(std::string(LOGGER_NAME), LOGGER_CREATE_INFO); \
+	}\
+}\
+
 #define CREATE_LOGGER_IF_NULL(LOGGER_NAME,LEVEL,...)\
 {\
 auto&& logger = spdlog::get(LOGGER_NAME);\
 if(nullptr == logger)\
 {\
 auto&& info = spdlog::details::registry::instance().get_logger_create_info();\
-CREATE_ASYNC_LOGGER(LOGGER_NAME,info);\
+CREATE_LOGGER(LOGGER_NAME,info);\
 logger = spdlog::get(LOGGER_NAME);\
 }\
 logger->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, LEVEL, __VA_ARGS__);\
@@ -122,12 +159,11 @@ logger->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, LEVEL, __VA
 
 #define CREATE_DEFAULT_LOGGER(LOGGER_NAME,LOGGER_CREATE_INFO) \
 {\
-auto result = STRING_LITERAL_TO_SEQUENCE(LOGGER_NAME); \
-everest::CreateAsyncLogger<decltype(result)>(std::string(LOGGER_NAME),LOGGER_CREATE_INFO);\
+spdlog::details::registry::instance().set_logger_create_info(LOGGER_CREATE_INFO);\
+CREATE_LOGGER(LOGGER_NAME,LOGGER_CREATE_INFO);\
 auto&& logger = spdlog::get(LOGGER_NAME);\
 spdlog::set_default_logger(logger);\
 spdlog::set_level(LOGGER_CREATE_INFO.level);\
-spdlog::details::registry::instance().set_logger_create_info(LOGGER_CREATE_INFO);\
 }\
 
 #define NAMED_LOG_INFO(name,...) \

@@ -48,11 +48,16 @@ namespace {
 	{
 		CMD_LINE_SINGLETON->Add<int>("production_thread_num", 'p', "product log thread num", false, 1);
 
+		CMD_LINE_SINGLETON->Add<int>("consumer_thread_num",'c',"consumer log thread num",false,1);
+
 		CMD_LINE_SINGLETON->Add<int>("production_model", 'm',
 			"produce log model,0 is that single thread produce consistent num log,1 is that all production thread produce consistent num log", false, 0);
 
 		CMD_LINE_SINGLETON->Add<int>("production_log_num", 'l',
 			"product log num,when is 0 model that mean single thread produce log num,when is 1 model that mean all production thread produce log num", false, 100000);
+
+		CMD_LINE_SINGLETON->Add<bool>("async_model",'a',
+			"product log message as async model,consumer_thread_num is invalid when async model",false,true);
 
 		CMD_LINE_SINGLETON->AddWithoutValueCommand("help", '?', "show usage");
 	}
@@ -185,6 +190,7 @@ namespace {
 	void TestForModel1()
 	{
 		size_t number_of_threads = CMD_LINE_SINGLETON->Get<int>("production_thread_num");
+		bool async_model = CMD_LINE_SINGLETON->Get<bool>("async_model");
 
 		std::vector<std::thread> threads(number_of_threads);
 		std::map<size_t, std::vector<uint64_t>> threads_result;
@@ -195,7 +201,9 @@ namespace {
 			threads_result[idx].reserve(g_iterations);
 		}
 
-		auto filename_result = fmt::format("test.result_spd_{}.csv",g_iterations);
+		auto filename_result = fmt::format("test.result_spd_{}_{}.csv",
+			g_iterations,
+			async_model ? "async_model" : "sync_model");
 
 		std::ostringstream oss;
 		oss << "Using " << number_of_threads;
@@ -244,6 +252,7 @@ int main(int argc, char** argv)
 		info.level = spdlog::level::info;
 		info.rotate = false;
 		info.to_stdout = false;
+		info.async_logger = CMD_LINE_SINGLETON->Get<bool>("async_model");
 		
 		CREATE_DEFAULT_LOGGER("test_spd", info);
 
