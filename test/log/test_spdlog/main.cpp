@@ -28,8 +28,18 @@ namespace spd = spdlog;
 namespace {
 	uint64_t g_iterations{ 1000000 };
 
-
 	std::atomic<size_t> g_counter = { 0 };
+
+	std::string GetSaveTestResultFileName()
+	{
+		bool async_model = CMD_LINE_SINGLETON->Get<bool>("async_model");
+		const std::string& exe_name = CMD_LINE_SINGLETON->GetProgramName();
+
+		return fmt::format("{}_result_{}_{}.csv",
+			exe_name,
+			g_iterations,
+			async_model ? "async_model" : "sync_model");
+	}
 
 	void WriteToFile(std::string result_filename, std::string content) {
 
@@ -42,6 +52,17 @@ namespace {
 		}
 		out << content << std::flush;
 		std::cout << content;
+	}
+
+	void WriteResultHeadToFile()
+	{
+		auto&& result_file_name = GetSaveTestResultFileName();
+		size_t production_thread_num = CMD_LINE_SINGLETON->Get<int>("production_thread_num");
+
+		std::ostringstream oss;
+		oss << "Using " << production_thread_num;
+		oss << " to log in total " << g_iterations << " log entries to " << result_file_name << std::endl;
+		WriteToFile(result_file_name, oss.str());
 	}
 
 	void AddCmdLineParam()
@@ -79,7 +100,6 @@ namespace {
 		}
 	}
 
-
 	void   PrintStats(const std::string& filename, const std::map<size_t, std::vector<uint64_t>>& threads_result, const uint64_t total_time_in_us) {
 
 		size_t idx = 0;
@@ -89,15 +109,22 @@ namespace {
 			oss << idx++ << " the worst thread latency was:" << worstUs / uint64_t(1000) << " ms  (" << worstUs << " us)] " << std::endl;
 		}
 
-
 		oss << "Total time :" << total_time_in_us / uint64_t(1000) << " ms (" << total_time_in_us
 			<< " us)" << std::endl;
-		oss << "Average time: " << double(total_time_in_us) / double(g_iterations) << " us" << std::endl;
+
+		int model = CMD_LINE_SINGLETON->Get<int>("production_model");
+		size_t number_of_threads = CMD_LINE_SINGLETON->Get<int>("production_thread_num");
+		if (model == 0)
+		{
+			oss << "Average time: " << double(total_time_in_us) / double((g_iterations * number_of_threads)) << " us" << std::endl;
+		}
+		else
+		{
+			oss << "Average time: " << double(total_time_in_us) / double(g_iterations) << " us" << std::endl;
+		}
 		WriteToFile(filename, oss.str());
 
 	}
-
-
 
 	void SaveResultToBucketFile(std::string result_filename, const std::map<size_t, std::vector<uint64_t>>& threads_result) {
 		// now split the result in buckets of 1ms each so that it's obvious how the peaks go
@@ -141,87 +168,72 @@ namespace {
 		std::cout << "microsecond bucket result is in file: " << result_filename << std::endl;
 	}
 
-	void WriteLog()
+	void WriteLog(const size_t id,std::vector<uint64_t>& result)
 	{
 		auto start_time_application_total = std::chrono::steady_clock::now();
 
 		for (int i = 0; i < g_iterations; ++i)
 		{
-			//SPDLOG_LOGGER_CALL(logger, spdlog::level::info, "Some text to log for thread: {}", i);
+			auto start_time = std::chrono::steady_clock::now();
+
 			NAMED_LOG_INFO("test", "Some text to log for thread: {}", i);
-			LOG_DEBUG("debug message {}",i);
-			//logger->info("Some text to log for thread: {}", i);
+			//LOG_DEBUG("debug message {}",i);
+
+			auto stop_time = std::chrono::steady_clock::now();
+
+			uint64_t time_us = std::chrono::duration_cast<std::chrono::microseconds>(stop_time - start_time).count();
+			result.push_back(time_us);
 		}
 
 		auto stop_time_application_total = std::chrono::steady_clock::now();
 
 		uint64_t total_time_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time_application_total - start_time_application_total).count();
 
-		std::cout << "thread id:" << std::this_thread::get_id() << " total time: " << total_time_in_ms << "ms" << std::endl;
+		std::ostringstream oss;
+		oss << "\n thread:" << id << " cost total ms:" << total_time_in_ms<< std::endl;
+
+		auto&& result_file_name = GetSaveTestResultFileName();
+		WriteToFile(result_file_name, oss.str());
 	}
 
-	void TestForModel0()
+	void Test()
 	{
 		size_t number_of_threads = CMD_LINE_SINGLETON->Get<int>("production_thread_num");
-		std::vector<std::thread> all;
-
-		auto start_time_application_total = std::chrono::steady_clock::now();
-
-		for (int i = 0; i < number_of_threads; ++i)
-		{
-			all.push_back(std::thread(WriteLog));
-		}
-
-		for (int i = 0; i < number_of_threads; i++)
-		{
-			all[i].join();
-		}
-
-		auto stop_time_application_total = std::chrono::steady_clock::now();
-
-		uint64_t total_time_in_ms = std::chrono::duration_cast<std::chrono::milliseconds>(stop_time_application_total - start_time_application_total).count();
-
-		std::cout << "model 0,total time: " << total_time_in_ms << "ms" << std::endl;
-		// crash
-		/*std::vector<int> v;
-		v[0] = 5;*/
-	}
-
-	void TestForModel1()
-	{
-		size_t number_of_threads = CMD_LINE_SINGLETON->Get<int>("production_thread_num");
-		bool async_model = CMD_LINE_SINGLETON->Get<bool>("async_model");
 
 		std::vector<std::thread> threads(number_of_threads);
 		std::map<size_t, std::vector<uint64_t>> threads_result;
 
-		for (size_t idx = 0; idx < number_of_threads; ++idx) {
-			// reserve to 1 million for all the result
-			// it's a test so  let's not care about the wasted space
+		for (size_t idx = 0; idx < number_of_threads; ++idx) 
+		{
 			threads_result[idx].reserve(g_iterations);
 		}
 
-		auto filename_result = fmt::format("test.result_spd_{}_{}.csv",
-			g_iterations,
-			async_model ? "async_model" : "sync_model");
+		WriteResultHeadToFile();
 
-		std::ostringstream oss;
-		oss << "Using " << number_of_threads;
-		oss << " to log in total " << g_iterations << " log entries to " << filename_result << std::endl;
-		WriteToFile(filename_result, oss.str());
-
+		int model = CMD_LINE_SINGLETON->Get<int>("production_model");
 
 		auto start_time_application_total = std::chrono::steady_clock::now();
-		for (uint64_t idx = 0; idx < number_of_threads; ++idx) {
-			threads[idx] = std::thread(MeasurePeakDuringLogWrites, idx, std::ref(threads_result[idx]));
+		for (uint64_t idx = 0; idx < number_of_threads; ++idx) 
+		{
+			if (model == 0)
+			{
+				threads[idx] = std::thread(WriteLog, idx, std::ref(threads_result[idx]));
+			}
+			else
+			{
+				threads[idx] = std::thread(MeasurePeakDuringLogWrites, idx, std::ref(threads_result[idx]));
+			}
 		}
+
 		for (size_t idx = 0; idx < number_of_threads; ++idx) {
 			threads[idx].join();
 		}
+
 		auto stop_time_application_total = std::chrono::steady_clock::now();
 
 		uint64_t total_time_in_us = std::chrono::duration_cast<std::chrono::microseconds>(stop_time_application_total - start_time_application_total).count();
 
+		auto&& filename_result = GetSaveTestResultFileName();
 		PrintStats(filename_result, threads_result, total_time_in_us);
 		SaveResultToBucketFile(filename_result, threads_result);
 	}
@@ -256,15 +268,7 @@ int main(int argc, char** argv)
 		
 		CREATE_DEFAULT_LOGGER("test_spd", info);
 
-		int model = CMD_LINE_SINGLETON->Get<int>("production_model");
-		if (model == 0)
-		{
-			TestForModel0();
-		}
-		else
-		{
-			TestForModel1();
-		}
+		Test();
 	}
 
 	//system("pause");
