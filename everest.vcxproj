@@ -129,7 +129,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>./3rd/yaml/include/;./3rd/libuv-v1.x/include/;./3rd/libuv-v1.x/src;./3rd/;./3rd/redis-plus-plus-1.3.1/src/sw/redis++;./3rd/redis-plus-plus-1.3.1/src/sw/redis++/no_tls;./3rd/redis-plus-plus-1.3.1/src/sw/redis++/cxx17;./3rd/spd/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./3rd/yaml/include/;./3rd/libuv-v1.x/include/;./3rd/libuv-v1.x/src;./3rd/;./3rd/redis-plus-plus-1.3.1/src/sw/redis++;./3rd/redis-plus-plus-1.3.1/src/sw/redis++/no_tls;./3rd/redis-plus-plus-1.3.1/src/sw/redis++/cxx17;./3rd/spd/include/;./3rd/byte-order/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4100;4127;4201;4206;4210;4232;4456;4457;4459;4706;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -157,6 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="3rd\byte-order\byte_order.h" />
     <ClInclude Include="3rd\hiredis\alloc.h" />
     <ClInclude Include="3rd\hiredis\async.h" />
     <ClInclude Include="3rd\hiredis\async_private.h" />

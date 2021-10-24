@@ -62,6 +62,9 @@
     <Filter Include="3rd\lock-free-queue">
       <UniqueIdentifier>{0ee2675f-b2ac-480f-8ab6-a59a8bf13aca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rd\byte-order">
+      <UniqueIdentifier>{6231ff5d-27da-4b85-8a64-66e549a1ebc9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="calculator\safe_integral_calculator.h">
@@ -642,6 +645,9 @@
     </ClInclude>
     <ClInclude Include="3rd\lock-free-queue\lightweightsemaphore.h">
       <Filter>3rd\lock-free-queue</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\byte-order\byte_order.h">
+      <Filter>3rd\byte-order</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
