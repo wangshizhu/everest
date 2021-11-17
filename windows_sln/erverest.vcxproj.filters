@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="singleton">
+      <UniqueIdentifier>{64aaa33e-b7d8-4d0b-9dcd-e4753746138f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="non_copyable">
+      <UniqueIdentifier>{84f2f419-b8e3-4610-be9c-bbe6ce5cf4a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="multi_producer_multi_consumer">
+      <UniqueIdentifier>{71dd2edc-e620-4d3d-8b76-800d14415847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="format">
+      <UniqueIdentifier>{321befa9-a4f6-4a7e-af9d-e28a12b5f64c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cmd_line">
+      <UniqueIdentifier>{fb179446-9f56-44ab-826e-ace423bb8305}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="calculator">
+      <UniqueIdentifier>{3b5f89b6-4df3-47ae-9ad5-2c9583fe7a09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd">
+      <UniqueIdentifier>{1ef1650f-30a7-492f-ad51-f74b97ab2c89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\byte-order">
+      <UniqueIdentifier>{977d9b1d-17ff-4561-b57e-16667aa55aae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\lock-free-queue">
+      <UniqueIdentifier>{994005b0-a96f-4703-8a54-d6ea40df469b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\everest\singleton\singleton.h">
+      <Filter>singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\non_copyable\non_copyable.h">
+      <Filter>non_copyable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\multi_producer_multi_consumer\circular_queue.h">
+      <Filter>multi_producer_multi_consumer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\multi_producer_multi_consumer\move_on_copy.h">
+      <Filter>multi_producer_multi_consumer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\multi_producer_multi_consumer\multi_producer_multi_consumer.h">
+      <Filter>multi_producer_multi_consumer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\format\core.h">
+      <Filter>format</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\format\format.h">
+      <Filter>format</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\format\format-inl.h">
+      <Filter>format</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\cmd_line\cmdline.h">
+      <Filter>cmd_line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\cmd_line\command_line_parser.h">
+      <Filter>cmd_line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\calculator\safe_integral_calculator.h">
+      <Filter>calculator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\byte-order\byte_order.h">
+      <Filter>3rd\byte-order</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\lock-free-queue\blockingconcurrentqueue.h">
+      <Filter>3rd\lock-free-queue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\lock-free-queue\concurrentqueue.h">
+      <Filter>3rd\lock-free-queue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\lock-free-queue\lightweightsemaphore.h">
+      <Filter>3rd\lock-free-queue</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\everest\format\format.cc">
+      <Filter>format</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\cmd_line\command_line_parser.cpp">
+      <Filter>cmd_line</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
