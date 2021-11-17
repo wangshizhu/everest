@@ -4,7 +4,6 @@
 *.log
 *.tlog
 *.obj
-*.txt
 *.suo
 *.user
 *.ncb
