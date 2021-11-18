@@ -15,17 +15,16 @@ ADD_DEFINITIONS ( -std=c++1z)
 # ---------------------------------------------------------------------------------------
 # option
 # ---------------------------------------------------------------------------------------
-OPTION(BUILD_YAML "build yaml that is yaml-cpp of jbeder" ON)
-OPTION(BUILD_SPDLOG "build spdlog" ON)
+OPTION(BUILD_YAML "build yaml that is yaml-cpp of jbeder" OFF)
+OPTION(BUILD_SPDLOG "build spdlog" OFF)
 OPTION(BUILD_PROTOBUF "build protobuf" OFF)
+OPTION(BUILD_REDISPLUS "build redis-plus-plus" ON)
 
 # ---------------------------------------------------------------------------------------
 # yaml
 # ---------------------------------------------------------------------------------------
 if (BUILD_YAML)
     add_subdirectory(${PROJECT_SOURCE_DIR}/3rd/yaml)
-        # INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/yaml/include)
-        # AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/3rd/yaml/src src_list)
 endif(BUILD_YAML)
 
 # ---------------------------------------------------------------------------------------
@@ -43,6 +42,14 @@ endif(BUILD_SPDLOG)
 if (BUILD_PROTOBUF)
     add_subdirectory(${PROJECT_SOURCE_DIR}/3rd/protobuf-3.18.0/cmake)
 endif(BUILD_PROTOBUF)
+
+# ---------------------------------------------------------------------------------------
+# redis-plus-plus
+# ---------------------------------------------------------------------------------------
+if (BUILD_REDISPLUS)
+    add_subdirectory(${PROJECT_SOURCE_DIR}/3rd/hiredis)
+    add_subdirectory(${PROJECT_SOURCE_DIR}/3rd/redis-plus-plus-1.3.1)
+endif(BUILD_REDISPLUS)
 
 # ---------------------------------------------------------------------------------------
 # everest source code
