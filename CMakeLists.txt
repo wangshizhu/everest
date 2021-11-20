@@ -48,6 +48,7 @@ endif(BUILD_PROTOBUF)
 # ---------------------------------------------------------------------------------------
 if (BUILD_REDISPLUS)
     add_subdirectory(${PROJECT_SOURCE_DIR}/3rd/hiredis)
+    add_subdirectory(${PROJECT_SOURCE_DIR}/3rd/libuv-v1.x)
     add_subdirectory(${PROJECT_SOURCE_DIR}/3rd/redis-plus-plus-1.3.1)
 endif(BUILD_REDISPLUS)
 
