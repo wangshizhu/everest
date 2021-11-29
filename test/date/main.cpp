@@ -13,8 +13,17 @@ int main()
 		auto today = everest::TimeCapsule::TodayZeroClock();
 		std::cout << "today:" << today << std::endl;
 
+		auto that_day = everest::TimeCapsule::ThatDayTimePoint(now,10);
+		std::cout << "that_day:" << that_day << std::endl;
+
 		auto&& monday = everest::TimeCapsule::ThisWeekMondayZeroClock();
 		std::cout << "monday:" << monday << std::endl;
+
+		auto&& prev_monday = everest::TimeCapsule::PrevWeekDayTimePoint(1,10);
+		std::cout << "prev_monday:" << prev_monday << std::endl;
+
+		auto&& next_monday = everest::TimeCapsule::NextWeekDayTimePoint(1, 10);
+		std::cout << "next_monday:" << next_monday << std::endl;
 
 		// 02:02:02
 		auto&& that_time_point = everest::TimeCapsule::TodayTimePoint(1, 61, 61);

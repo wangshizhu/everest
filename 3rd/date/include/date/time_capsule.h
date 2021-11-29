@@ -23,10 +23,15 @@ public:
 
 	static uint64_t TodayZeroClock() noexcept
 	{
-		auto&& fixed_seconds = GetFixedSeconds(Now());
-		auto&& today = SecondsToSystemDays(fixed_seconds);
+		return ThatDayTimePoint(Now());
+	}
 
-		return SystemTimeToSeconds(today) - GetTimeZoneSeconds();
+	static uint64_t ThatDayTimePoint(uint64_t src, uint8_t h = 0, uint8_t m = 0, uint8_t s = 0) noexcept
+	{
+		auto&& fixed_seconds = GetFixedSeconds(src);
+		auto&& that_day = SecondsToSystemDays(fixed_seconds);
+
+		return SystemTimeToSeconds(that_day) - GetTimeZoneSeconds() + HoursToSeconds(h) + MinutesToSeconds(m) + s;
 	}
 
 	static uint64_t ThisWeekMondayZeroClock() noexcept
@@ -84,6 +89,29 @@ public:
 		auto&& dest_days = date::year_month_weekday(SecondsToSystemDays(fixed_dest));
 
 		return src_days == dest_days;
+	}
+
+	// format: 2021-11-29-22-00-00
+	static std::string FormatTimePoint(uint64_t s)
+	{
+		return "";
+	}
+
+	// format: 2021-11-29
+	static std::string FormatTimePointToYearMonthDay(uint64_t s)
+	{
+		return "";
+	}
+
+	// format: 22-00-00
+	static std::string FormatTimePointToHourMinuteSecond(uint64_t s)
+	{
+		return "";
+	}
+
+	static uint64_t MakeTimePoint(const char* format_time)
+	{
+		return 0;
 	}
 
 	static int64_t WeeksToSeconds(int32_t w = 1) noexcept
