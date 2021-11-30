@@ -54,15 +54,6 @@
     <ClInclude Include="..\everest\multi_producer_multi_consumer\multi_producer_multi_consumer.h">
       <Filter>multi_producer_multi_consumer</Filter>
     </ClInclude>
-    <ClInclude Include="..\everest\format\core.h">
-      <Filter>format</Filter>
-    </ClInclude>
-    <ClInclude Include="..\everest\format\format.h">
-      <Filter>format</Filter>
-    </ClInclude>
-    <ClInclude Include="..\everest\format\format-inl.h">
-      <Filter>format</Filter>
-    </ClInclude>
     <ClInclude Include="..\everest\cmd_line\cmdline.h">
       <Filter>cmd_line</Filter>
     </ClInclude>
@@ -117,16 +108,25 @@
     <ClInclude Include="..\3rd\date\include\date\time_capsule.h">
       <Filter>3rd\date\include</Filter>
     </ClInclude>
+    <ClInclude Include="..\everest\format\core.h">
+      <Filter>format</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\format\format.h">
+      <Filter>format</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\format\format-inl.h">
+      <Filter>format</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\everest\format\format.cc">
-      <Filter>format</Filter>
-    </ClCompile>
     <ClCompile Include="..\everest\cmd_line\command_line_parser.cpp">
       <Filter>cmd_line</Filter>
     </ClCompile>
     <ClCompile Include="..\3rd\date\src\tz.cpp">
       <Filter>3rd\date\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\format\format.cc">
+      <Filter>format</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

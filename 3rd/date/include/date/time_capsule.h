@@ -5,6 +5,7 @@
 #include <stdint.h>
 
 #include "date/date.h"
+#include "format/format.h"
 
 #define NAMESPACE_HEADER namespace everest{
 #define NAMESPACE_TAIL }
@@ -29,18 +30,7 @@ public:
 		return SystemTimeToSeconds(that_day) - GetTimeZoneSeconds() + HoursToSeconds(h) + MinutesToSeconds(m) + s;
 	}
 
-	static uint64_t ThisWeekMondayZeroClock() noexcept
-	{
-		auto&& fixed_seconds = GetFixedSeconds(Now());
-		auto&& today = SecondsToSystemDays(fixed_seconds);
-		auto&& this_weekday = date::year_month_weekday(today);
-		auto&& week_monday = date::weekday_indexed(date::Monday, this_weekday.index());
-		auto&& that_day = date::year_month_weekday(this_weekday.year(), this_weekday.month(), week_monday);
-
-		return SystemTimeToSeconds(date::sys_days(that_day)) - GetTimeZoneSeconds();
-	}
-
-	static uint64_t PrevWeekDayTimePoint(uint8_t week_day = 1, uint8_t h = 0, uint8_t m = 0, uint8_t s = 0) noexcept
+	static uint64_t WeekDayFromThisWeekOffset(int8_t offset_weeks = 0, uint8_t week_day = 1, uint8_t h = 0, uint8_t m = 0, uint8_t s = 0) noexcept
 	{
 		if (week_day == 0)
 		{
@@ -48,22 +38,9 @@ public:
 		}
 
 		auto&& this_monday = ThisWeekMondayZeroClock();
-		auto&& prev_monday = this_monday - WeeksToSeconds(1);
+		auto&& that_monday = this_monday + WeeksToSeconds(offset_weeks);
 
-		return prev_monday + DaysToSeconds(week_day - 1) + HoursToSeconds(h) + MinutesToSeconds(m) + s;
-	}
-
-	static uint64_t NextWeekDayTimePoint(uint8_t week_day = 1, uint8_t h = 0, uint8_t m = 0, uint8_t s = 0) noexcept
-	{
-		if (week_day == 0)
-		{
-			week_day = 7;
-		}
-
-		auto&& this_monday = ThisWeekMondayZeroClock();
-		auto&& next_monday = this_monday + WeeksToSeconds(1);
-
-		return next_monday + DaysToSeconds(week_day - 1) + HoursToSeconds(h) + MinutesToSeconds(m) + s;
+		return that_monday + DaysToSeconds(week_day - 1) + HoursToSeconds(h) + MinutesToSeconds(m) + s;
 	}
 
 	static uint64_t TodayTimePoint(uint8_t h = 0, uint8_t m = 0, uint8_t s = 0) noexcept
@@ -89,19 +66,29 @@ public:
 	// format: 2021-11-29-22-00-00
 	static std::string FormatTimePoint(uint64_t s)
 	{
-		return "";
+		return fmt::format("{}-{}", FormatTimePointToYearMonthDay(s), FormatTimePointToHourMinuteSecond(s));
 	}
 
 	// format: 2021-11-29
 	static std::string FormatTimePointToYearMonthDay(uint64_t s)
 	{
-		return "";
+		auto&& fixed_second = GetFixedSeconds(s);
+		auto&& system_days = SecondsToSystemDays(fixed_second);
+		auto&& ymd = date::year_month_day(system_days);
+
+		return fmt::format("{}-{}-{}",int32_t(ymd.year()),uint32_t(ymd.month()),uint32_t(ymd.day()));
 	}
 
 	// format: 22-00-00
 	static std::string FormatTimePointToHourMinuteSecond(uint64_t s)
 	{
-		return "";
+		auto&& fixed_second = GetFixedSeconds(s);
+		auto&& system_days = SecondsToSystemDays(fixed_second);
+		auto&& ymd_seconds = SystemTimeToSeconds(system_days) - GetTimeZoneSeconds();
+		auto&& diff = s - ymd_seconds;
+		auto&& hms = date::time_of_day<std::chrono::seconds>(std::chrono::seconds(diff));
+
+		return fmt::format("{}-{}-{}",hms.hours().count(),hms.minutes().count(),hms.seconds().count());
 	}
 
 	static uint64_t MakeTimePoint(const char* format_time)
@@ -130,6 +117,17 @@ public:
 	}
 
 private:
+
+	static uint64_t ThisWeekMondayZeroClock() noexcept
+	{
+		auto&& fixed_seconds = GetFixedSeconds(Now());
+		auto&& today = SecondsToSystemDays(fixed_seconds);
+		auto&& this_weekday = date::year_month_weekday(today);
+		auto&& week_monday = date::weekday_indexed(date::Monday, this_weekday.index());
+		auto&& that_day = date::year_month_weekday(this_weekday.year(), this_weekday.month(), week_monday);
+
+		return SystemTimeToSeconds(date::sys_days(that_day)) - GetTimeZoneSeconds();
+	}
 
 	template<class T>
 	static uint64_t SystemTimeToSeconds(const std::chrono::time_point<std::chrono::system_clock,T>& src) noexcept
