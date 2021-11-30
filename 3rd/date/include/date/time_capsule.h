@@ -21,11 +21,6 @@ public:
 		return SystemTimeToSeconds(std::chrono::system_clock::now());
 	}
 
-	static uint64_t TodayZeroClock() noexcept
-	{
-		return ThatDayTimePoint(Now());
-	}
-
 	static uint64_t ThatDayTimePoint(uint64_t src, uint8_t h = 0, uint8_t m = 0, uint8_t s = 0) noexcept
 	{
 		auto&& fixed_seconds = GetFixedSeconds(src);
@@ -71,9 +66,9 @@ public:
 		return next_monday + DaysToSeconds(week_day - 1) + HoursToSeconds(h) + MinutesToSeconds(m) + s;
 	}
 
-	static uint64_t TodayTimePoint(uint8_t h, uint8_t m, uint8_t s) noexcept
+	static uint64_t TodayTimePoint(uint8_t h = 0, uint8_t m = 0, uint8_t s = 0) noexcept
 	{
-		return TodayZeroClock() + HoursToSeconds(h) + MinutesToSeconds(m) + s;
+		return ThatDayTimePoint(Now(),h,m,s);
 	}
 
 	static bool IsSameDay(uint64_t src, uint64_t dest) noexcept

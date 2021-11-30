@@ -10,7 +10,7 @@ int main()
 		auto now = everest::TimeCapsule::Now();
 		std::cout << "now:" << now << std::endl;
 
-		auto today = everest::TimeCapsule::TodayZeroClock();
+		auto today = everest::TimeCapsule::TodayTimePoint();
 		std::cout << "today:" << today << std::endl;
 
 		auto that_day = everest::TimeCapsule::ThatDayTimePoint(now,10);
