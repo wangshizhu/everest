@@ -2,6 +2,8 @@
 #include <chrono>
 #include <time.h>
 #include "date/time_capsule.h"
+#include "fmt/format.h"
+#include "fmt/chrono.h"
 
 int main()
 {
@@ -15,6 +17,8 @@ int main()
 
 		auto that_day = everest::TimeCapsule::ThatDayTimePoint(now,10);
 		std::cout << "that_day:" << that_day << std::endl;
+
+		std::cout << fmt::format("the date is {:%Y-%m-%d-%H-%M-%S}\n", fmt::localtime(that_day)) << std::endl;
 
 		auto&& monday = everest::TimeCapsule::WeekDayFromThisWeekOffset(0,1);
 		std::cout << "monday:" << monday << std::endl;

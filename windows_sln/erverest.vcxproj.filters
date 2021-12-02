@@ -10,9 +10,6 @@
     <Filter Include="multi_producer_multi_consumer">
       <UniqueIdentifier>{71dd2edc-e620-4d3d-8b76-800d14415847}</UniqueIdentifier>
     </Filter>
-    <Filter Include="format">
-      <UniqueIdentifier>{321befa9-a4f6-4a7e-af9d-e28a12b5f64c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cmd_line">
       <UniqueIdentifier>{fb179446-9f56-44ab-826e-ace423bb8305}</UniqueIdentifier>
     </Filter>
@@ -36,6 +33,15 @@
     </Filter>
     <Filter Include="3rd\date\src">
       <UniqueIdentifier>{433b446b-28e3-4052-a9cd-1fc92e9dbe23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\fmt">
+      <UniqueIdentifier>{478c2e53-90bd-4608-badc-24daac8ac841}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\fmt\include">
+      <UniqueIdentifier>{0a857de4-ed69-42a4-844b-82caa535845b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\fmt\src">
+      <UniqueIdentifier>{74933ea8-d7b5-4c42-838d-f295e4ffe8bb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -108,14 +114,44 @@
     <ClInclude Include="..\3rd\date\include\date\time_capsule.h">
       <Filter>3rd\date\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\everest\format\core.h">
-      <Filter>format</Filter>
+    <ClInclude Include="..\3rd\fmt\include\fmt\args.h">
+      <Filter>3rd\fmt\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\everest\format\format.h">
-      <Filter>format</Filter>
+    <ClInclude Include="..\3rd\fmt\include\fmt\chrono.h">
+      <Filter>3rd\fmt\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\everest\format\format-inl.h">
-      <Filter>format</Filter>
+    <ClInclude Include="..\3rd\fmt\include\fmt\color.h">
+      <Filter>3rd\fmt\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\fmt\include\fmt\compile.h">
+      <Filter>3rd\fmt\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\fmt\include\fmt\core.h">
+      <Filter>3rd\fmt\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\fmt\include\fmt\format-inl.h">
+      <Filter>3rd\fmt\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\fmt\include\fmt\format.h">
+      <Filter>3rd\fmt\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\fmt\include\fmt\locale.h">
+      <Filter>3rd\fmt\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\fmt\include\fmt\os.h">
+      <Filter>3rd\fmt\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\fmt\include\fmt\ostream.h">
+      <Filter>3rd\fmt\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\fmt\include\fmt\printf.h">
+      <Filter>3rd\fmt\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\fmt\include\fmt\ranges.h">
+      <Filter>3rd\fmt\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\fmt\include\fmt\xchar.h">
+      <Filter>3rd\fmt\include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -125,8 +161,11 @@
     <ClCompile Include="..\3rd\date\src\tz.cpp">
       <Filter>3rd\date\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\everest\format\format.cc">
-      <Filter>format</Filter>
+    <ClCompile Include="..\3rd\fmt\src\format.cc">
+      <Filter>3rd\fmt\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rd\fmt\src\os.cc">
+      <Filter>3rd\fmt\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

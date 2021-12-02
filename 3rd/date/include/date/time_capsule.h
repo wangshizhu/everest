@@ -6,7 +6,8 @@
 #include <stdint.h>
 
 #include "date/date.h"
-#include "format/format.h"
+#include "fmt/format.h"
+#include "fmt/chrono.h"
 
 #define NAMESPACE_HEADER namespace everest{
 #define NAMESPACE_TAIL }
@@ -96,12 +97,7 @@ public:
 	// return:格式错误返回nullopt，格式正确返回秒数
 	static std::optional<uint64_t> MakeTimePointByYMDHMS(const char* format_time,const char* format = "%d-%d-%d %d:%d:%d")
 	{
-		uint32_t y = 0;
-		uint32_t m = 0;
-		uint32_t d = 0;
-		uint32_t h = 0;
-		uint32_t mi = 0;
-		uint32_t s = 0;
+		uint32_t y,m,d,h,mi,s = 0;
 		auto num = sscanf(format_time, format,&y,&m,&d,&h,&mi,&s);
 		if (num != 6)
 		{
