@@ -34,6 +34,13 @@ int main()
 		std::cout << "is_same_week:" << everest::TimeCapsule::IsSameWeek(today, now) << std::endl;
 
 		std::cout << "format_time:" << everest::TimeCapsule::FormatTimePoint(now) << std::endl;
+
+		auto&& result = everest::TimeCapsule::MakeTimePointByYMDHMS("2021-12-2-0-00-1", "%d-%d-%d-%d-%d-%d");
+		if (result)
+		{
+			std::cout << "MakeTimePoint(2021-12-2 0:00:1):" << result.value() << std::endl;
+		}
+		
 	}
 
 	{

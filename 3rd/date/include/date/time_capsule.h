@@ -2,6 +2,7 @@
 #define TIME_CAPSULE_H_
 
 #include <chrono>
+#include <optional>
 #include <stdint.h>
 
 #include "date/date.h"
@@ -91,9 +92,26 @@ public:
 		return fmt::format("{}-{}-{}",hms.hours().count(),hms.minutes().count(),hms.seconds().count());
 	}
 
-	static uint64_t MakeTimePoint(const char* format_time)
+	// 按照year-month-day hour-minutes-seconds构造时间
+	// return:格式错误返回nullopt，格式正确返回秒数
+	static std::optional<uint64_t> MakeTimePointByYMDHMS(const char* format_time,const char* format = "%d-%d-%d %d:%d:%d")
 	{
-		return 0;
+		uint32_t y = 0;
+		uint32_t m = 0;
+		uint32_t d = 0;
+		uint32_t h = 0;
+		uint32_t mi = 0;
+		uint32_t s = 0;
+		auto num = sscanf(format_time, format,&y,&m,&d,&h,&mi,&s);
+		if (num != 6)
+		{
+			return std::nullopt;
+		}
+
+		auto&& ymd = date::year_month_day(date::year(y),date::month(m),date::day(d));
+		auto&& that_day = SystemTimeToSeconds(date::sys_days(ymd)) - GetTimeZoneSeconds();
+
+		return std::make_optional(ThatDayTimePoint(that_day,h,mi,s));
 	}
 
 	static int64_t WeeksToSeconds(int32_t w = 1) noexcept
