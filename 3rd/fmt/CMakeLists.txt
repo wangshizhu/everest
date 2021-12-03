@@ -236,6 +236,8 @@ else()
   set(FMT_SOURCES src/format.cc)
 endif ()
 
+SET(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/libs)
+
 add_library(fmt ${FMT_SOURCES} ${FMT_HEADERS} README.rst ChangeLog.rst)
 add_library(fmt::fmt ALIAS fmt)
 
