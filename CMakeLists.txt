@@ -18,7 +18,9 @@ ADD_DEFINITIONS ( -std=c++1z)
 OPTION(BUILD_YAML "build yaml that is yaml-cpp of jbeder" OFF)
 OPTION(BUILD_SPDLOG "build spdlog" OFF)
 OPTION(BUILD_PROTOBUF "build protobuf" OFF)
-OPTION(BUILD_REDISPLUS "build redis-plus-plus" ON)
+OPTION(BUILD_REDISPLUS "build redis-plus-plus" OFF)
+OPTION(BUILD_DATE "build date" OFF)
+OPTION(BUILD_FMT "build fmt" ON)
 
 # ---------------------------------------------------------------------------------------
 # yaml
@@ -53,10 +55,25 @@ if (BUILD_REDISPLUS)
 endif(BUILD_REDISPLUS)
 
 # ---------------------------------------------------------------------------------------
+# date
+# ---------------------------------------------------------------------------------------
+if (BUILD_DATE)
+    add_subdirectory(${PROJECT_SOURCE_DIR}/3rd/date)
+endif(BUILD_DATE)
+
+# ---------------------------------------------------------------------------------------
+# fmt
+# ---------------------------------------------------------------------------------------
+if (BUILD_FMT)
+    add_subdirectory(${PROJECT_SOURCE_DIR}/3rd/fmt)
+endif(BUILD_FMT)
+
+# ---------------------------------------------------------------------------------------
 # everest source code
 # ---------------------------------------------------------------------------------------
-AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/cmd_line src_list)
-AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/format src_list)
+AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/everest/cmd_line src_list)
+AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/3rd/fmt/src src_list)
+AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/3rd/date/src src_list)
 
 MESSAGE(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 MESSAGE(STATUS "src list:"${src_list})

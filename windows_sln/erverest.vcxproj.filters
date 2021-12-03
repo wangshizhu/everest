@@ -25,24 +25,6 @@
     <Filter Include="3rd\lock-free-queue">
       <UniqueIdentifier>{994005b0-a96f-4703-8a54-d6ea40df469b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3rd\date">
-      <UniqueIdentifier>{9a3a5b96-3ce7-4ad8-afb2-1b12403d9db3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3rd\date\include">
-      <UniqueIdentifier>{210101d7-1c40-401e-9c6d-a935b019160f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3rd\date\src">
-      <UniqueIdentifier>{433b446b-28e3-4052-a9cd-1fc92e9dbe23}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3rd\fmt">
-      <UniqueIdentifier>{478c2e53-90bd-4608-badc-24daac8ac841}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3rd\fmt\include">
-      <UniqueIdentifier>{0a857de4-ed69-42a4-844b-82caa535845b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3rd\fmt\src">
-      <UniqueIdentifier>{74933ea8-d7b5-4c42-838d-f295e4ffe8bb}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\everest\singleton\singleton.h">
@@ -81,91 +63,10 @@
     <ClInclude Include="..\3rd\lock-free-queue\lightweightsemaphore.h">
       <Filter>3rd\lock-free-queue</Filter>
     </ClInclude>
-    <ClInclude Include="..\3rd\date\include\date\chrono_io.h">
-      <Filter>3rd\date\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\date\include\date\date.h">
-      <Filter>3rd\date\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\date\include\date\ios.h">
-      <Filter>3rd\date\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\date\include\date\islamic.h">
-      <Filter>3rd\date\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\date\include\date\iso_week.h">
-      <Filter>3rd\date\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\date\include\date\julian.h">
-      <Filter>3rd\date\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\date\include\date\ptz.h">
-      <Filter>3rd\date\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\date\include\date\solar_hijri.h">
-      <Filter>3rd\date\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\date\include\date\tz.h">
-      <Filter>3rd\date\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\date\include\date\tz_private.h">
-      <Filter>3rd\date\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\date\include\date\time_capsule.h">
-      <Filter>3rd\date\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\fmt\include\fmt\args.h">
-      <Filter>3rd\fmt\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\fmt\include\fmt\chrono.h">
-      <Filter>3rd\fmt\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\fmt\include\fmt\color.h">
-      <Filter>3rd\fmt\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\fmt\include\fmt\compile.h">
-      <Filter>3rd\fmt\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\fmt\include\fmt\core.h">
-      <Filter>3rd\fmt\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\fmt\include\fmt\format-inl.h">
-      <Filter>3rd\fmt\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\fmt\include\fmt\format.h">
-      <Filter>3rd\fmt\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\fmt\include\fmt\locale.h">
-      <Filter>3rd\fmt\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\fmt\include\fmt\os.h">
-      <Filter>3rd\fmt\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\fmt\include\fmt\ostream.h">
-      <Filter>3rd\fmt\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\fmt\include\fmt\printf.h">
-      <Filter>3rd\fmt\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\fmt\include\fmt\ranges.h">
-      <Filter>3rd\fmt\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rd\fmt\include\fmt\xchar.h">
-      <Filter>3rd\fmt\include</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\everest\cmd_line\command_line_parser.cpp">
       <Filter>cmd_line</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rd\date\src\tz.cpp">
-      <Filter>3rd\date\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rd\fmt\src\format.cc">
-      <Filter>3rd\fmt\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rd\fmt\src\os.cc">
-      <Filter>3rd\fmt\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

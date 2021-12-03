@@ -78,7 +78,7 @@ public:
 		auto&& system_days = SecondsToSystemDays(fixed_second);
 		auto&& ymd = date::year_month_day(system_days);
 
-		return fmt::format("{}-{}-{}",int32_t(ymd.year()),uint32_t(ymd.month()),uint32_t(ymd.day()));
+		return fmt::format("{}-{:02}-{:02}",int32_t(ymd.year()),uint32_t(ymd.month()),uint32_t(ymd.day()));
 	}
 
 	// format: 22-00-00
@@ -90,7 +90,7 @@ public:
 		auto&& diff = s - ymd_seconds;
 		auto&& hms = date::time_of_day<std::chrono::seconds>(std::chrono::seconds(diff));
 
-		return fmt::format("{}-{}-{}",hms.hours().count(),hms.minutes().count(),hms.seconds().count());
+		return fmt::format("{:02}-{:02}-{:02}",hms.hours().count(),hms.minutes().count(),hms.seconds().count());
 	}
 
 	// 按照year-month-day hour-minutes-seconds构造时间
