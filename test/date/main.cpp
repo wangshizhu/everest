@@ -12,6 +12,9 @@ int main()
 		auto now = everest::TimeCapsule::Now();
 		std::cout << "now:" << now << std::endl;
 
+		auto now_millseconds = everest::TimeCapsule::NowMillSeconds();
+		std::cout << "now_millseconds:" << now_millseconds << std::endl;
+
 		auto today = everest::TimeCapsule::TodayTimePoint();
 		std::cout << "today:" << today << std::endl;
 
