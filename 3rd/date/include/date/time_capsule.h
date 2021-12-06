@@ -128,7 +128,7 @@ public:
 	*/
 	static bool IsSameDay(uint64_t src, uint64_t dest) noexcept
 	{
-		return SecondsToLocalTimeDayBeginSeconds(src) == SecondsToLocalTimeDayBeginSeconds(dest);
+		return DurationCountToLocalTimeDayBegin(src) == DurationCountToLocalTimeDayBegin(dest);
 	}
 
 	/*
@@ -144,10 +144,10 @@ public:
 	*/
 	static bool IsSameWeek(uint64_t src, uint64_t dest) noexcept
 	{
-		auto&& fixed_src = SecondsToLocalTimeDayBeginSeconds(src);
-		auto&& fixed_dest = SecondsToLocalTimeDayBeginSeconds(dest);
-		auto&& src_days = date::year_month_weekday(SecondsToDayTimePoint(fixed_src));
-		auto&& dest_days = date::year_month_weekday(SecondsToDayTimePoint(fixed_dest));
+		auto&& fixed_src = DurationCountToLocalTimeDayBegin(src);
+		auto&& fixed_dest = DurationCountToLocalTimeDayBegin(dest);
+		auto&& src_days = date::year_month_weekday(DurationCountToTimePoint<date::days>(fixed_src));
+		auto&& dest_days = date::year_month_weekday(DurationCountToTimePoint<date::days>(fixed_dest));
 
 		return src_days == dest_days;
 	}
@@ -169,8 +169,8 @@ public:
 	*/
 	static std::string FormatTimePointToYearMonthDay(uint64_t s)
 	{
-		auto&& fixed_second = SecondsToLocalTimeDayBeginSeconds(s);
-		auto&& system_days = SecondsToDayTimePoint(fixed_second);
+		auto&& fixed_second = DurationCountToLocalTimeDayBegin(s);
+		auto&& system_days = DurationCountToTimePoint<date::days>(fixed_second);
 		auto&& ymd = date::year_month_day(system_days);
 
 		return fmt::format("{}-{:02}-{:02}",int32_t(ymd.year()),uint32_t(ymd.month()),uint32_t(ymd.day()));
@@ -220,7 +220,7 @@ public:
 	*/
 	static int64_t WeeksToSeconds(int32_t w = 1) noexcept
 	{
-		return std::chrono::duration_cast<std::chrono::seconds>(date::weeks(w)).count();
+		return DurationCountToDuration<std::chrono::seconds, date::weeks>(w).count();
 	}
 
 	/*
@@ -229,7 +229,7 @@ public:
 	*/
 	static int64_t DaysToSeconds(int32_t d = 1) noexcept
 	{
-		return std::chrono::duration_cast<std::chrono::seconds>(date::days(d)).count();
+		return DurationCountToDuration<std::chrono::seconds, date::days>(d).count();
 	}
 
 	/*
@@ -238,7 +238,7 @@ public:
 	*/
 	static int64_t MinutesToSeconds(int32_t m = 1) noexcept
 	{
-		return std::chrono::seconds(std::chrono::minutes(m)).count();
+		return DurationCountToDuration<std::chrono::seconds, std::chrono::minutes>(m).count();
 	}
 
 	/*
@@ -247,7 +247,48 @@ public:
 	*/
 	static int64_t HoursToSeconds(int32_t h = 1) noexcept
 	{
-		return std::chrono::seconds(std::chrono::hours(h)).count();
+		return DurationCountToDuration<std::chrono::seconds, std::chrono::hours>(h).count();
+	}
+
+
+//-----------------------------------------------------------------------------
+//	duration_count 到 duration的转换
+//  duration_count 到 time_point的转换
+//-----------------------------------------------------------------------------
+private:
+	/*
+	* @brief 从指定duration的计数转换为指定duration
+	* @param [in] s 指定duration的计数，如果duration为std::chrono::seconds，则s为秒数
+	* @return 指定duration，例如：std::chrono::hours
+	*/
+	template<class To, class From = std::chrono::seconds>
+	static To DurationCountToDuration(int64_t s) noexcept
+	{
+		return std::chrono::duration_cast<To>(From(s));
+	}
+
+	template <class To, class From = std::chrono::seconds>
+	static std::chrono::time_point<std::chrono::system_clock, To> DurationCountToTimePoint(uint64_t s)
+	{
+		return std::chrono::time_point<std::chrono::system_clock, To>(DurationCountToDuration<To,From>(s));
+	}
+
+//-----------------------------------------------------------------------------
+//	time_point 到 duration_count的转换
+//-----------------------------------------------------------------------------
+private:
+	/*
+	* @brief 从time_point转换为指定duration的计数
+	* 例如：从std::chrono::time_point<std::chrono::system_clock, std::chrono::hours>转换为
+	* std::chrono::time_point<std::chrono::system_clock, std::chrono::seconds>
+	*
+	* @param [in] src 时间点
+	* @return 指定duration的计数
+	*/
+	template<class T, class ToDuration = std::chrono::seconds>
+	static uint64_t TimePointToDurationCount(const std::chrono::time_point<std::chrono::system_clock, T>& src) noexcept
+	{
+		return std::chrono::time_point_cast<ToDuration>(src).time_since_epoch().count();
 	}
 
 private:
@@ -256,8 +297,8 @@ private:
 	*/
 	static uint64_t ThisWeekMondayZeroClock() noexcept
 	{
-		auto&& fixed_seconds = SecondsToLocalTimeDayBeginSeconds(Now());
-		auto&& today = SecondsToDayTimePoint(fixed_seconds);
+		auto&& fixed_seconds = DurationCountToLocalTimeDayBegin(Now());
+		auto&& today = DurationCountToTimePoint<date::days>(fixed_seconds);
 		auto&& this_weekday = date::year_month_weekday(today);
 		auto&& week_monday = date::weekday_indexed(date::Monday, this_weekday.index());
 		auto&& that_day = date::year_month_weekday(this_weekday.year(), this_weekday.month(), week_monday);
@@ -272,8 +313,8 @@ private:
 	*/
 	static uint64_t SecondsToDayZeroClock(uint64_t s) noexcept
 	{
-		auto&& fixed_seconds = SecondsToLocalTimeDayBeginSeconds(s);
-		auto&& that_day = SecondsToDayTimePoint(fixed_seconds);
+		auto&& fixed_seconds = DurationCountToLocalTimeDayBegin(s);
+		auto&& that_day = DurationCountToTimePoint<date::days>(fixed_seconds);
 
 		return TToThatDayZeroClock(that_day);
 	}
@@ -286,35 +327,10 @@ private:
 	* 
 	* @return 当前时区自【1970-01-01 00:00:00】到【那天的00:00:00】所经过的总秒数
 	*/
-	template<class T>
+	template<class T,class ToDuration = std::chrono::seconds>
 	static uint64_t TToThatDayZeroClock(T&& t)
 	{
-		return TimePointToDurationCount(date::sys_days(t)) - GetTimeZoneSeconds();
-	}
-
-	/*
-	* @brief 从time_point转换为指定duration的计数
-	* 例如：从std::chrono::time_point<std::chrono::system_clock, std::chrono::hours>转换为
-	* std::chrono::time_point<std::chrono::system_clock, std::chrono::seconds>
-	* 
-	* @param [in] src 时间点
-	* @return 指定duration的计数
-	*/
-	template<class T, class D = std::chrono::seconds>
-	static uint64_t TimePointToDurationCount(const std::chrono::time_point<std::chrono::system_clock, T>& src) noexcept
-	{
-		return std::chrono::time_point_cast<D>(src).time_since_epoch().count();
-	}
-
-	/*
-	* @brief 从指定duration的计数转换为指定duration
-	* @param [in] s 指定duration的计数，如果duration为std::chrono::seconds，则s为秒数
-	* @return 指定duration，例如：std::chrono::hours
-	*/
-	template<class To,class From = std::chrono::seconds>
-	static To DurationCountToDuration(uint64_t s) noexcept
-	{
-		return std::chrono::duration_cast<To>(From(s));
+		return TimePointToDurationCount<date::sys_days::duration,ToDuration>(date::sys_days(t)) - GetTimeZoneDurationCount<ToDuration>();
 	}
 
 	/*
@@ -330,9 +346,10 @@ private:
 	/*
 	* @brief 便捷函数,将时区转换为秒数
 	*/
-	static int64_t GetTimeZoneSeconds() noexcept
+	template <class ToDuration = std::chrono::seconds>
+	static int64_t GetTimeZoneDurationCount() noexcept
 	{
-		return HoursToSeconds(g_time_zone);
+		return DurationCountToDuration<ToDuration,std::chrono::hours>(g_time_zone).count();
 	}
 
 	/*
@@ -345,24 +362,25 @@ private:
 	* 而北京时间（EST 8）2021-12-05 08:00:00转换为std::chrono::time_point<std::chrono::system_clock, date::days>.count为X+1天
 	* 进而造成【北京时间（EST 8）2021-12-05 07:59:59】与【北京时间（EST 8）2021-12-05 08:00:00】属于不同天
 	* 
-	* @param [in] s 秒数
-	* @return 秒数所在天的起点时间，即当前时区自【1970-01-01 00:00:00】到【那天的08:00:00】所经过的秒数
+	* @param [in] duration_count 持续时间计数
+	* @return 持续时间计数所在天的起点时间，即当前时区自【1970-01-01 00:00:00】到【那天的08:00:00】所经过的持续时间
 	*/
-	static uint64_t SecondsToLocalTimeDayBeginSeconds(uint64_t s) noexcept
+	template<class ToDuration = std::chrono::seconds,class FromDuration = std::chrono::seconds>
+	static uint64_t DurationCountToLocalTimeDayBegin(uint64_t duration_count) noexcept
 	{
-		auto&& src_day = SecondsToDayTimePoint(s);
-		auto&& src_day_seconds = TimePointToDurationCount(src_day);
+		auto&& src_day = DurationCountToTimePoint<date::days, FromDuration>(duration_count);
+		auto&& src_day_duration_count = TimePointToDurationCount<src_day::duration,ToDuration>(src_day);
 
-		auto&& demarcation = s + GetTimeZoneSeconds();
-		auto&& demarcation_day = SecondsToDayTimePoint(demarcation);
-		auto&& demarcation_day_seconds = TimePointToDurationCount(demarcation_day);
+		auto&& demarcation = duration_count + GetTimeZoneDurationCount<FromDuration>();
+		auto&& demarcation_day = DurationCountToTimePoint<date::days,FromDuration>(demarcation);
+		auto&& demarcation_day_duration_count = TimePointToDurationCount<src_day::duration, ToDuration>(demarcation_day);
 
-		if (src_day_seconds == demarcation_day_seconds)
+		if (src_day_duration_count == demarcation_day_duration_count)
 		{
-			return src_day_seconds;
+			return src_day_duration_count;
 		}
 
-		return demarcation_day_seconds;
+		return demarcation_day_duration_count;
 	}
 };
 
