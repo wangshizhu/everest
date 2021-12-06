@@ -209,7 +209,7 @@ public:
 		}
 
 		auto&& ymd = date::year_month_day(date::year(y),date::month(m),date::day(d));
-		auto&& that_day = TToThatDayZeroClock(ymd);
+		auto&& that_day = ToThatDayZeroClock(ymd);
 
 		return std::make_optional(ThatDayTimePoint(that_day,h,mi,s));
 	}
@@ -267,8 +267,13 @@ private:
 		return std::chrono::duration_cast<To>(From(s));
 	}
 
+	/*
+	* @brief 从指定duration的计数转换为指定time_point
+	* @param [in] s 指定duration的计数，如果duration为std::chrono::seconds，则s为秒数
+	* @return 指定time_point，例如：std::chrono::time_point<std::chrono::system_clock, date::days>
+	*/
 	template <class To, class From = std::chrono::seconds>
-	static std::chrono::time_point<std::chrono::system_clock, To> DurationCountToTimePoint(uint64_t s)
+	static std::chrono::time_point<std::chrono::system_clock, To> DurationCountToTimePoint(uint64_t s) noexcept
 	{
 		return std::chrono::time_point<std::chrono::system_clock, To>(DurationCountToDuration<To,From>(s));
 	}
@@ -293,7 +298,7 @@ private:
 
 private:
 	/*
-	* @brief 当前时区自【1970-01-01 00:00:00】到【当前时间所在周的周一00:00:00】所经过的秒数
+	* @brief 便捷函数,当前时区自【1970-01-01 00:00:00】到【当前时间所在周的周一00:00:00】所经过的秒数
 	*/
 	static uint64_t ThisWeekMondayZeroClock() noexcept
 	{
@@ -303,7 +308,7 @@ private:
 		auto&& week_monday = date::weekday_indexed(date::Monday, this_weekday.index());
 		auto&& that_day = date::year_month_weekday(this_weekday.year(), this_weekday.month(), week_monday);
 
-		return TToThatDayZeroClock(that_day);
+		return ToThatDayZeroClock(that_day);
 	}
 
 	/*
@@ -316,7 +321,7 @@ private:
 		auto&& fixed_seconds = DurationCountToLocalTimeDayBegin(s);
 		auto&& that_day = DurationCountToTimePoint<date::days>(fixed_seconds);
 
-		return TToThatDayZeroClock(that_day);
+		return ToThatDayZeroClock(that_day);
 	}
 
 	/*
@@ -328,7 +333,7 @@ private:
 	* @return 当前时区自【1970-01-01 00:00:00】到【那天的00:00:00】所经过的总秒数
 	*/
 	template<class T,class ToDuration = std::chrono::seconds>
-	static uint64_t TToThatDayZeroClock(T&& t)
+	static uint64_t ToThatDayZeroClock(T&& t) noexcept
 	{
 		return TimePointToDurationCount<date::sys_days::duration,ToDuration>(date::sys_days(t)) - GetTimeZoneDurationCount<ToDuration>();
 	}
@@ -369,18 +374,18 @@ private:
 	static uint64_t DurationCountToLocalTimeDayBegin(uint64_t duration_count) noexcept
 	{
 		auto&& src_day = DurationCountToTimePoint<date::days, FromDuration>(duration_count);
-		auto&& src_day_duration_count = TimePointToDurationCount<src_day::duration,ToDuration>(src_day);
+		auto&& src_day_duration_count = TimePointToDurationCount<date::sys_days::duration,ToDuration>(src_day);
 
-		auto&& demarcation = duration_count + GetTimeZoneDurationCount<FromDuration>();
-		auto&& demarcation_day = DurationCountToTimePoint<date::days,FromDuration>(demarcation);
-		auto&& demarcation_day_duration_count = TimePointToDurationCount<src_day::duration, ToDuration>(demarcation_day);
+		auto&& later8Clock = duration_count + GetTimeZoneDurationCount<FromDuration>();
+		auto&& later8Clock_day = DurationCountToTimePoint<date::days,FromDuration>(demarcation);
+		auto&& later8Clock_day_duration_count = TimePointToDurationCount<date::sys_days::duration, ToDuration>(demarcation_day);
 
-		if (src_day_duration_count == demarcation_day_duration_count)
+		if (src_day_duration_count == later8Clock_day_duration_count)
 		{
 			return src_day_duration_count;
 		}
 
-		return demarcation_day_duration_count;
+		return later8Clock_day_duration_count;
 	}
 };
 

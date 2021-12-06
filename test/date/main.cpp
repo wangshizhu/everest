@@ -21,7 +21,7 @@ int main()
 		auto that_day = everest::TimeCapsule::ThatDayTimePoint(now,10);
 		std::cout << "that_day:" << that_day << std::endl;
 
-		std::cout << fmt::format("the date is {:%Y-%m-%d-%H-%M-%S}\n", fmt::localtime(that_day)) << std::endl;
+		//std::cout << fmt::format("the date is {:%Y-%m-%d-%H-%M-%S}\n", fmt::localtime(that_day)) << std::endl;
 
 		auto&& monday = everest::TimeCapsule::WeekDayFromThisWeekOffset(0,1);
 		std::cout << "monday:" << monday << std::endl;
@@ -33,8 +33,8 @@ int main()
 		std::cout << "next_monday:" << next_monday << std::endl;
 
 		// 02:02:02
-		auto&& that_time_point = everest::TimeCapsule::TodayTimePoint(1, 61, 61);
-		std::cout << "1_61_61:" << that_time_point << std::endl;
+		auto&& that_time_point = everest::TimeCapsule::TodayTimePoint(1, 61, 62);
+		std::cout << "1_61_62:" << that_time_point << std::endl;
 
 		std::cout << "is_same_day:" << everest::TimeCapsule::IsSameDay(today, now) << std::endl;
 
