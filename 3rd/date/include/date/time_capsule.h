@@ -377,8 +377,8 @@ private:
 		auto&& src_day_duration_count = TimePointToDurationCount<date::sys_days::duration,ToDuration>(src_day);
 
 		auto&& later8Clock = duration_count + GetTimeZoneDurationCount<FromDuration>();
-		auto&& later8Clock_day = DurationCountToTimePoint<date::days,FromDuration>(demarcation);
-		auto&& later8Clock_day_duration_count = TimePointToDurationCount<date::sys_days::duration, ToDuration>(demarcation_day);
+		auto&& later8Clock_day = DurationCountToTimePoint<date::days,FromDuration>(later8Clock);
+		auto&& later8Clock_day_duration_count = TimePointToDurationCount<date::sys_days::duration, ToDuration>(later8Clock_day);
 
 		if (src_day_duration_count == later8Clock_day_duration_count)
 		{
