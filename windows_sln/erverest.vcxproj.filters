@@ -25,6 +25,12 @@
     <Filter Include="3rd\lock-free-queue">
       <UniqueIdentifier>{994005b0-a96f-4703-8a54-d6ea40df469b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="timer">
+      <UniqueIdentifier>{35dd916c-7711-4f81-9b57-1321b49b5e8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{88750e19-d6d9-430c-bb58-9451a8298134}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\everest\singleton\singleton.h">
@@ -63,10 +69,25 @@
     <ClInclude Include="..\3rd\lock-free-queue\lightweightsemaphore.h">
       <Filter>3rd\lock-free-queue</Filter>
     </ClInclude>
+    <ClInclude Include="..\everest\timer\timer.h">
+      <Filter>timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\common\include.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\common\define.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\timer\timer.ipp">
+      <Filter>timer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\everest\cmd_line\command_line_parser.cpp">
       <Filter>cmd_line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\common\include.cpp">
+      <Filter>common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

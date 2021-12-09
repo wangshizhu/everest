@@ -163,14 +163,19 @@
     <ClInclude Include="..\everest\calculator\safe_integral_calculator.h" />
     <ClInclude Include="..\everest\cmd_line\cmdline.h" />
     <ClInclude Include="..\everest\cmd_line\command_line_parser.h" />
+    <ClInclude Include="..\everest\common\define.h" />
+    <ClInclude Include="..\everest\common\include.h" />
     <ClInclude Include="..\everest\multi_producer_multi_consumer\circular_queue.h" />
     <ClInclude Include="..\everest\multi_producer_multi_consumer\move_on_copy.h" />
     <ClInclude Include="..\everest\multi_producer_multi_consumer\multi_producer_multi_consumer.h" />
     <ClInclude Include="..\everest\non_copyable\non_copyable.h" />
     <ClInclude Include="..\everest\singleton\singleton.h" />
+    <ClInclude Include="..\everest\timer\timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\everest\cmd_line\command_line_parser.cpp" />
+    <ClCompile Include="..\everest\common\include.cpp" />
+    <ClInclude Include="..\everest\timer\timer.ipp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

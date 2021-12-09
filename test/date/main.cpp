@@ -1,9 +1,11 @@
 #include <iostream>
 #include <chrono>
 #include <time.h>
+#include <thread>
 #include "date/time_capsule.h"
 #include "fmt/format.h"
 #include "fmt/chrono.h"
+#include "common/include.h"
 
 int main()
 {
@@ -57,6 +59,18 @@ int main()
 		local->tm_min = 0;
 		local->tm_sec = 0;
 		std::cout <<"local_time:"<< mktime(local) << std::endl;
+	}
+
+	{
+		g_tls_ms_timer = everest::Timer<std::chrono::milliseconds>(100,true);
+		everest::Timer<std::chrono::seconds> t(1, true);
+		t.Start();
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+		t.Update();
+		if (t.Expired())
+		{
+			std::cout << "expired" << std::endl;
+		}
 	}
 
 	system("pause");
