@@ -4,5 +4,6 @@
 #include <chrono>
 
 #include "define.h"
+#include "../timer/clock.h"
 #include "../timer/timer.h"
 #endif

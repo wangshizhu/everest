@@ -62,11 +62,16 @@ int main()
 	}
 
 	{
-		g_tls_ms_timer = everest::Timer<std::chrono::milliseconds>(100,true);
+		everest::Clock clock;
+		everest::SetThreadLocalClock(&clock);
+
 		everest::Timer<std::chrono::seconds> t(1, true);
 		t.Start();
+
 		std::this_thread::sleep_for(std::chrono::seconds(1));
-		t.Update();
+
+		clock.TickTock();
+
 		if (t.Expired())
 		{
 			std::cout << "expired" << std::endl;

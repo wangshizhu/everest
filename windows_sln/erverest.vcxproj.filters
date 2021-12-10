@@ -81,6 +81,9 @@
     <ClInclude Include="..\everest\timer\timer.ipp">
       <Filter>timer</Filter>
     </ClInclude>
+    <ClInclude Include="..\everest\timer\clock.h">
+      <Filter>timer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\everest\cmd_line\command_line_parser.cpp">
@@ -88,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="..\everest\common\include.cpp">
       <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\timer\clock.cpp">
+      <Filter>timer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -170,6 +170,8 @@
     <ClInclude Include="..\everest\multi_producer_multi_consumer\multi_producer_multi_consumer.h" />
     <ClInclude Include="..\everest\non_copyable\non_copyable.h" />
     <ClInclude Include="..\everest\singleton\singleton.h" />
+    <ClInclude Include="..\everest\timer\clock.h" />
+    <ClCompile Include="..\everest\timer\clock.cpp" />
     <ClInclude Include="..\everest\timer\timer.h" />
   </ItemGroup>
   <ItemGroup>

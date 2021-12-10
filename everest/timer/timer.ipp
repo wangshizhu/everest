@@ -3,7 +3,7 @@
 
 NAMESPACE_BEGIN
 
-thread_local Timer<std::chrono::milliseconds> g_tls_ms_timer;
+extern thread_local Clock* g_tls_clock;
 
 template<class Duration>
 Timer<Duration>::Timer()
@@ -19,17 +19,6 @@ Timer<Duration>::Timer(uint32_t duration, bool repeat/* = false*/)
 	is_stop_(true),
 	repeat_(repeat)
 {
-}
-
-template<class Duration>
-void Timer<Duration>::Update()
-{
-	if (IsStop())
-	{
-		return;
-	}
-
-	last_tick_time_point_ = std::chrono::steady_clock::now();
 }
 
 template<class Duration>
@@ -51,7 +40,7 @@ bool Timer<Duration>::Expired()
 	bool expired = diff >= duration_;
 	if (expired && repeat_)
 	{
-		start_time_point_ = last_tick_time_point_;
+		start_time_point_ = LastTimePoint();
 	}
 
 	return expired;
@@ -60,9 +49,7 @@ bool Timer<Duration>::Expired()
 template<class Duration>
 void Timer<Duration>::Start()
 {
-	auto&& now = std::chrono::steady_clock::now();
-	last_tick_time_point_ = now;
-	start_time_point_ = now;
+	start_time_point_ = LastTimePoint();
 	is_stop_ = false;
 }
 
@@ -100,14 +87,18 @@ uint32_t Timer<Duration>::Elapse() const
 template<class Duration>
 typename Timer<Duration>::SteadyTimePoint Timer<Duration>::LastTimePoint()const
 {
-	return last_tick_time_point_;
+	if (g_tls_clock != nullptr)
+	{
+		return g_tls_clock->LatestTimePoint();
+	}
+
+	return std::chrono::steady_clock::now();
 }
 
 template<class Duration>
 Duration Timer<Duration>::ElapseToDuration() const
 {
-	// TODO:last_tick_time_point_应该取线程局部变量Timer的last_tick_time_point_
-	return std::chrono::floor<Duration>(g_tls_ms_timer.LastTimePoint() - start_time_point_);
+	return std::chrono::floor<Duration>(LastTimePoint() - start_time_point_);
 }
 
 NAMESPACE_END

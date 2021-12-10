@@ -15,8 +15,6 @@ public:
 	explicit Timer(uint32_t duration,bool repeat = false);
 
 public:
-	void Update();
-
 	bool IsStop()const;
 
 	bool Expired();
@@ -29,9 +27,9 @@ public:
 
 	uint32_t Elapse() const;
 
+private:
 	SteadyTimePoint LastTimePoint() const;
 
-private:
 	Duration ElapseToDuration() const;
 
 private:
@@ -44,9 +42,6 @@ private:
 	// 是否重复
 	bool repeat_;
 
-	// 最后一帧时间点
-	SteadyTimePoint last_tick_time_point_;
-
 	// 开始计时时间点
 	SteadyTimePoint start_time_point_;
 };
@@ -54,7 +49,5 @@ private:
 NAMESPACE_END
 
 #include "timer.ipp";
-
-extern thread_local everest::Timer<std::chrono::milliseconds> g_tls_ms_timer;
 
 #endif // !TIMER_H_
