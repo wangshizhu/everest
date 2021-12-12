@@ -20,6 +20,9 @@ int main()
 		auto today = everest::TimeCapsule::TodayTimePoint();
 		std::cout << "today:" << today << std::endl;
 
+		auto utc0 = everest::TimeCapsule::LocalTimeZoneDurationCountToDestTimeZoneDurationCount(-28800,0);
+		std::cout << "today00:00:00 to utc0:" << utc0 << std::endl;
+
 		auto that_day = everest::TimeCapsule::ThatDayTimePoint(now,10);
 		std::cout << "that_day:" << that_day << std::endl;
 

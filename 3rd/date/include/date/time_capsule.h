@@ -15,7 +15,8 @@
 
 NAMESPACE_BEGIN
 
-int32_t g_time_zone = 8;
+// 本地时区
+int32_t g_local_time_zone = 8;
 
 class TimeCapsule
 {
@@ -54,6 +55,31 @@ public:
 	}
 
 	/*
+	* @brief 从本地时间持续时间计数转到目标时区持续时间计数
+	* 例如：(1) 将北京时间（UTC时间+EST 8）1639238400秒(2021-12-12 00:00:00)转换为
+	* 【UTC时间+0】1639238400+8*3600 = 1639267200(2021-12-12 00:00:00)
+	* 
+	* (2) 将北京时间（UTC时间+EST 8）-28800秒(1970-01-01 00:00:00)转换为
+	* 【UTC时间+0】-28800+8*3600 = 0(1970-01-01 00:00:00)
+	* 
+	* (3) 将北京时间（UTC时间+EST 8）-28800秒(1970-01-01 00:00:00)转换为
+	* 美国东部时间【UTC时间-5】-28800+8*3600-(-5*3600) = 18000(1970-01-01 00:00:00)
+	* 
+	* @param [in] local_duration_count 本地时间持续时间计数
+	* @param [in] dest_time_zone 目标时区
+	* 
+	* @return 目标时区持续时间计数
+	*/
+	template<class Duration = std::chrono::seconds>
+	static int64_t LocalTimeZoneDurationCountToDestTimeZoneDurationCount(int64_t local_duration_count,int32_t dest_time_zone)
+	{
+		// 先转换到【UTC时间+0】对应的持续时间计数，再转化到目标时区持续时间计数
+		auto utc0 = local_duration_count + GetTimeZoneDurationCount<Duration>();
+
+		return utc0 - GetTimeZoneDurationCount<Duration>(dest_time_zone);
+	}
+
+	/*
 	* @brief 计算当前时区自1970-01-01 00:00:00经过指定秒数的那一天的某时某分某秒
 	* 例如：计算北京时间（EST 8）1638691687秒（2021-12-05 16:08:07）所在的那天的10:00:00，即2021-12-05 10:00:00，
 	* 应该返回当前时区自1970-01-01 00:00:00到2021-12-05 10:00:00所经过的秒数，应该返回1638669600秒
@@ -65,7 +91,7 @@ public:
 	* 
 	* @return 当前时区自1970-01-01 00:00:00经过指定秒数的那一天的某时某分某秒的总秒数
 	*/
-	static uint64_t ThatDayTimePoint(uint64_t src, uint8_t h = 0, uint8_t m = 0, uint8_t s = 0) noexcept
+	static int64_t ThatDayTimePoint(int64_t src, uint8_t h = 0, uint8_t m = 0, uint8_t s = 0) noexcept
 	{
 		return SecondsToDayZeroClock(src) + HoursToSeconds(h) + MinutesToSeconds(m) + s;
 	}
@@ -126,7 +152,7 @@ public:
 	* 
 	* @return true 或者 false
 	*/
-	static bool IsSameDay(uint64_t src, uint64_t dest) noexcept
+	static bool IsSameDay(int64_t src, int64_t dest) noexcept
 	{
 		return DurationCountToLocalTimeDayBegin(src) == DurationCountToLocalTimeDayBegin(dest);
 	}
@@ -142,7 +168,7 @@ public:
 	* 
 	* @return true 或者 false
 	*/
-	static bool IsSameWeek(uint64_t src, uint64_t dest) noexcept
+	static bool IsSameWeek(int64_t src, int64_t dest) noexcept
 	{
 		auto&& fixed_src = DurationCountToLocalTimeDayBegin(src);
 		auto&& fixed_dest = DurationCountToLocalTimeDayBegin(dest);
@@ -157,7 +183,7 @@ public:
 	* @param [in] s 当前时区秒数
 	* @return 格式化后的时间
 	*/
-	static std::string FormatTimePoint(uint64_t s)
+	static std::string FormatTimePoint(int64_t s)
 	{
 		return fmt::format("{}-{}", FormatTimePointToYearMonthDay(s), FormatTimePointToHourMinuteSecond(s));
 	}
@@ -167,7 +193,7 @@ public:
 	* @param [in] s 当前时区秒数
 	* @return 格式化后的时间
 	*/
-	static std::string FormatTimePointToYearMonthDay(uint64_t s)
+	static std::string FormatTimePointToYearMonthDay(int64_t s)
 	{
 		auto&& fixed_second = DurationCountToLocalTimeDayBegin(s);
 		auto&& system_days = DurationCountToTimePoint<date::days>(fixed_second);
@@ -181,7 +207,7 @@ public:
 	* @param [in] s 当前时区秒数
 	* @return 格式化后的时间
 	*/
-	static std::string FormatTimePointToHourMinuteSecond(uint64_t s)
+	static std::string FormatTimePointToHourMinuteSecond(int64_t s)
 	{
 		auto&& ymd_seconds = SecondsToDayZeroClock(s);
 		auto&& diff = s - ymd_seconds;
@@ -199,7 +225,7 @@ public:
 	* @return 如果格式错误返回nullopt，调用方需要处理nullopt的情况，
 	* 如果格式正确,则返回当前时区自1970-01-01 00:00:00到给定时间总秒数
 	*/
-	static std::optional<uint64_t> MakeTimePointByYMDHMS(const char* format_time,const char* format = "%d-%d-%d %d:%d:%d") noexcept
+	static std::optional<int64_t> MakeTimePointByYMDHMS(const char* format_time,const char* format = "%d-%d-%d %d:%d:%d") noexcept
 	{
 		uint32_t y,m,d,h,mi,s = 0;
 		auto num = sscanf(format_time, format,&y,&m,&d,&h,&mi,&s);
@@ -220,7 +246,7 @@ public:
 	*/
 	static int64_t WeeksToSeconds(int32_t w = 1) noexcept
 	{
-		return DurationCountToDuration<std::chrono::seconds, date::weeks>(w).count();
+		return DurationCountToDurationCount<std::chrono::seconds, date::weeks>(w);
 	}
 
 	/*
@@ -229,7 +255,7 @@ public:
 	*/
 	static int64_t DaysToSeconds(int32_t d = 1) noexcept
 	{
-		return DurationCountToDuration<std::chrono::seconds, date::days>(d).count();
+		return DurationCountToDurationCount<std::chrono::seconds, date::days>(d);
 	}
 
 	/*
@@ -238,7 +264,7 @@ public:
 	*/
 	static int64_t MinutesToSeconds(int32_t m = 1) noexcept
 	{
-		return DurationCountToDuration<std::chrono::seconds, std::chrono::minutes>(m).count();
+		return DurationCountToDurationCount<std::chrono::seconds, std::chrono::minutes>(m);
 	}
 
 	/*
@@ -247,7 +273,7 @@ public:
 	*/
 	static int64_t HoursToSeconds(int32_t h = 1) noexcept
 	{
-		return DurationCountToDuration<std::chrono::seconds, std::chrono::hours>(h).count();
+		return DurationCountToDurationCount<std::chrono::seconds, std::chrono::hours>(h);
 	}
 
 
@@ -268,12 +294,28 @@ private:
 	}
 
 	/*
+	* @brief 从指定duration的计数转换为指定duration的计数
+	* 例如：从小时数转换为秒数
+	* 
+	* @param [in] s 指定duration的计数，如果duration为std::chrono::seconds，则s为秒数
+	* 
+	* @return 指定duration的计数
+	*/
+	template<class To, class From = std::chrono::seconds,
+	typename std::enable_if_t<!std::is_same_v<To,From>,int> = 0
+	>
+	static int64_t DurationCountToDurationCount(int64_t s) noexcept
+	{
+		return DurationCountToDuration<To,From>(s).count();
+	}
+
+	/*
 	* @brief 从指定duration的计数转换为指定time_point
 	* @param [in] s 指定duration的计数，如果duration为std::chrono::seconds，则s为秒数
 	* @return 指定time_point，例如：std::chrono::time_point<std::chrono::system_clock, date::days>
 	*/
 	template <class To, class From = std::chrono::seconds>
-	static std::chrono::time_point<std::chrono::system_clock, To> DurationCountToTimePoint(uint64_t s) noexcept
+	static std::chrono::time_point<std::chrono::system_clock, To> DurationCountToTimePoint(int64_t s) noexcept
 	{
 		return std::chrono::time_point<std::chrono::system_clock, To>(DurationCountToDuration<To,From>(s));
 	}
@@ -316,7 +358,7 @@ private:
 	* @param [in] s 秒数
 	* @return 当前时区自【1970-01-01 00:00:00】到【那天的00:00:00】所经过的总秒数
 	*/
-	static uint64_t SecondsToDayZeroClock(uint64_t s) noexcept
+	static int64_t SecondsToDayZeroClock(int64_t s) noexcept
 	{
 		auto&& fixed_seconds = DurationCountToLocalTimeDayBegin(s);
 		auto&& that_day = DurationCountToTimePoint<date::days>(fixed_seconds);
@@ -343,7 +385,7 @@ private:
 	* @param [in] s 秒数
 	* @return time_point(date::sys_days)
 	*/
-	static date::sys_days SecondsToDayTimePoint(uint64_t s) noexcept
+	static date::sys_days SecondsToDayTimePoint(int64_t s) noexcept
 	{
 		return date::sys_days(DurationCountToDuration<date::days>(s));
 	}
@@ -352,9 +394,9 @@ private:
 	* @brief 便捷函数,将时区转换为秒数
 	*/
 	template <class ToDuration = std::chrono::seconds>
-	static int64_t GetTimeZoneDurationCount() noexcept
+	static int64_t GetTimeZoneDurationCount(int32_t time_zone = g_local_time_zone) noexcept
 	{
-		return DurationCountToDuration<ToDuration,std::chrono::hours>(g_time_zone).count();
+		return DurationCountToDurationCount<ToDuration,std::chrono::hours>(time_zone);
 	}
 
 	/*
@@ -371,7 +413,7 @@ private:
 	* @return 持续时间计数所在天的起点时间，即当前时区自【1970-01-01 00:00:00】到【那天的08:00:00】所经过的持续时间
 	*/
 	template<class ToDuration = std::chrono::seconds,class FromDuration = std::chrono::seconds>
-	static uint64_t DurationCountToLocalTimeDayBegin(uint64_t duration_count) noexcept
+	static int64_t DurationCountToLocalTimeDayBegin(int64_t duration_count) noexcept
 	{
 		auto&& src_day = DurationCountToTimePoint<date::days, FromDuration>(duration_count);
 		auto&& src_day_duration_count = TimePointToDurationCount<date::sys_days::duration,ToDuration>(src_day);

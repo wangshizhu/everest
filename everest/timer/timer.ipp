@@ -8,7 +8,7 @@ extern thread_local Clock* g_tls_clock;
 template<class Duration>
 Timer<Duration>::Timer()
 	:duration_(0),
-	is_stop_(false),
+	is_stop_(true),
 	repeat_(false)
 {
 }
