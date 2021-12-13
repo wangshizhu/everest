@@ -15,7 +15,12 @@
 
 NAMESPACE_BEGIN
 
-// 本地时区
+/*
+* @brief 本地时区
+* 例如：
+* 北京时间（UTC时间 +8），则为8
+* 美国东部时间（UTC时间 -5），则为-5
+*/
 int32_t g_local_time_zone = 8;
 
 class TimeCapsule
@@ -55,11 +60,11 @@ public:
 	}
 
 	/*
-	* @brief 从本地时间持续时间计数转到目标时区持续时间计数
+	* @brief 从【本地时间持续时间计数代表的日历时间】转换到【目标时区相同日历时间持续时间计数】
 	* 例如：(1) 将北京时间（UTC时间+EST 8）1639238400秒(2021-12-12 00:00:00)转换为
 	* 【UTC时间+0】1639238400+8*3600 = 1639267200(2021-12-12 00:00:00)
 	* 
-	* (2) 将北京时间（UTC时间+EST 8）-28800秒(1970-01-01 00:00:00)转换为
+	* (2) 将北京时间（UTC时间+EST 8）- 28800秒(1970-01-01 00:00:00)转换为
 	* 【UTC时间+0】-28800+8*3600 = 0(1970-01-01 00:00:00)
 	* 
 	* (3) 将北京时间（UTC时间+EST 8）-28800秒(1970-01-01 00:00:00)转换为
@@ -77,6 +82,37 @@ public:
 		auto utc0 = local_duration_count + GetTimeZoneDurationCount<Duration>();
 
 		return utc0 - GetTimeZoneDurationCount<Duration>(dest_time_zone);
+	}
+
+	/*
+	* @brief 从【本地时间持续时间计数】转换到【目标时区时间持续时间计数】，
+	* 目标时区时间持续时间计数是基于本地时区而计算的结果，返回结果并不能应用于目标时区的时间计算，
+	* 例如下面例子(2)返回的结果是1639191600，将这个结果输入到本地时区是美国东部时间【UTC时间-5】的程序计算并不能求得【2021-12-11 11:00:00】这样的结果
+	* 
+	* 例如：
+	* (1) 将北京时间（UTC时间+EST 8）1639238400秒(2021-12-12 00:00:00)这一时刻对应于
+	* 【UTC时间+0】是1639238400 - 8*3600 = 1639209600(2021-12-11 16:00:00)
+	*
+	* (2) 将北京时间（UTC时间+EST 8）1639238400秒(2021-12-12 00:00:00)这一时刻对应于
+	* 美国东部时间【UTC时间-5】是1639238400 - 8*3600 - (5*3600) = 1639191600(2021-12-11 11:00:00)
+	*
+	* @param [in] local_duration_count 本地时间持续时间计数
+	* @param [in] dest_time_zone 目标时区
+	*
+	* @return 目标时区持续时间计数
+	*/
+	template<class Duration = std::chrono::seconds>
+	static int64_t DestTimeZoneDurationCountBaseOnLocalTimeZone(int64_t local_duration_count, int32_t dest_time_zone)
+	{
+		// 先转换到【UTC时间+0】对应的持续时间计数，再转化到目标时区持续时间计数
+		auto utc0 = local_duration_count - GetTimeZoneDurationCount<Duration>();
+
+		if (dest_time_zone < 0)
+		{
+			return utc0 - GetTimeZoneDurationCount<Duration>(std::abs(dest_time_zone));
+		}
+
+		return utc0 + GetTimeZoneDurationCount<Duration>(dest_time_zone);
 	}
 
 	/*
