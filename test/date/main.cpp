@@ -6,6 +6,7 @@
 #include "fmt/format.h"
 #include "fmt/chrono.h"
 #include "common/include.h"
+#include "effolkronium/random.hpp"
 
 int main()
 {
@@ -82,6 +83,10 @@ int main()
 		{
 			std::cout << "expired" << std::endl;
 		}
+	}
+
+	{
+		std::cout <<"rand(1,100):"<< effolkronium::random_thread_local::get(1, 100) << std::endl;
 	}
 
 	system("pause");

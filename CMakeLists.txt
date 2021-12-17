@@ -64,6 +64,7 @@ endif(BUILD_FMT)
 # everest source code
 # ---------------------------------------------------------------------------------------
 AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/everest/cmd_line src_list)
+AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/everest/timer src_list)
 
 MESSAGE(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 MESSAGE(STATUS "src list:"${src_list})

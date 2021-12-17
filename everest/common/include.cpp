@@ -1,4 +1,4 @@
-#include "include.h"
-
-NAMESPACE_BEGIN
-NAMESPACE_END
+//#include "include.h"
+//
+//NAMESPACE_BEGIN
+//NAMESPACE_END

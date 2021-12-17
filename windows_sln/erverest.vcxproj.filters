@@ -31,6 +31,9 @@
     <Filter Include="common">
       <UniqueIdentifier>{88750e19-d6d9-430c-bb58-9451a8298134}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rd\random">
+      <UniqueIdentifier>{c623766f-6143-4eb8-bba7-b829429f02ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\everest\singleton\singleton.h">
@@ -83,6 +86,9 @@
     </ClInclude>
     <ClInclude Include="..\everest\timer\clock.h">
       <Filter>timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rd\random\include\effolkronium\random.hpp">
+      <Filter>3rd\random</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
