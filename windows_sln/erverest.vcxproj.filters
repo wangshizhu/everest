@@ -34,6 +34,15 @@
     <Filter Include="3rd\random">
       <UniqueIdentifier>{c623766f-6143-4eb8-bba7-b829429f02ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="thread">
+      <UniqueIdentifier>{4befe43f-12a2-43c5-a60d-01a75b960b25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thread\include">
+      <UniqueIdentifier>{eba5e458-b003-441f-bee1-9fdfbb43c9cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thread\src">
+      <UniqueIdentifier>{34dd7c36-9e7b-4bdf-9976-52f0712b7eb5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\everest\singleton\singleton.h">
@@ -90,6 +99,9 @@
     <ClInclude Include="..\3rd\random\include\effolkronium\random.hpp">
       <Filter>3rd\random</Filter>
     </ClInclude>
+    <ClInclude Include="..\everest\thread\include\thread_base.h">
+      <Filter>thread\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\everest\cmd_line\command_line_parser.cpp">
@@ -100,6 +112,9 @@
     </ClCompile>
     <ClCompile Include="..\everest\timer\clock.cpp">
       <Filter>timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\thread\src\thread_base.cpp">
+      <Filter>thread\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

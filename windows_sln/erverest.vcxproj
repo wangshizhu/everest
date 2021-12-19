@@ -98,7 +98,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../3rd/date/include;%(AdditionalIncludeDirectories);../everest;../3rd/fmt/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../3rd/date/include;%(AdditionalIncludeDirectories);../everest;../everest/thread/include;../3rd/fmt/include;../3rd/asio-1.16.1/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -114,7 +114,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>;../everest;../everest/format/include;../everest/format/include;../3rd/fmt/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>;../everest;../everest/format/include;../everest/format/include;../3rd/fmt/include;../everest/thread/include;../3rd/asio-1.16.1/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,7 +130,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../3rd/date/include;%(AdditionalIncludeDirectories);../everest;../3rd/fmt/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../3rd/date/include;%(AdditionalIncludeDirectories);../everest;../everest/thread/include;../3rd/fmt/include;../3rd/asio-1.16.1/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,7 +146,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../everest;../3rd/fmt/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../everest;../3rd/fmt/include;../everest/thread/include;../3rd/asio-1.16.1/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -171,7 +171,9 @@
     <ClInclude Include="..\everest\multi_producer_multi_consumer\multi_producer_multi_consumer.h" />
     <ClInclude Include="..\everest\non_copyable\non_copyable.h" />
     <ClInclude Include="..\everest\singleton\singleton.h" />
+    <ClInclude Include="..\everest\thread\include\thread_base.h" />
     <ClInclude Include="..\everest\timer\clock.h" />
+    <ClCompile Include="..\everest\thread\src\thread_base.cpp" />
     <ClCompile Include="..\everest\timer\clock.cpp" />
     <ClInclude Include="..\everest\timer\timer.h" />
   </ItemGroup>

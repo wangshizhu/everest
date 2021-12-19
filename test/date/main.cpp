@@ -89,6 +89,12 @@ int main()
 		std::cout <<"rand(1,100):"<< effolkronium::random_thread_local::get(1, 100) << std::endl;
 	}
 
+	{
+		everest::ThreadBase tb = 1;
+		tb.Start();
+		tb.Join();
+	}
+
 	system("pause");
 	return 0;
 }

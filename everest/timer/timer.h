@@ -14,6 +14,12 @@ public:
 	Timer();
 	explicit Timer(uint32_t duration,bool repeat = false);
 
+	Timer(const Timer& t);
+	Timer& operator = (const Timer& t);
+
+	Timer(Timer&& t);
+	Timer& operator = (Timer&& t);
+
 public:
 	bool IsStop()const;
 

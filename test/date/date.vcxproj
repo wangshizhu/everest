@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../3rd/date/include;../../everest;../../3rd/fmt/include;../../3rd/random/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../3rd/asio-1.16.1/include;../../3rd/date/include;../../everest;../../everest/thread/include;../../3rd/fmt/include;../../3rd/random/include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -107,7 +107,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../everest;../../3rd/fmt/include;../../3rd/date/include;../../3rd/random/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../everest;../../3rd/fmt/include;../../3rd/date/include;../../3rd/random/include;../../everest/thread/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,7 +124,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../3rd/date/include;../../everest;../../3rd/fmt/include;../../3rd/random/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../3rd/asio-1.16.1/include;../../3rd/date/include;../../everest;../../everest/thread/include;../../3rd/fmt/include;../../3rd/random/include</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -143,7 +143,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../everest;../../3rd/fmt/include;../../3rd/date/include;../../3rd/random/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../everest;../../3rd/fmt/include;../../3rd/date/include;../../3rd/random/include;../../everest/thread/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

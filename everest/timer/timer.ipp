@@ -22,6 +22,30 @@ Timer<Duration>::Timer(uint32_t duration, bool repeat/* = false*/)
 }
 
 template<class Duration>
+Timer<Duration>::Timer(const Timer& t):Timer(t.duration_,t.repeat_)
+{
+}
+
+template<class Duration>
+Timer<Duration>& Timer<Duration>::operator=(const Timer& t)
+{
+	Timer(t.duration_, t.repeat_);
+	return *this;
+}
+
+template<class Duration>
+Timer<Duration>::Timer(Timer&& t) : Timer(t.duration_, t.repeat_)
+{
+}
+
+template<class Duration>
+Timer<Duration>& Timer<Duration>::operator=(Timer&& t)
+{
+	Timer(t.duration_, t.repeat_);
+	return *this;
+}
+
+template<class Duration>
 bool Timer<Duration>::IsStop() const
 {
 	return is_stop_;
