@@ -102,6 +102,9 @@
     <ClInclude Include="..\everest\thread\include\thread_base.h">
       <Filter>thread\include</Filter>
     </ClInclude>
+    <ClInclude Include="..\everest\thread\include\thread_pool.h">
+      <Filter>thread\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\everest\cmd_line\command_line_parser.cpp">
@@ -114,6 +117,9 @@
       <Filter>timer</Filter>
     </ClCompile>
     <ClCompile Include="..\everest\thread\src\thread_base.cpp">
+      <Filter>thread\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\thread\src\thread_pool.cpp">
       <Filter>thread\src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -90,7 +90,8 @@ int main()
 	}
 
 	{
-		everest::ThreadBase tb = 1;
+		everest::ThreadBase tb;
+		tb.SetUpdateInterval(std::chrono::milliseconds(1000));
 		tb.Start();
 		tb.Join();
 	}

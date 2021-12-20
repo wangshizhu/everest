@@ -2,8 +2,9 @@
 
 NAMESPACE_BEGIN
 
-ThreadBase::ThreadBase(uint32_t index)
-	:index_(index), run_timer_(context_), start_(false)
+ThreadBase::ThreadBase()
+	:index_(0), run_timer_(context_), interval_(THREAD_UPDATE_INTERVAL),
+	pending_num_(0)
 {
 }
 
@@ -11,7 +12,7 @@ ThreadBase::~ThreadBase()
 {
 }
 
-const char* ThreadBase::Name()
+const char* ThreadBase::Name()const
 {
 	return "ThreadBase";
 }
@@ -35,8 +36,6 @@ void ThreadBase::Start()
 	// 创建线程
 	std::thread t([context = &context_]() {context->run(); });
 	thread_.swap(t);
-
-	start_ = true;
 }
 
 void ThreadBase::Join()
@@ -51,23 +50,12 @@ void ThreadBase::Stop()
 
 void ThreadBase::Update()
 {
-}
-
-template<class T>
-void ThreadBase::Post(T&& t)
-{
-	context_.post(std::forward<T>(t));
-}
-
-template<class T>
-void ThreadBase::Dispatch(T&& t)
-{
-	context_.dispatch(std::forward<T>(t));
+	//std::cout << "name:" << FullName().c_str() << std::endl;
 }
 
 void ThreadBase::AddTimerTaskToActuateUpdate()
 {
-	run_timer_.expires_after(std::chrono::milliseconds(1000));
+	run_timer_.expires_after(interval_);
 	run_timer_.async_wait(
 		[this](const asio::error_code& code) 
 		{ 
@@ -83,7 +71,11 @@ void ThreadBase::AddTimerTaskToActuateUpdate()
 			// 拨动线程时钟
 			this->clock_.TickTock();
 
+			TRY_MACRO
+
 			this->Update();
+
+			CATCH_MACRO
 		});
 }
 
@@ -100,6 +92,21 @@ bool ThreadBase::IsSameThread()const
 bool ThreadBase::IsStopped()const
 {
 	return context_.stopped();
+}
+
+asio::io_context& ThreadBase::GetIoContext()
+{
+	return context_;
+}
+
+std::size_t ThreadBase::PendingNum()
+{
+	return pending_num_;
+}
+
+std::string ThreadBase::FullName()const
+{
+	return fmt::format("{}-{}", Name(), index_);
 }
 
 NAMESPACE_END

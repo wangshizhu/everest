@@ -172,8 +172,10 @@
     <ClInclude Include="..\everest\non_copyable\non_copyable.h" />
     <ClInclude Include="..\everest\singleton\singleton.h" />
     <ClInclude Include="..\everest\thread\include\thread_base.h" />
+    <ClInclude Include="..\everest\thread\include\thread_pool.h" />
     <ClInclude Include="..\everest\timer\clock.h" />
     <ClCompile Include="..\everest\thread\src\thread_base.cpp" />
+    <ClCompile Include="..\everest\thread\src\thread_pool.cpp" />
     <ClCompile Include="..\everest\timer\clock.cpp" />
     <ClInclude Include="..\everest\timer\timer.h" />
   </ItemGroup>
