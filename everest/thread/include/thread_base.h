@@ -14,6 +14,7 @@ public:
 public:
 	virtual const char* Name();
 	virtual bool Init();
+	virtual void Update();
 
 public:
 	void Start();
@@ -22,13 +23,21 @@ public:
 
 	void Stop();
 
-	void Update();
-
 	template<class T>
 	void Post(T&& t);
 
 	template<class T>
 	void Dispatch(T&& t);
+
+	void SetThreadIndex(uint32_t index);
+
+	bool IsSameThread()const;
+
+	bool IsStopped()const;
+
+private:
+	// 增加定时任务，这个任务为了驱动本线程Update
+	void AddTimerTaskToActuateUpdate();
 
 private:
 	// 线程执行环境
