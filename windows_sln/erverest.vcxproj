@@ -99,6 +99,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>../3rd/date/include;%(AdditionalIncludeDirectories);../everest;../everest/3rd;../everest/thread/include;../3rd/fmt/include;../3rd/asio-1.16.1/include;../3rd/spd/include</AdditionalIncludeDirectories>
+      <AdditionalModuleDependencies>%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,6 +132,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>../3rd/date/include;%(AdditionalIncludeDirectories);../everest;../everest/3rd;../everest/thread/include;../3rd/fmt/include;../3rd/asio-1.16.1/include;../3rd/spd/include</AdditionalIncludeDirectories>
+      <AdditionalModuleDependencies>%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -171,12 +173,29 @@
     <ClInclude Include="..\everest\multi_producer_multi_consumer\multi_producer_multi_consumer.h" />
     <ClInclude Include="..\everest\non_copyable\non_copyable.h" />
     <ClInclude Include="..\everest\singleton\singleton.h" />
+    <ClInclude Include="..\everest\spdlog_wrapper\everest_spdlog.h" />
+    <ClInclude Include="..\everest\spdlog_wrapper\logger_create_info.h" />
     <ClInclude Include="..\everest\thread\include\thread_base.h" />
     <ClInclude Include="..\everest\thread\include\thread_pool.h" />
     <ClInclude Include="..\everest\timer\clock.h" />
-    <ClCompile Include="..\everest\thread\src\thread_base.cpp" />
-    <ClCompile Include="..\everest\thread\src\thread_pool.cpp" />
-    <ClCompile Include="..\everest\timer\clock.cpp" />
+    <ClCompile Include="..\everest\spdlog_wrapper\everest_spdlog.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\everest\spdlog_wrapper\logger_create_info.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\everest\thread\src\thread_base.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\everest\thread\src\thread_pool.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\everest\timer\clock.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClInclude Include="..\everest\timer\timer.h" />
   </ItemGroup>
   <ItemGroup>

@@ -96,7 +96,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../libs</AdditionalLibraryDirectories>
-      <AdditionalDependencies>everest.lib;date.lib;fmt.lib;spd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>everest.lib;date.lib;fmt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -132,7 +132,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../libs</AdditionalLibraryDirectories>
-      <AdditionalDependencies>everest.lib;date.lib;fmt.lib;spd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>everest.lib;date.lib;fmt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

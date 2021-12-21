@@ -43,6 +43,9 @@
     <Filter Include="thread\src">
       <UniqueIdentifier>{34dd7c36-9e7b-4bdf-9976-52f0712b7eb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="spdlog_wrapper">
+      <UniqueIdentifier>{60d5de10-2104-43cc-9e31-8cc38b0fb5f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\everest\singleton\singleton.h">
@@ -105,6 +108,12 @@
     <ClInclude Include="..\everest\thread\include\thread_pool.h">
       <Filter>thread\include</Filter>
     </ClInclude>
+    <ClInclude Include="..\everest\spdlog_wrapper\everest_spdlog.h">
+      <Filter>spdlog_wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\spdlog_wrapper\logger_create_info.h">
+      <Filter>spdlog_wrapper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\everest\cmd_line\command_line_parser.cpp">
@@ -121,6 +130,12 @@
     </ClCompile>
     <ClCompile Include="..\everest\thread\src\thread_pool.cpp">
       <Filter>thread\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\spdlog_wrapper\everest_spdlog.cpp">
+      <Filter>spdlog_wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\spdlog_wrapper\logger_create_info.cpp">
+      <Filter>spdlog_wrapper</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

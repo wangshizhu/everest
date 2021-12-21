@@ -181,7 +181,6 @@
     <ClInclude Include="..\..\3rd\spd\include\spdlog\details\thread_pool-inl.h" />
     <ClInclude Include="..\..\3rd\spd\include\spdlog\details\thread_pool.h" />
     <ClInclude Include="..\..\3rd\spd\include\spdlog\details\windows_include.h" />
-    <ClInclude Include="..\..\3rd\spd\include\spdlog\everest_spdlog.h" />
     <ClInclude Include="..\..\3rd\spd\include\spdlog\fmt\bin_to_hex.h" />
     <ClInclude Include="..\..\3rd\spd\include\spdlog\fmt\bundled\chrono.h" />
     <ClInclude Include="..\..\3rd\spd\include\spdlog\fmt\bundled\color.h" />
@@ -202,7 +201,6 @@
     <ClInclude Include="..\..\3rd\spd\include\spdlog\fwd.h" />
     <ClInclude Include="..\..\3rd\spd\include\spdlog\logger-inl.h" />
     <ClInclude Include="..\..\3rd\spd\include\spdlog\logger.h" />
-    <ClInclude Include="..\..\3rd\spd\include\spdlog\logger_create_info.h" />
     <ClInclude Include="..\..\3rd\spd\include\spdlog\pattern_formatter-inl.h" />
     <ClInclude Include="..\..\3rd\spd\include\spdlog\pattern_formatter.h" />
     <ClInclude Include="..\..\3rd\spd\include\spdlog\sinks\android_sink.h" />

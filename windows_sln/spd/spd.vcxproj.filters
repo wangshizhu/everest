@@ -113,9 +113,6 @@
     <ClInclude Include="..\..\3rd\spd\include\spdlog\details\windows_include.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\3rd\spd\include\spdlog\everest_spdlog.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\3rd\spd\include\spdlog\fmt\bin_to_hex.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -174,9 +171,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rd\spd\include\spdlog\logger.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rd\spd\include\spdlog\logger_create_info.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rd\spd\include\spdlog\pattern_formatter-inl.h">

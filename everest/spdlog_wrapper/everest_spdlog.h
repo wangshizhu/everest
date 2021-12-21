@@ -6,7 +6,7 @@
 #include "spdlog/spdlog.h"
 #include "spdlog/logger.h"
 #include "spdlog/logger.h"
-#include "spdlog/logger_create_info.h"
+#include "logger_create_info.h"
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/async.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
@@ -29,36 +29,7 @@ namespace everest
 		return MakeSequenceByType(std::move(t), std::make_index_sequence<sizeof(T::get()) - 1>());
 	}
 
-	void GetSinksByLoggerCreateInfo(std::vector<spdlog::sink_ptr>& sinks, const std::string& logger_name,const LoggerCreateInfo& info)
-	{
-		// 是否输出到控制台
-		if (info.to_stdout)
-		{
-			sinks.push_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
-		}
-
-		if (info.daily && info.rotate)
-		{
-			auto daily_sink = std::make_shared<spdlog::sinks::daily_rotating_file_sink_mt>(logger_name, info.log_file_size, 0, 0, false);
-			sinks.push_back(daily_sink);
-		}
-		else
-		{
-			// 每天固定时间产生新log文件
-			if (info.daily)
-			{
-				auto daily_sink = std::make_shared<spdlog::sinks::daily_file_sink_mt>(logger_name, 0, 0, false);
-				sinks.push_back(daily_sink);
-			}
-
-			// 按照文件大小产生新log文件
-			if (info.rotate)
-			{
-				auto rotating_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(logger_name, info.log_file_size, 3);
-				sinks.push_back(rotating_sink);
-			}
-		}
-	}
+	void GetSinksByLoggerCreateInfo(std::vector<spdlog::sink_ptr>& sinks, const std::string& logger_name, const LoggerCreateInfo& info);
 
 	template<class T>
 	struct AsyncLoggerFactory
@@ -145,7 +116,7 @@ everest::CreateAsyncLogger<decltype(result)>(std::string(LOGGER_NAME),LOGGER_CRE
 auto&& logger = spdlog::get(LOGGER_NAME);\
 if(nullptr == logger)\
 {\
-auto&& info = spdlog::details::registry::instance().get_logger_create_info();\
+auto&& info = CreateInfoFactory::GetLoggerCreateInfo();\
 CREATE_LOGGER(LOGGER_NAME,info);\
 logger = spdlog::get(LOGGER_NAME);\
 }\
@@ -159,7 +130,7 @@ logger->log(spdlog::source_loc{__FILE__, __LINE__, SPDLOG_FUNCTION}, LEVEL, __VA
 
 #define CREATE_DEFAULT_LOGGER(LOGGER_NAME,LOGGER_CREATE_INFO) \
 {\
-spdlog::details::registry::instance().set_logger_create_info(LOGGER_CREATE_INFO);\
+SetLoggerCreateInfo(LOGGER_CREATE_INFO);\
 CREATE_LOGGER(LOGGER_NAME,LOGGER_CREATE_INFO);\
 auto&& logger = spdlog::get(LOGGER_NAME);\
 spdlog::set_default_logger(logger);\

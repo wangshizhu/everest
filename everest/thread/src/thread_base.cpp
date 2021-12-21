@@ -1,4 +1,4 @@
-#include "common/include.h"
+//#include "common/include.h"
 
 NAMESPACE_BEGIN
 
@@ -57,7 +57,7 @@ void ThreadBase::Stop()
 
 void ThreadBase::Update()
 {
-	//EVEREST_LOG_INFO("name:{}", FullName().c_str());
+	EVEREST_LOG_INFO("name:{}", FullName().c_str());
 	//std::cout << "name:" << FullName().c_str() << std::endl;
 }
 
