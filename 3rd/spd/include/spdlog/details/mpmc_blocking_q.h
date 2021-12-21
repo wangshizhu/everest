@@ -11,7 +11,9 @@
 // passed.
 
 #include <spdlog/details/circular_q.h>
+#ifdef USE_LOCK_FREE_QUEUE  
 #include <lock-free-queue/concurrentqueue.h>
+#endif
 
 #include <condition_variable>
 #include <mutex>

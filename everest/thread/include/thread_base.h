@@ -26,10 +26,10 @@ public:
 	template<class T>
 	void Post(T&& cb)
 	{
-		++pending_num_;
+		pending_num_++;
 		context_.post([this,task = std::forward<T>(cb)]
 			{
-				--pending_num_;
+				pending_num_--;
 				
 				TRY_MACRO
 				task();
@@ -40,10 +40,10 @@ public:
 	template<class T>
 	void Dispatch(T&& cb)
 	{
-		++pending_num_;
+		pending_num_++;
 		context_.dispatch([this,task = std::forward<T>(cb)]
 			{
-				--pending_num_;
+				pending_num_--;
 				
 				TRY_MACRO
 				task();
@@ -65,7 +65,7 @@ public:
 
 	asio::io_context& GetIoContext();
 
-	std::size_t PendingNum();
+	std::size_t PendingNum()const;
 
 	std::string FullName()const;
 
@@ -90,7 +90,10 @@ private:
 	std::chrono::steady_clock::duration interval_;
 
 	// 未处理任务数量
-	std::size_t pending_num_;
+	std::atomic_size_t pending_num_;
+
+	// 线程start 标识
+	std::atomic_flag  started_;
 
 	std::thread thread_;
 };

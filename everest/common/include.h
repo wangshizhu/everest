@@ -5,6 +5,7 @@
 #include <thread>
 #include <iostream>
 
+#include "spdlog/everest_spdlog.h"
 #include "define.h"
 #include "timer/clock.h"
 #include "timer/timer.h"

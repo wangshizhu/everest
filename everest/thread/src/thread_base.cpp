@@ -6,6 +6,7 @@ ThreadBase::ThreadBase()
 	:index_(0), run_timer_(context_), interval_(THREAD_UPDATE_INTERVAL),
 	pending_num_(0)
 {
+	started_.clear();
 }
 
 ThreadBase::~ThreadBase()
@@ -24,6 +25,12 @@ bool ThreadBase::Init()
 
 void ThreadBase::Start()
 {
+	if (started_.test_and_set())
+	{
+		// TODO: 记录重复启动的日志
+		return;
+	}
+
 	// 线程时钟重置
 	clock_.Restart();
 
@@ -50,6 +57,7 @@ void ThreadBase::Stop()
 
 void ThreadBase::Update()
 {
+	//EVEREST_LOG_INFO("name:{}", FullName().c_str());
 	//std::cout << "name:" << FullName().c_str() << std::endl;
 }
 
@@ -99,7 +107,7 @@ asio::io_context& ThreadBase::GetIoContext()
 	return context_;
 }
 
-std::size_t ThreadBase::PendingNum()
+std::size_t ThreadBase::PendingNum()const
 {
 	return pending_num_;
 }
