@@ -6,7 +6,7 @@
 #include <iostream>
 
 // 通用定义
-#include "define.h"
+#include "common/define.h"
 
 // log相关
 #include "spdlog_wrapper/logger_create_info.h"

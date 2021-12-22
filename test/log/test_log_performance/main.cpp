@@ -14,6 +14,7 @@
 #include <future>
 #include <string>
 
+#include "common/include.h"
 #include "singleton/singleton.h"
 #include "cmd_line/command_line_parser.h"
 
@@ -24,10 +25,8 @@
 #include "spdlog/logger.h"
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/async.h"
-#include "spdlog/everest_spdlog.h"
-#include "spdlog/logger_create_info.h"
 
-namespace spd = spdlog;
+//namespace spd = spdlog;
 
 #else
 #include "format/format.h"

@@ -116,7 +116,7 @@ everest::CreateAsyncLogger<decltype(result)>(std::string(LOGGER_NAME),LOGGER_CRE
 auto&& logger = spdlog::get(LOGGER_NAME);\
 if(nullptr == logger)\
 {\
-auto&& info = CreateInfoFactory::GetLoggerCreateInfo();\
+auto&& info = everest::CreateInfoFactory::GetLoggerCreateInfo();\
 CREATE_LOGGER(LOGGER_NAME,info);\
 logger = spdlog::get(LOGGER_NAME);\
 }\
