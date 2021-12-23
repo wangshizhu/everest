@@ -114,6 +114,9 @@
     <ClInclude Include="..\everest\spdlog_wrapper\logger_create_info.h">
       <Filter>spdlog_wrapper</Filter>
     </ClInclude>
+    <ClInclude Include="..\everest\thread\src\thread_pool.ipp">
+      <Filter>thread\src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\everest\cmd_line\command_line_parser.cpp">
@@ -126,9 +129,6 @@
       <Filter>timer</Filter>
     </ClCompile>
     <ClCompile Include="..\everest\thread\src\thread_base.cpp">
-      <Filter>thread\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\everest\thread\src\thread_pool.cpp">
       <Filter>thread\src</Filter>
     </ClCompile>
     <ClCompile Include="..\everest\spdlog_wrapper\everest_spdlog.cpp">
