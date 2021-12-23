@@ -3,8 +3,7 @@
 
 NAMESPACE_BEGIN
 
-template<class ThreadType,
-	typename std::enable_if_t<std::is_base_of_v<everest::ThreadBase,ThreadType>,int> = 0>
+template<class ThreadType>
 class ThreadPool : public everest::NonCopyable
 {
 public:
@@ -12,6 +11,7 @@ public:
 	virtual ~ThreadPool();
 
 public:
+	virtual const char* Name()const;
 	virtual bool Init();
 
 public:
@@ -19,8 +19,27 @@ public:
 
 	void StopAll();
 
+	void JoinAll();
+
 	template<class T>
 	void PostAll(T&& cb);
+
+	template<class T>
+	void PostAny(T&& cb);
+
+	template<class T,class K>
+	void PostByKey(T&& cb,K&& key);
+
+	template<class T>
+	void PostByIndex(T&& cb,std::size_t index);
+
+private:
+	void CreateAllThread();
+
+	template<class K>
+	std::size_t CalculateHashValue(K&& key) const;
+
+	std::size_t GetThreadIndexByHashValue(std::size_t hash_value) const;
 
 private:
 	std::size_t pool_size_;

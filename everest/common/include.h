@@ -8,6 +8,9 @@
 // 通用定义
 #include "common/define.h"
 
+// 随机数
+#include "effolkronium/random.hpp"
+
 // log相关
 #include "spdlog_wrapper/logger_create_info.h"
 #include "spdlog_wrapper/everest_spdlog.h"

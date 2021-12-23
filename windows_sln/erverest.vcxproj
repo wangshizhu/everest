@@ -98,7 +98,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../3rd/date/include;%(AdditionalIncludeDirectories);../everest;../everest/3rd;../everest/thread/include;../3rd/fmt/include;../3rd/asio-1.16.1/include;../3rd/spd/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../3rd/date/include;%(AdditionalIncludeDirectories);../everest;../everest/3rd;../everest/thread/include;../3rd/fmt/include;../3rd/asio-1.16.1/include;../3rd/spd/include;../3rd/random/include</AdditionalIncludeDirectories>
       <AdditionalModuleDependencies>%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
     </ClCompile>
     <Link>
@@ -115,7 +115,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>;../everest;../everest/format/include;../everest/format/include;../3rd/fmt/include;../everest/thread/include;../3rd/asio-1.16.1/include;../3rd/spd/include;../everest/3rd</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>;../everest;../everest/format/include;../everest/format/include;../3rd/fmt/include;../everest/thread/include;../3rd/asio-1.16.1/include;../3rd/spd/include;../everest/3rd;../3rd/random/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,7 +131,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../3rd/date/include;%(AdditionalIncludeDirectories);../everest;../everest/3rd;../everest/thread/include;../3rd/fmt/include;../3rd/asio-1.16.1/include;../3rd/spd/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../3rd/date/include;%(AdditionalIncludeDirectories);../everest;../everest/3rd;../everest/thread/include;../3rd/fmt/include;../3rd/asio-1.16.1/include;../3rd/spd/include;../3rd/random/include</AdditionalIncludeDirectories>
       <AdditionalModuleDependencies>%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
     </ClCompile>
     <Link>
@@ -148,7 +148,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../everest;../3rd/fmt/include;../everest/thread/include;../3rd/asio-1.16.1/include;../3rd/spd/include;../everest/3rd</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../everest;../3rd/fmt/include;../everest/thread/include;../3rd/asio-1.16.1/include;../3rd/spd/include;../everest/3rd;../3rd/random/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

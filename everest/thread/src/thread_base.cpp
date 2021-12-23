@@ -27,7 +27,8 @@ void ThreadBase::Start()
 {
 	if (started_.test_and_set())
 	{
-		// TODO: 记录重复启动的日志
+		EVEREST_LOG_ERROR("ThreadBase::Start thread started yet,thread_name:{}",FullName().c_str());
+
 		return;
 	}
 
@@ -69,7 +70,9 @@ void ThreadBase::AddTimerTaskToActuateUpdate()
 		{ 
 			if (code)
 			{
-				// TODO: 增加日志
+				EVEREST_LOG_ERROR("ThreadBase::AddTimerTaskToActuateUpdate error,thread_name:{},error_code:{},error_message:{}",
+					FullName().c_str(),int32_t(code.value()),code.message());
+
 				return;
 			}
 

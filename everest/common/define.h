@@ -5,6 +5,7 @@
 #define NAMESPACE_END }
 
 #define EVEREST_LOG_INFO(...) NAMED_LOG_INFO("everest",__VA_ARGS__)
+#define EVEREST_LOG_ERROR(...) NAMED_LOG_ERROR("everest",__VA_ARGS__)
 
 // 线程Update更新时间间隔,100ms
 #define THREAD_UPDATE_INTERVAL (1000*1000*100)
