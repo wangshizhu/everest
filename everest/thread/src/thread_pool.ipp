@@ -64,7 +64,7 @@ void ThreadPool<ThreadType>::PostAll(T&& cb)
 {
 	for (auto&& one : threads_)
 	{
-		one->Post(std::forward<T>(cb));
+		one->Post(cb);
 	}
 }
 
@@ -115,7 +115,7 @@ template<class ThreadType>
 template<class K>
 std::size_t ThreadPool<ThreadType>::CalculateHashValue(K&& key)const
 {
-	return std::hash<K>{}(key);
+	return std::hash<K>{}(std::forward<K>(key));
 }
 
 template<class ThreadType>
