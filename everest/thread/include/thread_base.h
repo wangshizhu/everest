@@ -7,14 +7,40 @@ NAMESPACE_BEGIN
 
 class ThreadBase : public everest::NonCopyable
 {
+	struct PrivateFlag {};
+
 public:
-	ThreadBase();
+	ThreadBase(const PrivateFlag& placehold);
+
 	virtual ~ThreadBase();
 
 public:
+	// 线程名称
 	virtual const char* Name()const;
+
+	// 初始化线程
 	virtual bool Init();
+
+	// 线程更新
 	virtual void Update();
+
+	// 线程启动
+	virtual void OnStart();
+
+public:
+	/*
+	* @brief 创建线程的工厂函数，创建线程必须调用此函数，否则编译失败
+	*/
+	template<class ThreadType,typename... Args>
+	static std::shared_ptr<ThreadType> CreateThread(Args&&... args)
+	{
+		auto ptr = std::make_shared<ThreadType>(std::forward<Args>(args)...,PrivateFlag());
+
+		auto&& thread_monitor = ControlMonitorSingleton::GetInstance()->GetThreadMonitor();
+		thread_monitor.RegisterThread(ptr);
+
+		return ptr;
+	}
 
 public:
 	void Start();
@@ -27,7 +53,7 @@ public:
 	void Post(T&& cb)
 	{
 		pending_num_++;
-		context_.post([this,task = std::forward<T>(cb)]
+		context_.post([this,task = std::forward<T>(cb)]()mutable
 			{
 				pending_num_--;
 				
@@ -41,7 +67,7 @@ public:
 	void Dispatch(T&& cb)
 	{
 		pending_num_++;
-		context_.dispatch([this,task = std::forward<T>(cb)]
+		context_.dispatch([this,task = std::forward<T>(cb)]()mutable
 			{
 				pending_num_--;
 				
@@ -59,6 +85,8 @@ public:
 		interval_ = std::chrono::duration_cast<std::chrono::steady_clock::duration>(d);
 	}
 
+	void Snapshot(std::shared_ptr<ThreadBase> to, SnapshotCb&& cb);
+
 	bool IsSameThread()const;
 
 	bool IsStopped()const;
@@ -68,6 +96,8 @@ public:
 	std::size_t PendingNum()const;
 
 	std::string FullName()const;
+
+	ThreadIdType ThisThreadId() const;
 
 private:
 	// 增加定时任务，这个任务为了驱动本线程Update
@@ -94,6 +124,10 @@ private:
 
 	// 线程start 标识
 	std::atomic_flag  started_;
+	bool started_flag_;
+
+	// 单次update执行最大时间
+	uint64_t execute_once_max_time_;
 
 	std::thread thread_;
 };

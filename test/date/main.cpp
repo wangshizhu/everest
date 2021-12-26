@@ -3,8 +3,6 @@
 #include <time.h>
 #include <thread>
 #include "date/time_capsule.h"
-//#include "fmt/format.h"
-//#include "fmt/chrono.h"
 #include "common/include.h"
 
 int main()
@@ -90,10 +88,15 @@ int main()
 	}
 
 	{
-		everest::ThreadBase tb;
-		tb.SetUpdateInterval(std::chrono::milliseconds(1000));
-		tb.Start();
-		tb.Join();
+		auto tb = everest::ThreadBase::CreateThread<everest::ThreadBase>();
+		tb->SetUpdateInterval(std::chrono::seconds(1));
+		tb->Start();
+
+		auto monitor = everest::ThreadBase::CreateThread<everest::MonitorThread>();
+		monitor->Start();
+
+		tb->Join();
+		monitor->Join();
 	}
 
 	system("pause");

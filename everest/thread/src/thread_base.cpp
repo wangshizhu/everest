@@ -1,10 +1,9 @@
-//#include "common/include.h"
 
 NAMESPACE_BEGIN
 
-ThreadBase::ThreadBase()
+ThreadBase::ThreadBase(const PrivateFlag& placehold)
 	:index_(0), run_timer_(context_), interval_(THREAD_UPDATE_INTERVAL),
-	pending_num_(0)
+	pending_num_(0), started_flag_(false), execute_once_max_time_(0)
 {
 	started_.clear();
 }
@@ -32,6 +31,8 @@ void ThreadBase::Start()
 		return;
 	}
 
+	started_flag_ = true;
+
 	// 线程时钟重置
 	clock_.Restart();
 
@@ -44,6 +45,9 @@ void ThreadBase::Start()
 	// 创建线程
 	std::thread t([context = &context_]() {context->run(); });
 	thread_.swap(t);
+
+	// 向子类传递启动事件
+	OnStart();
 }
 
 void ThreadBase::Join()
@@ -58,8 +62,10 @@ void ThreadBase::Stop()
 
 void ThreadBase::Update()
 {
-	EVEREST_LOG_INFO("name:{}", FullName().c_str());
-	//std::cout << "name:" << FullName().c_str() << std::endl;
+}
+
+void ThreadBase::OnStart()
+{
 }
 
 void ThreadBase::AddTimerTaskToActuateUpdate()
@@ -84,9 +90,37 @@ void ThreadBase::AddTimerTaskToActuateUpdate()
 
 			TRY_MACRO
 
+			// 记录更新起始时间
+			auto&& begin_time = std::chrono::steady_clock::now();
+
+			// 业务逻辑更新
 			this->Update();
 
+			// 记录更新结束时间
+			auto&& end_time = std::chrono::steady_clock::now();
+
+			// 更新一次所花费的时间
+			execute_once_max_time_ = std::max(execute_once_max_time_, uint64_t((end_time - begin_time).count()));
+
 			CATCH_MACRO
+		});
+}
+
+void ThreadBase::Snapshot(std::shared_ptr<ThreadBase> to, SnapshotCb&& cb)
+{
+	Post([to = to,cb = std::move(cb),this] () mutable 
+		{
+			ThreadMonitorData data;
+			data.thread_id_ = this->ThisThreadId();
+			data.thread_full_name_ = this->FullName();
+			data.pending_num_ = this->PendingNum();
+			data.interval_ = this->interval_;
+			data.last_timepoint_ = this->clock_.LatestTimePoint();
+			data.execute_once_max_time_ = this->execute_once_max_time_;
+			data.thread_state_flag_.set(ThreadStateBitFlag::kStartedPos, this->started_flag_);
+			data.thread_state_flag_.set(ThreadStateBitFlag::kStoppedPos, this->IsStopped());
+
+			to->Post([cb = std::move(cb), data = std::move(data)]()mutable{ cb(std::move(data)); });
 		});
 }
 
@@ -118,6 +152,14 @@ std::size_t ThreadBase::PendingNum()const
 std::string ThreadBase::FullName()const
 {
 	return fmt::format("{}-{}", Name(), index_);
+}
+
+ThreadIdType ThreadBase::ThisThreadId() const
+{
+	std::stringstream tmp;
+	tmp << thread_.get_id();
+
+	return atoll(tmp.str().c_str());
 }
 
 NAMESPACE_END

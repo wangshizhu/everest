@@ -46,6 +46,15 @@
     <Filter Include="spdlog_wrapper">
       <UniqueIdentifier>{60d5de10-2104-43cc-9e31-8cc38b0fb5f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="control_monitor">
+      <UniqueIdentifier>{ea292fd0-1ef4-4ba3-947b-29a86e8c8ecd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="control_monitor\include">
+      <UniqueIdentifier>{622192e4-e827-4313-8943-046d3584f4da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="control_monitor\src">
+      <UniqueIdentifier>{bebcc3bc-5445-42f1-8ef4-03753aae9e0e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\everest\singleton\singleton.h">
@@ -117,6 +126,18 @@
     <ClInclude Include="..\everest\thread\src\thread_pool.ipp">
       <Filter>thread\src</Filter>
     </ClInclude>
+    <ClInclude Include="..\everest\control_monitor\include\control_monitor.h">
+      <Filter>control_monitor\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\control_monitor\include\thread_monitor.h">
+      <Filter>control_monitor\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\control_monitor\include\thread_monitor_data.h">
+      <Filter>control_monitor\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\thread\include\monitor_thread.h">
+      <Filter>thread\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\everest\cmd_line\command_line_parser.cpp">
@@ -136,6 +157,15 @@
     </ClCompile>
     <ClCompile Include="..\everest\spdlog_wrapper\logger_create_info.cpp">
       <Filter>spdlog_wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\control_monitor\src\control_monitor.cpp">
+      <Filter>control_monitor\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\control_monitor\src\thread_monitor.cpp">
+      <Filter>control_monitor\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\thread\src\monitor_thread.cpp">
+      <Filter>thread\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

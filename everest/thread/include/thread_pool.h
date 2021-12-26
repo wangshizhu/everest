@@ -43,7 +43,7 @@ private:
 
 private:
 	std::size_t pool_size_;
-	std::vector<std::unique_ptr<ThreadType>> threads_;
+	std::vector<std::shared_ptr<ThreadType>> threads_;
 };
 
 NAMESPACE_END

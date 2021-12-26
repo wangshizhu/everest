@@ -12,6 +12,8 @@
 #define THREAD_POOL_MIN_SIZE (2)
 #define THREAD_POOL_MAX_SIZE (10)
 
+#define ONE_BYTE_TO_BIT (8)
+
 // try∫Í∂®“Â
 #define TRY_MACRO try{
 
@@ -23,5 +25,11 @@ catch(const std::exception& e) \
 catch (...) \
 { \
 }
+
+NAMESPACE_BEGIN
+
+using ThreadIdType = std::size_t;
+
+NAMESPACE_END
 
 #endif

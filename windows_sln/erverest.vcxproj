@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -168,6 +168,9 @@
     <ClInclude Include="..\everest\cmd_line\command_line_parser.h" />
     <ClInclude Include="..\everest\common\define.h" />
     <ClInclude Include="..\everest\common\include.h" />
+    <ClInclude Include="..\everest\control_monitor\include\control_monitor.h" />
+    <ClInclude Include="..\everest\control_monitor\include\thread_monitor.h" />
+    <ClInclude Include="..\everest\control_monitor\include\thread_monitor_data.h" />
     <ClInclude Include="..\everest\multi_producer_multi_consumer\circular_queue.h" />
     <ClInclude Include="..\everest\multi_producer_multi_consumer\move_on_copy.h" />
     <ClInclude Include="..\everest\multi_producer_multi_consumer\multi_producer_multi_consumer.h" />
@@ -175,14 +178,33 @@
     <ClInclude Include="..\everest\singleton\singleton.h" />
     <ClInclude Include="..\everest\spdlog_wrapper\everest_spdlog.h" />
     <ClInclude Include="..\everest\spdlog_wrapper\logger_create_info.h" />
+    <ClInclude Include="..\everest\thread\include\monitor_thread.h" />
     <ClInclude Include="..\everest\thread\include\thread_base.h" />
     <ClInclude Include="..\everest\thread\include\thread_pool.h" />
     <ClInclude Include="..\everest\timer\clock.h" />
+    <ClCompile Include="..\everest\control_monitor\src\control_monitor.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\everest\control_monitor\src\thread_monitor.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\everest\spdlog_wrapper\everest_spdlog.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\everest\spdlog_wrapper\logger_create_info.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\everest\thread\src\monitor_thread.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\everest\thread\src\thread_base.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -199,7 +221,12 @@
     <ClInclude Include="..\everest\timer\timer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\everest\cmd_line\command_line_parser.cpp" />
+    <ClCompile Include="..\everest\cmd_line\command_line_parser.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\everest\common\include.cpp" />
     <ClInclude Include="..\everest\timer\timer.ipp" />
   </ItemGroup>

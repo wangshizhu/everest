@@ -9,7 +9,7 @@ ThreadPool<ThreadType>::ThreadPool(std::size_t pool_size)
 
 	threads_.reserve(pool_size_);
 
-	EVEREST_LOG_INFO("ThreadPool pool_size_:{},param_pool_size:{}",pool_size_, pool_size);
+	EVEREST_LOG_INFO("ThreadPool name:{} ,pool_size_: {}, param_pool_size : {}", Name(),pool_size_, pool_size);
 }
 
 template<class ThreadType>
@@ -104,10 +104,10 @@ void ThreadPool<ThreadType>::CreateAllThread()
 {
 	for (std::size_t i = 0; i < pool_size_; ++i)
 	{
-		auto tmp = std::make_unique<ThreadType>();
+		auto tmp = ThreadBase::CreateThread<ThreadType>();
 		tmp->SetThreadIndex(i);
 
-		threads_.emplace_back(std::move(tmp));
+		threads_.emplace_back(tmp);
 	}
 }
 
