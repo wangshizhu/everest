@@ -35,14 +35,14 @@
 #include "fmt/format.h"
 
 // 监控器
-#include "control_monitor/include/thread_monitor_data.h"
-#include "control_monitor/include/thread_monitor.h"
-#include "control_monitor/include/control_monitor.h"
+#include "control_monitor/thread_monitor_data.h"
+#include "control_monitor/thread_monitor.h"
+#include "control_monitor/control_monitor.h"
 
 // 线程相关
-#include "thread_base.h"
-#include "thread_pool.h"
-#include "monitor_thread.h"
+#include "thread/thread_base.h"
+#include "thread/thread_pool.h"
+#include "thread/monitor_thread.h"
 
 
 

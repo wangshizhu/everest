@@ -48,6 +48,6 @@ private:
 
 NAMESPACE_END
 
-#include "../src/thread_pool.ipp"
+#include "thread/src/thread_pool.ipp"
 
 #endif

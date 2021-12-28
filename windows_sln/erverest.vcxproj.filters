@@ -55,6 +55,30 @@
     <Filter Include="control_monitor\src">
       <UniqueIdentifier>{bebcc3bc-5445-42f1-8ef4-03753aae9e0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="spdlog_wrapper\include">
+      <UniqueIdentifier>{9cb81e50-db19-43b3-a550-47d91da4a470}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="spdlog_wrapper\src">
+      <UniqueIdentifier>{90ee056f-75ef-4153-ae17-c8273a2e9d84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="timer\include">
+      <UniqueIdentifier>{e3ccfad1-ebbd-4eb0-a83f-125701acc8bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="timer\src">
+      <UniqueIdentifier>{5d674dc9-6317-4118-ac92-545dd558d6a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cmd_line\include">
+      <UniqueIdentifier>{4f86ed11-a8bf-45de-b362-a8c8e7d4ce86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cmd_line\src">
+      <UniqueIdentifier>{e544c334-c5c3-4ed7-90cb-15b0276c28de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common\include">
+      <UniqueIdentifier>{e919b011-e14f-4081-92d1-e066ce010492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common\src">
+      <UniqueIdentifier>{8b3a6649-f9cd-4fd7-ae50-edc830cad257}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\everest\singleton\singleton.h">
@@ -72,12 +96,6 @@
     <ClInclude Include="..\everest\multi_producer_multi_consumer\multi_producer_multi_consumer.h">
       <Filter>multi_producer_multi_consumer</Filter>
     </ClInclude>
-    <ClInclude Include="..\everest\cmd_line\cmdline.h">
-      <Filter>cmd_line</Filter>
-    </ClInclude>
-    <ClInclude Include="..\everest\cmd_line\command_line_parser.h">
-      <Filter>cmd_line</Filter>
-    </ClInclude>
     <ClInclude Include="..\everest\calculator\safe_integral_calculator.h">
       <Filter>calculator</Filter>
     </ClInclude>
@@ -93,70 +111,61 @@
     <ClInclude Include="..\3rd\lock-free-queue\lightweightsemaphore.h">
       <Filter>3rd\lock-free-queue</Filter>
     </ClInclude>
-    <ClInclude Include="..\everest\timer\timer.h">
-      <Filter>timer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\everest\common\include.h">
-      <Filter>common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\everest\common\define.h">
-      <Filter>common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\everest\timer\timer.ipp">
-      <Filter>timer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\everest\timer\clock.h">
-      <Filter>timer</Filter>
-    </ClInclude>
     <ClInclude Include="..\3rd\random\include\effolkronium\random.hpp">
       <Filter>3rd\random</Filter>
-    </ClInclude>
-    <ClInclude Include="..\everest\thread\include\thread_base.h">
-      <Filter>thread\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\everest\thread\include\thread_pool.h">
-      <Filter>thread\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\everest\spdlog_wrapper\everest_spdlog.h">
-      <Filter>spdlog_wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\everest\spdlog_wrapper\logger_create_info.h">
-      <Filter>spdlog_wrapper</Filter>
     </ClInclude>
     <ClInclude Include="..\everest\thread\src\thread_pool.ipp">
       <Filter>thread\src</Filter>
     </ClInclude>
-    <ClInclude Include="..\everest\control_monitor\include\control_monitor.h">
+    <ClInclude Include="..\everest\control_monitor\control_monitor.h">
       <Filter>control_monitor\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\everest\control_monitor\include\thread_monitor.h">
+    <ClInclude Include="..\everest\control_monitor\thread_monitor.h">
       <Filter>control_monitor\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\everest\control_monitor\include\thread_monitor_data.h">
+    <ClInclude Include="..\everest\control_monitor\thread_monitor_data.h">
       <Filter>control_monitor\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\everest\thread\include\monitor_thread.h">
+    <ClInclude Include="..\everest\thread\monitor_thread.h">
       <Filter>thread\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\thread\thread_base.h">
+      <Filter>thread\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\thread\thread_pool.h">
+      <Filter>thread\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\spdlog_wrapper\everest_spdlog.h">
+      <Filter>spdlog_wrapper\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\spdlog_wrapper\logger_create_info.h">
+      <Filter>spdlog_wrapper\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\timer\clock.h">
+      <Filter>timer\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\timer\timer.h">
+      <Filter>timer\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\timer\src\timer.ipp">
+      <Filter>timer\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\cmd_line\cmdline.h">
+      <Filter>cmd_line\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\cmd_line\command_line_parser.h">
+      <Filter>cmd_line\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\common\define.h">
+      <Filter>common\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\common\include.h">
+      <Filter>common\include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\everest\cmd_line\command_line_parser.cpp">
-      <Filter>cmd_line</Filter>
-    </ClCompile>
-    <ClCompile Include="..\everest\common\include.cpp">
-      <Filter>common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\everest\timer\clock.cpp">
-      <Filter>timer</Filter>
-    </ClCompile>
     <ClCompile Include="..\everest\thread\src\thread_base.cpp">
       <Filter>thread\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\everest\spdlog_wrapper\everest_spdlog.cpp">
-      <Filter>spdlog_wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\everest\spdlog_wrapper\logger_create_info.cpp">
-      <Filter>spdlog_wrapper</Filter>
     </ClCompile>
     <ClCompile Include="..\everest\control_monitor\src\control_monitor.cpp">
       <Filter>control_monitor\src</Filter>
@@ -166,6 +175,21 @@
     </ClCompile>
     <ClCompile Include="..\everest\thread\src\monitor_thread.cpp">
       <Filter>thread\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\spdlog_wrapper\src\everest_spdlog.cpp">
+      <Filter>spdlog_wrapper\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\spdlog_wrapper\src\logger_create_info.cpp">
+      <Filter>spdlog_wrapper\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\timer\src\clock.cpp">
+      <Filter>timer\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\cmd_line\src\command_line_parser.cpp">
+      <Filter>cmd_line\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\common\src\include.cpp">
+      <Filter>common\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
