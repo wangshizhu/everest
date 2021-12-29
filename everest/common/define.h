@@ -9,8 +9,6 @@
 
 // 线程Update更新时间间隔,100ms
 #define THREAD_UPDATE_INTERVAL (1000*1000*100)
-#define THREAD_POOL_MIN_SIZE (2)
-#define THREAD_POOL_MAX_SIZE (10)
 
 #define ONE_BYTE_TO_BIT (8)
 

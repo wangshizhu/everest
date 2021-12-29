@@ -4,8 +4,8 @@ NAMESPACE_BEGIN
 template<class ThreadType>
 ThreadPool<ThreadType>::ThreadPool(std::size_t pool_size)
 {
-	pool_size_ = std::max(pool_size,THREAD_POOL_MIN_SIZE);
-	pool_size_ = std::min(pool_size_,THREAD_POOL_MAX_SIZE);
+	pool_size_ = std::max(pool_size, kThreadPoolMinSize);
+	pool_size_ = std::min(pool_size_, kThreadPoolMaxSize);
 
 	threads_.reserve(pool_size_);
 

@@ -61,10 +61,18 @@ if (BUILD_FMT)
 endif(BUILD_FMT)
 
 # ---------------------------------------------------------------------------------------
+# everest head directory
+# ---------------------------------------------------------------------------------------
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/asio-1.16.1/include)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/spd/include)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/fmt/include)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/random/include)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/everest)
+
+# ---------------------------------------------------------------------------------------
 # everest source code
 # ---------------------------------------------------------------------------------------
-AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/everest/cmd_line src_list)
-AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/everest/timer src_list)
+AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/everest/common/src src_list)
 
 MESSAGE(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 MESSAGE(STATUS "src list:"${src_list})
