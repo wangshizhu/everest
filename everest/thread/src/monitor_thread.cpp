@@ -12,12 +12,12 @@ bool MonitorThread::Init()
 
 void MonitorThread::Update()
 {
-	ControlMonitorSingleton::GetInstance()->Update();
+	CONTROL_MONITOR_SINGLETON->Update();
 }
 
 void MonitorThread::OnStart()
 {
-	ControlMonitorSingleton::GetInstance()->OnThreadStart();
+	CONTROL_MONITOR_SINGLETON->OnThreadStart();
 }
 
 

@@ -54,6 +54,6 @@ private:
 
 NAMESPACE_END
 
-#include "timer/src/timer.ipp";
+#include "timer/src/timer.ipp"
 
 #endif // !TIMER_H_

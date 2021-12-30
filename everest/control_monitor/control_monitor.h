@@ -20,7 +20,7 @@ private:
 	ThreadMonitor thread_monitor_;
 };
 
-using ControlMonitorSingleton = everest::ThreadSafeSingleton<everest::ControlMonitor>;
+#define CONTROL_MONITOR_SINGLETON everest::ThreadSafeSingleton<everest::ControlMonitor>::GetInstance()
 
 NAMESPACE_END
 

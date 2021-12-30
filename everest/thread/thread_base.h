@@ -36,7 +36,7 @@ public:
 	{
 		auto ptr = std::make_shared<ThreadType>(std::forward<Args>(args)...,PrivateFlag());
 
-		auto&& thread_monitor = ControlMonitorSingleton::GetInstance()->GetThreadMonitor();
+		auto&& thread_monitor = CONTROL_MONITOR_SINGLETON->GetThreadMonitor();
 		thread_monitor.RegisterThread(ptr);
 
 		return ptr;
