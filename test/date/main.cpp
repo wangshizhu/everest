@@ -92,11 +92,11 @@ int main()
 		tb->SetUpdateInterval(std::chrono::seconds(1));
 		tb->Start();
 
-		auto monitor = everest::ThreadBase::CreateThread<everest::MonitorThread>();
-		monitor->Start();
+		/*auto monitor = everest::ThreadBase::CreateThread<everest::MonitorThread>();
+		monitor->Start();*/
 
 		tb->Join();
-		monitor->Join();
+		//monitor->Join();
 	}
 
 	system("pause");

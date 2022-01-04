@@ -162,6 +162,9 @@
     <ClInclude Include="..\everest\common\include.h">
       <Filter>common\include</Filter>
     </ClInclude>
+    <ClInclude Include="..\everest\thread\thread_define.h">
+      <Filter>thread\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\everest\thread\src\thread_base.cpp">

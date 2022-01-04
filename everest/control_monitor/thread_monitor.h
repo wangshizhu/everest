@@ -28,9 +28,17 @@ private:
 	void Snapshot();
 
 private:
+	// 所有线程的上次监控数据
 	std::unordered_map<ThreadIdType, ThreadMonitorData> thread_monitor_data_;
+
+	// 所有线程的弱引用
 	std::vector<ThreadBaseWeakPtr> registed_thread_;
+
+	// 收集所有线程的监控数据定时器
 	everest::Timer<std::chrono::seconds> snapshot_timer_;
+
+	// 执行监控器的线程
+	ThreadBaseSharedPtr monitor_thread_;
 };
 
 NAMESPACE_END

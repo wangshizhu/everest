@@ -187,6 +187,7 @@
     <ClInclude Include="..\everest\spdlog_wrapper\logger_create_info.h" />
     <ClInclude Include="..\everest\thread\monitor_thread.h" />
     <ClInclude Include="..\everest\thread\thread_base.h" />
+    <ClInclude Include="..\everest\thread\thread_define.h" />
     <ClInclude Include="..\everest\thread\thread_pool.h" />
     <ClCompile Include="..\everest\control_monitor\src\control_monitor.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

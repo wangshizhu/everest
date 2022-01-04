@@ -1,6 +1,7 @@
 NAMESPACE_BEGIN
 
-ThreadMonitor::ThreadMonitor():snapshot_timer_(kSnapshotTimerDuration,true)
+ThreadMonitor::ThreadMonitor()
+	:snapshot_timer_(kSnapshotTimerDuration,true), monitor_thread_(nullptr)
 {
 	thread_monitor_data_.clear();
 	registed_thread_.reserve(kMaxThreadNum);
@@ -18,7 +19,15 @@ void ThreadMonitor::OnThreadStart()
 
 void ThreadMonitor::RegisterThread(ThreadBaseSharedPtr thread_ptr)
 {
-	registed_thread_.push_back(thread_ptr);
+	if (thread_ptr->GetThreadType() == ThreadType::kMonitor)
+	{
+		monitor_thread_ = thread_ptr;
+	}
+
+	monitor_thread_->Post([self = this, thread_ptr = thread_ptr]()
+		{
+			self->registed_thread_.push_back(thread_ptr);
+		});
 }
 
 void ThreadMonitor::PrintThreadMonitorData()const
@@ -47,7 +56,7 @@ void ThreadMonitor::Snapshot()
 			continue;
 		}
 
-		thread_base->Snapshot(thread_base, 
+		thread_base->Snapshot(monitor_thread_,
 			[this](ThreadMonitorData data) 
 			{
 				this->thread_monitor_data_[data.thread_id_] = data;

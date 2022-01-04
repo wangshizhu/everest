@@ -34,7 +34,11 @@
 // 格式化相关
 #include "fmt/format.h"
 
+// asio
+#include <asio.hpp>
+
 // 监控器
+#include "thread/thread_define.h"
 #include "control_monitor/thread_monitor_data.h"
 #include "control_monitor/thread_monitor.h"
 #include "control_monitor/control_monitor.h"

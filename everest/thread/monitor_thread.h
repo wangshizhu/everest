@@ -15,6 +15,9 @@ public:
 	// 线程名称
 	virtual const char* Name()const override;
 
+	// 线程类型
+	virtual ThreadType GetThreadType() const;
+
 	// 初始化线程
 	virtual bool Init() override;
 
@@ -24,6 +27,8 @@ public:
 	// 线程启动的事件
 	virtual void OnStart() override;
 };
+
+bool CreateAndStartMonitorThread();
 
 NAMESPACE_END
 

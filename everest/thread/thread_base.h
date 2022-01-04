@@ -1,8 +1,6 @@
 #ifndef THREAD_BASE_H_
 #define THREAD_BASE_H_
 
-#include <asio.hpp>
-
 NAMESPACE_BEGIN
 
 class ThreadBase : public everest::NonCopyable
@@ -17,6 +15,9 @@ public:
 public:
 	// 线程名称
 	virtual const char* Name()const;
+
+	// 线程类型
+	virtual ThreadType GetThreadType() const;
 
 	// 初始化线程
 	virtual bool Init();
@@ -36,8 +37,7 @@ public:
 	{
 		auto ptr = std::make_shared<ThreadType>(std::forward<Args>(args)...,PrivateFlag());
 
-		auto&& thread_monitor = CONTROL_MONITOR_SINGLETON->GetThreadMonitor();
-		thread_monitor.RegisterThread(ptr);
+		CONTROL_MONITOR_SINGLETON()->RegisterThread(ptr);
 
 		return ptr;
 	}
@@ -91,7 +91,7 @@ public:
 
 	bool IsStopped()const;
 
-	asio::io_context& GetIoContext();
+	asio::io_context* GetIoContext();
 
 	std::size_t PendingNum()const;
 

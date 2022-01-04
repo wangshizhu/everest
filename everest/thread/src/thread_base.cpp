@@ -17,6 +17,11 @@ const char* ThreadBase::Name()const
 	return "ThreadBase";
 }
 
+ThreadType ThreadBase::GetThreadType() const
+{
+	return ThreadType::kCommon;
+}
+
 bool ThreadBase::Init()
 {
 	return true;
@@ -139,9 +144,9 @@ bool ThreadBase::IsStopped()const
 	return context_.stopped();
 }
 
-asio::io_context& ThreadBase::GetIoContext()
+asio::io_context* ThreadBase::GetIoContext()
 {
-	return context_;
+	return &context_;
 }
 
 std::size_t ThreadBase::PendingNum()const

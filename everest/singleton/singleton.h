@@ -31,13 +31,12 @@ private:
 template <class T> T* ThreadUnsafeSingleton<T>::m_pT = nullptr;
 
 template <class T>
-class ThreadSafeSingleton : public NonCopyable
+class ThreadSafeSingleton : public everest::NonCopyable
 {
 public:
-	template<typename... Args>
-	static T* GetInstance(Args&&... args)
+	static T* GetInstance()
 	{
-		static T instance(std::forward<Args>(args)...);
+		static T instance;
 		return &instance;
 	}
 
