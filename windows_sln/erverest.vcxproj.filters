@@ -79,6 +79,9 @@
     <Filter Include="common\src">
       <UniqueIdentifier>{8b3a6649-f9cd-4fd7-ae50-edc830cad257}</UniqueIdentifier>
     </Filter>
+    <Filter Include="time_capsule">
+      <UniqueIdentifier>{b680e3ac-bfe4-4fed-83c6-cd45929ec8fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\everest\singleton\singleton.h">
@@ -165,6 +168,9 @@
     <ClInclude Include="..\everest\thread\thread_define.h">
       <Filter>thread\include</Filter>
     </ClInclude>
+    <ClInclude Include="..\everest\time_capsule\time_capsule.h">
+      <Filter>time_capsule</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\everest\thread\src\thread_base.cpp">
@@ -193,6 +199,9 @@
     </ClCompile>
     <ClCompile Include="..\everest\common\src\include.cpp">
       <Filter>common\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\time_capsule\time_capsule.cpp">
+      <Filter>time_capsule</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

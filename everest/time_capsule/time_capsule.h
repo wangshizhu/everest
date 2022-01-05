@@ -1,27 +1,9 @@
 #ifndef TIME_CAPSULE_H_
 #define TIME_CAPSULE_H_
 
-#include <chrono>
-#include <optional>
-#include <utility>
-#include <stdint.h>
-
-#include "date/date.h"
-#include "fmt/format.h"
-#include "fmt/chrono.h"
-
-#define NAMESPACE_BEGIN namespace everest{
-#define NAMESPACE_END }
-
 NAMESPACE_BEGIN
 
-/*
-* @brief 本地时区
-* 例如：
-* 北京时间（UTC时间 +8），则为8
-* 美国东部时间（UTC时间 -5），则为-5
-*/
-int32_t g_local_time_zone = 8;
+extern int32_t g_local_time_zone;
 
 class TimeCapsule
 {
@@ -312,6 +294,22 @@ public:
 		return DurationCountToDurationCount<std::chrono::seconds, std::chrono::hours>(h);
 	}
 
+	/*
+	* @brief 从指定duration的计数转换为指定duration的计数
+	* 例如：从小时数转换为秒数
+	*
+	* @param [in] s 指定duration的计数，如果duration为std::chrono::seconds，则s为秒数
+	*
+	* @return 指定duration的计数
+	*/
+	template<class To, class From = std::chrono::seconds,
+		typename std::enable_if_t<!std::is_same_v<To, From>, int> = 0
+	>
+	static int64_t DurationCountToDurationCount(int64_t s) noexcept
+	{
+		return DurationCountToDuration<To, From>(s).count();
+	}
+
 
 //-----------------------------------------------------------------------------
 //	duration_count 到 duration的转换
@@ -327,22 +325,6 @@ private:
 	static To DurationCountToDuration(int64_t s) noexcept
 	{
 		return std::chrono::duration_cast<To>(From(s));
-	}
-
-	/*
-	* @brief 从指定duration的计数转换为指定duration的计数
-	* 例如：从小时数转换为秒数
-	* 
-	* @param [in] s 指定duration的计数，如果duration为std::chrono::seconds，则s为秒数
-	* 
-	* @return 指定duration的计数
-	*/
-	template<class To, class From = std::chrono::seconds,
-	typename std::enable_if_t<!std::is_same_v<To,From>,int> = 0
-	>
-	static int64_t DurationCountToDurationCount(int64_t s) noexcept
-	{
-		return DurationCountToDuration<To,From>(s).count();
 	}
 
 	/*

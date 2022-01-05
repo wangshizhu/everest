@@ -56,9 +56,18 @@ public:
 			thread_id_,
 			thread_full_name_,
 			pending_num_,
-			interval_.count(),
+			IntervalToString(),
 			execute_once_max_time_,
 			thread_state_flag_.to_string());
+	}
+
+private:
+	std::string IntervalToString() const
+	{
+		auto second = TimeCapsule::DurationCountToDurationCount<std::chrono::seconds, std::chrono::steady_clock::duration>(interval_.count());
+		//auto millsecond = 
+
+		return fmt::format("{}second-{}millsecond-{}microsecond-{}nanosecond",s);
 	}
 };
 
