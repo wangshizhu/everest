@@ -29,11 +29,11 @@ enum ThreadState
 
 class ThreadMonitorData
 {
-	static constexpr std::string_view thread_state_describe[] = { "wait_start","running","havntstart_stopped","stopped" };
+	static constexpr std::string_view thread_state_describe[] = { "wait_start","running","no_start_stopped","stopped" };
 	static constexpr std::size_t kThreadStateBitNum = sizeof(int8_t) * ONE_BYTE_TO_BIT;
 public:
 	// 线程id
-	ThreadIdType thread_id_;
+	ThreadIdType thread_id_ = 0;
 
 	// 线程全名
 	std::string thread_full_name_ = "";
@@ -54,49 +54,10 @@ public:
 	std::bitset<kThreadStateBitNum> thread_state_flag_ = 0;
 
 public:
-	std::string FormatForLog() const 
-	{
-		return fmt::format("thread_id:{},thread_full_name:{},pending_num:{},update_interval:{},execute_once_max_time: {},thread_state_flag: {}",
-			thread_id_,
-			thread_full_name_,
-			pending_num_,
-			NanosecondConvertSecond(interval_.count()),
-			NanosecondConvertSecond(execute_once_max_time_),
-			thread_state_describe[thread_state_flag_.to_ulong()]);
-	}
+	std::string FormatForLog() const;
 
 private:
-	std::string NanosecondConvertSecond(uint64_t nanosecond) const
-	{
-		auto second = TimeCapsule::DurationCountToDurationCount<std::chrono::seconds, std::chrono::steady_clock::duration>(nanosecond);
-		auto mill_second = TimeCapsule::DurationCountToDurationCount<std::chrono::milliseconds, std::chrono::steady_clock::duration>(nanosecond - second * std::nano::den);
-		auto micro_second = TimeCapsule::DurationCountToDurationCount<std::chrono::microseconds, std::chrono::steady_clock::duration>(nanosecond - second * std::nano::den - mill_second * std::micro::den);
-		auto nano_second = nanosecond - second * std::nano::den - mill_second * std::micro::den - micro_second * std::milli::den;
-
-		return fmt::format("{}s-{}ms-{}us-{}ns",
-			second, mill_second, micro_second, nano_second);
-	}
-
-	const char* ThreadStateFlagToString()
-	{
-		auto val = thread_state_flag_.to_ulong();
-		if (val == ThreadState::kWaitingStart)
-		{
-			return "wait_start";
-		}
-		else if (val == ThreadState::kRunning)
-		{
-			return "running";
-		}
-		else if (val == ThreadState::kStopped)
-		{
-			return "stopped";
-		}
-		else
-		{
-			return "unknow_state";
-		}
-	}
+	std::string NanosecondConvertSecond(uint64_t nanosecond) const;
 };
 
 using SnapshotCb = std::function<void(ThreadMonitorData)>;

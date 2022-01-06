@@ -42,8 +42,8 @@ void ThreadBase::Start()
 	clock_.Restart();
 
 	// 将此时钟设置为线程时钟
-	SetThreadLocalClock(&clock_);
-
+	Post([this] { SetThreadLocalClock(&(this->clock_)); });
+	
 	// 增加一个定时任务
 	AddTimerTaskToActuateUpdate();
 
@@ -120,7 +120,6 @@ void ThreadBase::Snapshot(std::shared_ptr<ThreadBase> to, SnapshotCb&& cb)
 			data.thread_full_name_ = this->FullName();
 			data.pending_num_ = this->PendingNum();
 			data.interval_ = this->interval_;
-			data.last_timepoint_ = this->clock_.LatestTimePoint();
 			data.execute_once_max_time_ = this->execute_once_max_time_;
 			data.thread_state_flag_.set(ThreadStateBitFlag::kStartedPos, this->started_flag_);
 			data.thread_state_flag_.set(ThreadStateBitFlag::kStoppedPos, this->IsStopped());

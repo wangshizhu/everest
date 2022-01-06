@@ -82,6 +82,12 @@
     <Filter Include="time_capsule">
       <UniqueIdentifier>{b680e3ac-bfe4-4fed-83c6-cd45929ec8fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="time_capsule\include">
+      <UniqueIdentifier>{11f52188-088e-4414-be6b-4300ee971a5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="time_capsule\src">
+      <UniqueIdentifier>{b33e33ca-6a43-4ab2-b820-394e2eadeeba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\everest\singleton\singleton.h">
@@ -169,7 +175,7 @@
       <Filter>thread\include</Filter>
     </ClInclude>
     <ClInclude Include="..\everest\time_capsule\time_capsule.h">
-      <Filter>time_capsule</Filter>
+      <Filter>time_capsule\include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -200,8 +206,11 @@
     <ClCompile Include="..\everest\common\src\include.cpp">
       <Filter>common\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\everest\time_capsule\time_capsule.cpp">
-      <Filter>time_capsule</Filter>
+    <ClCompile Include="..\everest\time_capsule\src\time_capsule.cpp">
+      <Filter>time_capsule\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\control_monitor\src\thread_monitor_data.cpp">
+      <Filter>control_monitor\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
