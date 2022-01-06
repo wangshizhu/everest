@@ -20,12 +20,16 @@ enum ThreadState
 	// 正在运行
 	kRunning = 1,
 
+	// 未启动但是已停止
+	kHavntStartStopped = 2,
+
 	// 已停止
 	kStopped = 3,
 };
 
 class ThreadMonitorData
 {
+	static constexpr std::string_view thread_state_describe[] = { "wait_start","running","havntstart_stopped","stopped" };
 	static constexpr std::size_t kThreadStateBitNum = sizeof(int8_t) * ONE_BYTE_TO_BIT;
 public:
 	// 线程id
@@ -52,22 +56,46 @@ public:
 public:
 	std::string FormatForLog() const 
 	{
-		return fmt::format("thread_id_:{},thread_full_name_:{},pending_num_:{},interval_:{},execute_once_max_time_ : {},thread_state_flag_ : {}",
+		return fmt::format("thread_id:{},thread_full_name:{},pending_num:{},update_interval:{},execute_once_max_time: {},thread_state_flag: {}",
 			thread_id_,
 			thread_full_name_,
 			pending_num_,
-			IntervalToString(),
-			execute_once_max_time_,
-			thread_state_flag_.to_string());
+			NanosecondConvertSecond(interval_.count()),
+			NanosecondConvertSecond(execute_once_max_time_),
+			thread_state_describe[thread_state_flag_.to_ulong()]);
 	}
 
 private:
-	std::string IntervalToString() const
+	std::string NanosecondConvertSecond(uint64_t nanosecond) const
 	{
-		auto second = TimeCapsule::DurationCountToDurationCount<std::chrono::seconds, std::chrono::steady_clock::duration>(interval_.count());
-		//auto millsecond = 
+		auto second = TimeCapsule::DurationCountToDurationCount<std::chrono::seconds, std::chrono::steady_clock::duration>(nanosecond);
+		auto mill_second = TimeCapsule::DurationCountToDurationCount<std::chrono::milliseconds, std::chrono::steady_clock::duration>(nanosecond - second * std::nano::den);
+		auto micro_second = TimeCapsule::DurationCountToDurationCount<std::chrono::microseconds, std::chrono::steady_clock::duration>(nanosecond - second * std::nano::den - mill_second * std::micro::den);
+		auto nano_second = nanosecond - second * std::nano::den - mill_second * std::micro::den - micro_second * std::milli::den;
 
-		return fmt::format("{}second-{}millsecond-{}microsecond-{}nanosecond",s);
+		return fmt::format("{}s-{}ms-{}us-{}ns",
+			second, mill_second, micro_second, nano_second);
+	}
+
+	const char* ThreadStateFlagToString()
+	{
+		auto val = thread_state_flag_.to_ulong();
+		if (val == ThreadState::kWaitingStart)
+		{
+			return "wait_start";
+		}
+		else if (val == ThreadState::kRunning)
+		{
+			return "running";
+		}
+		else if (val == ThreadState::kStopped)
+		{
+			return "stopped";
+		}
+		else
+		{
+			return "unknow_state";
+		}
 	}
 };
 
