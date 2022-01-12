@@ -1,8 +1,8 @@
 #ifndef DEFINE_H_
 #define DEFINE_H_
 
-#define NAMESPACE_BEGIN namespace everest{
-#define NAMESPACE_END }
+#define NAMESPACE_EVEREST_BEGIN namespace everest{
+#define NAMESPACE_EVEREST_END }
 
 #define EVEREST_LOG_INFO(...) NAMED_LOG_INFO("everest",__VA_ARGS__)
 #define EVEREST_LOG_ERROR(...) NAMED_LOG_ERROR("everest",__VA_ARGS__)
@@ -24,10 +24,10 @@ catch (...) \
 { \
 }
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 using ThreadIdType = std::size_t;
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END
 
 #endif

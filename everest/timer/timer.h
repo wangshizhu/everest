@@ -1,7 +1,7 @@
 #ifndef TIMER_H_
 #define TIMER_H_
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 template<class Duration = std::chrono::milliseconds>
 class Timer
@@ -52,7 +52,7 @@ private:
 	SteadyTimePoint start_time_point_;
 };
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END
 
 #include "timer/src/timer.ipp"
 

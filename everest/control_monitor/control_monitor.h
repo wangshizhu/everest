@@ -1,7 +1,7 @@
 #ifndef CONTROL_MONITOR_H_
 #define CONTROL_MONITOR_H_
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 class ControlMonitor : public everest::NonCopyable
 {
@@ -29,6 +29,6 @@ private:
 
 #define CONTROL_MONITOR_SINGLETON() everest::ThreadSafeSingleton<everest::ControlMonitor>::GetInstance()
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END
 
 #endif

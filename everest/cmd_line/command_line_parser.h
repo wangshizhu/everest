@@ -1,7 +1,7 @@
 #ifndef COMMAND_LINE_PARSER_H_
 #define COMMAND_LINE_PARSER_H_
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 class CommandLineParser
 {
@@ -69,7 +69,7 @@ private:
 	cmdline::parser parser_;
 };
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END
 
 #endif // !COMMAND_LINE_PARSER_H_
 

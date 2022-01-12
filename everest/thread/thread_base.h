@@ -1,7 +1,7 @@
 #ifndef THREAD_BASE_H_
 #define THREAD_BASE_H_
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 class ThreadBase : public everest::NonCopyable
 {
@@ -132,6 +132,6 @@ private:
 	std::thread thread_;
 };
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END
 
 #endif

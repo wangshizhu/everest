@@ -1,7 +1,7 @@
 #ifndef THREAD_POOL_H_
 #define THREAD_POOL_H_
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 template<class ThreadType>
 class ThreadPool : public everest::NonCopyable
@@ -48,7 +48,7 @@ private:
 	std::vector<std::shared_ptr<ThreadType>> threads_;
 };
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END
 
 #include "thread/src/thread_pool.ipp"
 

@@ -1,4 +1,4 @@
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 ControlMonitor::ControlMonitor() : monitor_thread_(nullptr)
 {
@@ -35,4 +35,4 @@ ThreadMonitor& ControlMonitor::GetThreadMonitor()
 	return thread_monitor_;
 }
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END

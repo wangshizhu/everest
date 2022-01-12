@@ -1,4 +1,4 @@
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 CommandLineParser::CommandLineParser() :parser_()
 {
@@ -77,4 +77,4 @@ void CommandLineParser::ParseSetBehavior(int argc, char** argv)
 	parser_.parse_check(argc, argv);
 }
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END

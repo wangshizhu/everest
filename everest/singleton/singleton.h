@@ -1,7 +1,7 @@
 #ifndef SINGLETON_H_
 #define SINGLETON_H_
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 template <class T>
 class ThreadUnsafeSingleton : public everest::NonCopyable
@@ -46,7 +46,7 @@ private:
 	ThreadSafeSingleton() {}
 };
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END
 
 #endif // !SINGLETON_H_
 

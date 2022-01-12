@@ -1,7 +1,7 @@
 #ifndef THREAD_MONITOR_H_
 #define THREAD_MONITOR_H_
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 class ThreadBase;
 using ThreadBaseSharedPtr = std::shared_ptr<ThreadBase>;
@@ -41,6 +41,6 @@ private:
 	ThreadBaseSharedPtr monitor_thread_;
 };
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END
 
 #endif

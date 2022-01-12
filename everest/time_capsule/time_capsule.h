@@ -1,7 +1,7 @@
 #ifndef TIME_CAPSULE_H_
 #define TIME_CAPSULE_H_
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 extern int32_t g_local_time_zone;
 
@@ -449,6 +449,6 @@ private:
 	}
 };
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END
 
 #endif

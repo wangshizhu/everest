@@ -3,7 +3,7 @@
 
 #include "spdlog/common.h"
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 struct LoggerCreateInfo
 {
@@ -48,6 +48,6 @@ struct CreateInfoFactory
 
 void SetLoggerCreateInfo(const LoggerCreateInfo& info);
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END
 
 #endif

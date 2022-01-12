@@ -1,7 +1,7 @@
 #ifndef NON_COPYABLE_H_
 #define NON_COPYABLE_H_
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 class NonCopyable
 {
@@ -17,6 +17,6 @@ public:
 	NonCopyable& operator=(const NonCopyable&) = delete;
 };
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END
 
 #endif

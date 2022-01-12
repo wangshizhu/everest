@@ -1,4 +1,4 @@
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 const char* MonitorThread::Name()const
 {
@@ -42,4 +42,4 @@ bool CreateAndStartMonitorThread()
 bool created_moniter_thread = CreateAndStartMonitorThread();
 
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END

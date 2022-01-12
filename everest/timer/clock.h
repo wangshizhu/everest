@@ -1,7 +1,7 @@
 #ifndef CLOCK_H_
 #define CLOCK_H_
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 class Clock
 {
@@ -38,7 +38,7 @@ private:
 
 void SetThreadLocalClock(Clock* clock);
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END
 
 
 #endif

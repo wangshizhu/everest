@@ -1,7 +1,7 @@
 #ifndef TIMER_IPP_
 #define TIMER_IPP_
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 extern thread_local Clock* g_tls_clock;
 
@@ -125,6 +125,6 @@ Duration Timer<Duration>::ElapseToDuration() const
 	return std::chrono::floor<Duration>(LastTimePoint() - start_time_point_);
 }
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END
 
 #endif

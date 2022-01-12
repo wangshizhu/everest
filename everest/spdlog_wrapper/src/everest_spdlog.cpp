@@ -1,5 +1,5 @@
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 void GetSinksByLoggerCreateInfo(std::vector<spdlog::sink_ptr>& sinks, const std::string& logger_name, const LoggerCreateInfo& info)
 {
@@ -32,4 +32,4 @@ void GetSinksByLoggerCreateInfo(std::vector<spdlog::sink_ptr>& sinks, const std:
 	}
 }
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END

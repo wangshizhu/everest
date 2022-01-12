@@ -1,5 +1,5 @@
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 ThreadBase::ThreadBase(const PrivateFlag& placehold)
 	:index_(0), run_timer_(context_), interval_(THREAD_UPDATE_INTERVAL),
@@ -166,4 +166,4 @@ ThreadIdType ThreadBase::ThisThreadId() const
 	return atoll(tmp.str().c_str());
 }
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END

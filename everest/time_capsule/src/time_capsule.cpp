@@ -1,4 +1,4 @@
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 /*
 * @brief 本地时区
@@ -8,4 +8,4 @@ NAMESPACE_BEGIN
 */
 int32_t g_local_time_zone = 8;
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END

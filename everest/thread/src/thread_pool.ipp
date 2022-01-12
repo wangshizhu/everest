@@ -1,5 +1,5 @@
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 template<class ThreadType>
 ThreadPool<ThreadType>::ThreadPool(std::size_t pool_size)
@@ -125,4 +125,4 @@ std::size_t ThreadPool<ThreadType>::GetThreadIndexByHashValue(std::size_t hash_v
 }
 
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END

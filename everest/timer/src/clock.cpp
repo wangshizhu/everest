@@ -1,5 +1,5 @@
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 thread_local Clock* g_tls_clock = nullptr;
 
@@ -28,4 +28,4 @@ void SetThreadLocalClock(Clock* clock)
 	g_tls_clock = clock;
 }
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END

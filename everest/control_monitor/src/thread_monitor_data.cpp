@@ -1,4 +1,4 @@
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 std::string ThreadMonitorData::FormatForLog() const
 {
@@ -27,4 +27,4 @@ std::string ThreadMonitorData::NanosecondConvertSecond(uint64_t nanosecond) cons
 		second, mill_second, micro_second, nano_second);
 }
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END

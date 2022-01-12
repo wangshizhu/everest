@@ -1,7 +1,7 @@
 #ifndef MONITOR_THREAD_H_
 #define MONITOR_THREAD_H_
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 class MonitorThread final : public ThreadBase
 {
@@ -30,6 +30,6 @@ public:
 
 bool CreateAndStartMonitorThread();
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END
 
 #endif

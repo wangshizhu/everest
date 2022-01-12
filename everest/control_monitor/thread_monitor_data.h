@@ -1,7 +1,7 @@
 #ifndef THREAD_MONITOR_DATA_H_
 #define THREAD_MONITOR_DATA_H_
 
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 enum ThreadStateBitFlag
 {
@@ -62,6 +62,6 @@ private:
 
 using SnapshotCb = std::function<void(ThreadMonitorData)>;
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END
 
 #endif

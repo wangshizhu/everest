@@ -1,4 +1,4 @@
-NAMESPACE_BEGIN
+NAMESPACE_EVEREST_BEGIN
 
 ThreadMonitor::ThreadMonitor()
 	:snapshot_timer_(kSnapshotTimerDuration,true), monitor_thread_(nullptr)
@@ -69,4 +69,4 @@ void ThreadMonitor::Snapshot()
 	}
 }
 
-NAMESPACE_END
+NAMESPACE_EVEREST_END
