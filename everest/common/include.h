@@ -56,6 +56,8 @@
 #include "thread/thread_pool.h"
 #include "thread/monitor_thread.h"
 
-
+// ÍøÂç
+#include "net/net_define.h"
+#include "net/session_base.h"
 
 #endif

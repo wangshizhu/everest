@@ -10,3 +10,4 @@
 #include "spdlog_wrapper/src/everest_spdlog.cpp"
 #include "control_monitor/src/thread_monitor.cpp"
 #include "control_monitor/src/control_monitor.cpp"
+#include "net/src/session_base.cpp"

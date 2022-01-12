@@ -88,6 +88,15 @@
     <Filter Include="time_capsule\src">
       <UniqueIdentifier>{b33e33ca-6a43-4ab2-b820-394e2eadeeba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="net">
+      <UniqueIdentifier>{97702d9b-6bb1-4a30-bdf9-87241ce89f94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\include">
+      <UniqueIdentifier>{08e760b7-8bfd-466b-913f-e528ba3d5d34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\src">
+      <UniqueIdentifier>{7c5e810e-0abc-44cd-acbb-a551ade6631e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\everest\singleton\singleton.h">
@@ -177,6 +186,12 @@
     <ClInclude Include="..\everest\time_capsule\time_capsule.h">
       <Filter>time_capsule\include</Filter>
     </ClInclude>
+    <ClInclude Include="..\everest\net\session_base.h">
+      <Filter>net\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\net\net_define.h">
+      <Filter>net\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\everest\thread\src\thread_base.cpp">
@@ -211,6 +226,9 @@
     </ClCompile>
     <ClCompile Include="..\everest\control_monitor\src\thread_monitor_data.cpp">
       <Filter>control_monitor\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\net\src\session_base.cpp">
+      <Filter>net\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

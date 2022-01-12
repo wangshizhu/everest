@@ -172,6 +172,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\everest\net\src\session_base.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\everest\timer\src\clock.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -197,6 +203,8 @@
     <ClInclude Include="..\everest\multi_producer_multi_consumer\circular_queue.h" />
     <ClInclude Include="..\everest\multi_producer_multi_consumer\move_on_copy.h" />
     <ClInclude Include="..\everest\multi_producer_multi_consumer\multi_producer_multi_consumer.h" />
+    <ClInclude Include="..\everest\net\net_define.h" />
+    <ClInclude Include="..\everest\net\session_base.h" />
     <ClInclude Include="..\everest\non_copyable\non_copyable.h" />
     <ClInclude Include="..\everest\singleton\singleton.h" />
     <ClInclude Include="..\everest\spdlog_wrapper\everest_spdlog.h" />
