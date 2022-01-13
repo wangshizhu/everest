@@ -192,6 +192,12 @@
     <ClInclude Include="..\everest\net\net_define.h">
       <Filter>net\include</Filter>
     </ClInclude>
+    <ClInclude Include="..\everest\net\listener.h">
+      <Filter>net\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\net\src\listener.ipp">
+      <Filter>net\src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\everest\thread\src\thread_base.cpp">

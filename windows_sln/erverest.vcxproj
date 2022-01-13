@@ -203,8 +203,10 @@
     <ClInclude Include="..\everest\multi_producer_multi_consumer\circular_queue.h" />
     <ClInclude Include="..\everest\multi_producer_multi_consumer\move_on_copy.h" />
     <ClInclude Include="..\everest\multi_producer_multi_consumer\multi_producer_multi_consumer.h" />
+    <ClInclude Include="..\everest\net\listener.h" />
     <ClInclude Include="..\everest\net\net_define.h" />
     <ClInclude Include="..\everest\net\session_base.h" />
+    <ClInclude Include="..\everest\net\src\listener.ipp" />
     <ClInclude Include="..\everest\non_copyable\non_copyable.h" />
     <ClInclude Include="..\everest\singleton\singleton.h" />
     <ClInclude Include="..\everest\spdlog_wrapper\everest_spdlog.h" />

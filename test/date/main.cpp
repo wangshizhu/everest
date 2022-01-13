@@ -4,6 +4,21 @@
 #include <thread>
 #include "common/include.h"
 
+class TestSession : public everest::SessionBase
+{
+public:
+	template<typename... Args>
+	TestSession(Args&&... args) :SessionBase(std::forward<Args>(args)...)
+	{
+	}
+public:
+	everest::SessionType GetSessionType() override
+	{
+		return everest::SessionType::kExternal;
+	}
+
+};
+
 int main()
 {
 
@@ -90,6 +105,10 @@ int main()
 		auto tb = everest::ThreadBase::CreateThread<everest::ThreadBase>();
 		tb->SetUpdateInterval(std::chrono::seconds(1));
 		tb->Start();
+
+		everest::Listener<TestSession> listener(*tb->GetIoContext());
+
+		listener.StartAccept();
 
 		tb->Join();
 	}

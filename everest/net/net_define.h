@@ -24,6 +24,8 @@ enum class SessionDirection
 	kNegative = 2,
 };
 
+using everest_tcp = asio::ip::tcp;
+
 NAMESPACE_EVEREST_END
 
 #endif // !NET_DEFINE_H_

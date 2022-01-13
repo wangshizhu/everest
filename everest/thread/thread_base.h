@@ -93,6 +93,8 @@ public:
 
 	asio::io_context* GetIoContext();
 
+	asio::io_context& GetIoContextRef();
+
 	std::size_t PendingNum()const;
 
 	std::string FullName()const;

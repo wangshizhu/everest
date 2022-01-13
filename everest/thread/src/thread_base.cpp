@@ -148,6 +148,11 @@ asio::io_context* ThreadBase::GetIoContext()
 	return &context_;
 }
 
+asio::io_context& ThreadBase::GetIoContextRef()
+{
+	return context_;
+}
+
 std::size_t ThreadBase::PendingNum()const
 {
 	return pending_num_;
