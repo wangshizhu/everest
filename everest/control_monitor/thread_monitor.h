@@ -3,24 +3,19 @@
 
 NAMESPACE_EVEREST_BEGIN
 
-class ThreadBase;
-using ThreadBaseSharedPtr = std::shared_ptr<ThreadBase>;
-using ThreadBaseWeakPtr = std::weak_ptr<ThreadBase>;
-
-class ThreadMonitor : public everest::NonCopyable
+class ThreadMonitor final : public everest::MonitorBase<ThreadBaseSharedPtr>
 {
-	static constexpr uint32_t kSnapshotTimerDuration = 1;
-	static constexpr std::size_t kMaxThreadNum = 100;
+	using BaseType = everest::MonitorBase<ThreadBaseSharedPtr>;
 
 public:
 	ThreadMonitor();
 
 public:
-	void Update();
+	void Register(ThreadBaseSharedPtr monitor_object) override;
 
-	void OnThreadStart();
+	void Update() override;
 
-	void RegisterThread(ThreadBaseSharedPtr thread_ptr);
+	void OnThreadStart() override;
 
 private:
 	void PrintThreadMonitorData()const;
@@ -33,12 +28,6 @@ private:
 
 	// 所有线程的弱引用
 	std::vector<ThreadBaseWeakPtr> registed_thread_;
-
-	// 收集所有线程的监控数据定时器
-	everest::Timer<std::chrono::seconds> snapshot_timer_;
-
-	// 执行监控器的线程
-	ThreadBaseSharedPtr monitor_thread_;
 };
 
 NAMESPACE_EVEREST_END

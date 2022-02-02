@@ -1,10 +1,10 @@
 NAMESPACE_EVEREST_BEGIN
 
 ThreadMonitor::ThreadMonitor()
-	:snapshot_timer_(kSnapshotTimerDuration,true), monitor_thread_(nullptr)
+	:BaseType()
 {
 	thread_monitor_data_.clear();
-	registed_thread_.reserve(kMaxThreadNum);
+	registed_thread_.reserve(BaseType::kMonitorObjectMaxNum);
 }
 
 void ThreadMonitor::Update()
@@ -14,20 +14,14 @@ void ThreadMonitor::Update()
 
 void ThreadMonitor::OnThreadStart()
 {
-	snapshot_timer_.Start();
 }
 
-void ThreadMonitor::RegisterThread(ThreadBaseSharedPtr thread_ptr)
+void ThreadMonitor::Register(ThreadBaseSharedPtr thread_ptr)
 {
-	if (thread_ptr->GetThreadType() == ThreadType::kMonitor)
+	monitor_thread_->Post([self = this,thread_ptr = thread_ptr]()
 	{
-		monitor_thread_ = thread_ptr;
-	}
-
-	monitor_thread_->Post([self = this, thread_ptr = thread_ptr]()
-		{
-			self->registed_thread_.push_back(thread_ptr);
-		});
+		self->registed_thread_.push_back(thread_ptr);
+	});
 }
 
 void ThreadMonitor::PrintThreadMonitorData()const
@@ -57,13 +51,13 @@ void ThreadMonitor::Snapshot()
 		}
 
 		thread_base->Snapshot(monitor_thread_,
-			[this](ThreadMonitorData data) 
-			{
-				// 记录最后一次收集数据时间点
-				data.last_timepoint_ = g_tls_clock->LatestTimePoint();
+													[this](ThreadMonitorData data)
+		{
+			// 记录最后一次收集数据时间点
+			data.last_timepoint_ = g_tls_clock->LatestTimePoint();
 
-				this->thread_monitor_data_[data.thread_id_] = data;
-			});
+			this->thread_monitor_data_[data.thread_id_] = data;
+		});
 
 		++iter;
 	}

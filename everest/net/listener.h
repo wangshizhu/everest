@@ -3,25 +3,49 @@
 
 NAMESPACE_EVEREST_BEGIN
 
-template<class SessionType>
 class Listener final : public everest::NonCopyable
 {
-public:
-	Listener(asio::io_context& io_context);
+	struct PrivateFlag {};
+	friend class ServiceBase;
 
 public:
-	void StartAccept();
+	Listener(ServiceIdType service_id, SessionCreatorSharedPtr session_creator,
+					 NetThreadAllocateMgrSharedPtr net_thread_allocate,const PrivateFlag&);
+
+public:
+	bool StartListen();
 
 private:
-	void HandleAccept(std::shared_ptr<SessionType> new_session,const asio::error_code& error);
+	bool Open(const everest_tcp::endpoint& ep);
+
+	bool Bind(const everest_tcp::endpoint& ep);
+
+	bool SetSocketOption();
+
+	bool Listen();
+
+	void StartAccept();
+
+	// 处理新连接
+	void HandleAccept(const asio::error_code& error,everest_tcp::socket new_socket);
+
+	// 构造ip地址和端口
+	std::optional<everest_tcp::endpoint> MakeEndpoint();
 
 private:
 	asio::io_context& io_context_;
+
 	everest_tcp::acceptor acceptor_;
+
+	SessionCreatorSharedPtr session_creator_;
+
+	NetThreadAllocateMgrSharedPtr net_thread_allocate_;
+
+	ServiceIdType service_id_;
 };
 
-NAMESPACE_EVEREST_END
+using ListenerSharedPtr = std::shared_ptr<everest::Listener>;
 
-#include "net/src/listener.ipp"
+NAMESPACE_EVEREST_END
 
 #endif // !LISTENER_H_

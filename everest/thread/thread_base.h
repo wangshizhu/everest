@@ -37,7 +37,7 @@ public:
 	{
 		auto ptr = std::make_shared<ThreadType>(std::forward<Args>(args)...,PrivateFlag());
 
-		CONTROL_MONITOR_SINGLETON()->RegisterThread(ptr);
+		g_control_monitor->RegisterThread(ptr);
 
 		return ptr;
 	}

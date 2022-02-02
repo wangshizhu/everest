@@ -1,13 +1,13 @@
-#ifndef MONITOR_THREAD_H_
-#define MONITOR_THREAD_H_
+#ifndef SESSION_THREAD_H_
+#define SESSION_THREAD_H_
 
 NAMESPACE_EVEREST_BEGIN
 
-class MonitorThread final : public ThreadBase
+class SessionThread : public everest::ThreadBase
 {
 public:
 	template<typename... Args>
-	MonitorThread(Args&&... args) :ThreadBase(std::forward<Args>(args)...)
+	SessionThread(Args&&... args) :ThreadBase(std::forward<Args>(args)...)
 	{
 	}
 
@@ -30,4 +30,5 @@ public:
 
 NAMESPACE_EVEREST_END
 
-#endif
+#endif // !SESSION_THREAD_H_
+

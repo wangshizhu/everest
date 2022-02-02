@@ -7,7 +7,7 @@ class SessionBase : public everest::NonCopyable
 {
 	struct PrivateFlag {};
 public:
-	SessionBase(asio::io_context& io_context,SessionDirection session_direction,const PrivateFlag& placehold);
+	SessionBase(const PrivateFlag& placehold);
 	virtual ~SessionBase();
 
 public:
@@ -18,12 +18,16 @@ public:
 	static std::shared_ptr<SessionType> CreateSession(Args&&... args)
 	{
 		auto ptr = std::make_shared<SessionType>(std::forward<Args>(args)..., PrivateFlag());
+		// TODO: 向控制中心报告
 
 		return ptr;
 	}
 
 public:
+	void SetSocket(everest_tcp::socket&& new_socket);
 	everest_tcp::socket& GetSocket();
+
+	void SetSessionDirection(SessionDirection session_direction);
 
 	void GetSessionId()const;
 
@@ -31,10 +35,14 @@ public:
 	virtual SessionType GetSessionType() = 0;
 
 private:
+	void SetLocalEndpoint();
+	void SetRemoteEndpoint();
+
+private:
 	SessionDirection session_direction_;
 	everest_tcp::endpoint local_;
 	everest_tcp::endpoint remote_;
-	everest_tcp::socket socket_;
+	std::unique_ptr<everest_tcp::socket> socket_;
 };
 
 NAMESPACE_EVEREST_END

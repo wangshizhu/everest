@@ -17,29 +17,13 @@ bool MonitorThread::Init()
 
 void MonitorThread::Update()
 {
-	CONTROL_MONITOR_SINGLETON()->Update();
+	g_control_monitor->Update();
 }
 
 void MonitorThread::OnStart()
 {
-	CONTROL_MONITOR_SINGLETON()->OnThreadStart();
+	g_control_monitor->OnThreadStart();
 }
-
-bool CreateAndStartMonitorThread()
-{
-	auto ptr = MonitorThread::CreateThread<everest::MonitorThread>();
-	if (nullptr == ptr)
-	{
-		return false;
-	}
-
-	ptr->Start();
-
-	return true;
-}
-
-// TODO: Ë½ÓÐ»¯
-bool created_moniter_thread = CreateAndStartMonitorThread();
 
 
 NAMESPACE_EVEREST_END

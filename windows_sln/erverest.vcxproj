@@ -166,13 +166,73 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\everest\common\src\include.cpp" />
+    <ClCompile Include="..\everest\configuration\src\configuration_manager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\everest\control_monitor\src\service_monitor.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\everest\control_monitor\src\thread_monitor_data.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\everest\launcher\src\launcher_base.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\everest\net\src\address.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\everest\net\src\listener.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\everest\net\src\session_base.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\everest\service\src\service.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\everest\thread\src\listener_connector_thread.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\everest\thread\src\net_thread_allocate.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\everest\thread\src\session_thread.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\everest\thread\src\session_thread_pool.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -197,21 +257,37 @@
     <ClInclude Include="..\everest\cmd_line\command_line_parser.h" />
     <ClInclude Include="..\everest\common\define.h" />
     <ClInclude Include="..\everest\common\include.h" />
+    <ClInclude Include="..\everest\common\platform.h" />
+    <ClInclude Include="..\everest\configuration\configuration_manager.h" />
+    <ClInclude Include="..\everest\configuration\listen_configuration.h" />
+    <ClInclude Include="..\everest\configuration\service_config.h" />
+    <ClInclude Include="..\everest\configuration\session_configuration.h" />
+    <ClInclude Include="..\everest\configuration\thread_allocate_configuration.h" />
     <ClInclude Include="..\everest\control_monitor\control_monitor.h" />
+    <ClInclude Include="..\everest\control_monitor\monitor_base.h" />
+    <ClInclude Include="..\everest\control_monitor\service_monitor.h" />
+    <ClInclude Include="..\everest\control_monitor\src\monitor_base.ipp" />
     <ClInclude Include="..\everest\control_monitor\thread_monitor.h" />
     <ClInclude Include="..\everest\control_monitor\thread_monitor_data.h" />
+    <ClInclude Include="..\everest\launcher\launcher_base.h" />
     <ClInclude Include="..\everest\multi_producer_multi_consumer\circular_queue.h" />
     <ClInclude Include="..\everest\multi_producer_multi_consumer\move_on_copy.h" />
     <ClInclude Include="..\everest\multi_producer_multi_consumer\multi_producer_multi_consumer.h" />
+    <ClInclude Include="..\everest\net\address.h" />
     <ClInclude Include="..\everest\net\listener.h" />
     <ClInclude Include="..\everest\net\net_define.h" />
     <ClInclude Include="..\everest\net\session_base.h" />
-    <ClInclude Include="..\everest\net\src\listener.ipp" />
+    <ClInclude Include="..\everest\net\session_creator.h" />
     <ClInclude Include="..\everest\non_copyable\non_copyable.h" />
+    <ClInclude Include="..\everest\service\service.h" />
     <ClInclude Include="..\everest\singleton\singleton.h" />
     <ClInclude Include="..\everest\spdlog_wrapper\everest_spdlog.h" />
     <ClInclude Include="..\everest\spdlog_wrapper\logger_create_info.h" />
+    <ClInclude Include="..\everest\thread\listener_connector_thread.h" />
     <ClInclude Include="..\everest\thread\monitor_thread.h" />
+    <ClInclude Include="..\everest\thread\net_thread_allocate.h" />
+    <ClInclude Include="..\everest\thread\session_thread.h" />
+    <ClInclude Include="..\everest\thread\session_thread_pool.h" />
     <ClInclude Include="..\everest\thread\thread_base.h" />
     <ClInclude Include="..\everest\thread\thread_define.h" />
     <ClInclude Include="..\everest\thread\thread_pool.h" />

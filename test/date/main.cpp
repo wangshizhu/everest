@@ -4,6 +4,7 @@
 #include <thread>
 #include "common/include.h"
 
+
 class TestSession : public everest::SessionBase
 {
 public:
@@ -21,7 +22,6 @@ public:
 
 int main()
 {
-
 	{
 		auto now = everest::TimeCapsule::Now();
 		std::cout << "now:" << now << std::endl;
@@ -94,23 +94,6 @@ int main()
 		{
 			std::cout << "expired" << std::endl;
 		}
-	}
-
-	{
-		std::cout <<"rand(1,100):"<< effolkronium::random_thread_local::get(1, 100) << std::endl;
-		std::cout << "rand_any:" << effolkronium::random_thread_local::get() << std::endl;
-	}
-
-	{
-		auto tb = everest::ThreadBase::CreateThread<everest::ThreadBase>();
-		tb->SetUpdateInterval(std::chrono::seconds(1));
-		tb->Start();
-
-		everest::Listener<TestSession> listener(*tb->GetIoContext());
-
-		listener.StartAccept();
-
-		tb->Join();
 	}
 
 	system("pause");

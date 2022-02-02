@@ -100,6 +100,12 @@ void ThreadPool<ThreadType>::PostByIndex(T&& cb, std::size_t index)
 }
 
 template<class ThreadType>
+std::shared_ptr<ThreadType> ThreadPool<ThreadType>::GetAnyThread()
+{
+	return threads_.at(GetThreadIndexByHashValue(effolkronium::random_thread_local::get()));
+}
+
+template<class ThreadType>
 void ThreadPool<ThreadType>::CreateAllThread()
 {
 	for (std::size_t i = 0; i < pool_size_; ++i)

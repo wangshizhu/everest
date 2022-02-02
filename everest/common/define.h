@@ -28,6 +28,8 @@ NAMESPACE_EVEREST_BEGIN
 
 using ThreadIdType = std::size_t;
 
+using ServiceIdType = uint16_t;
+
 NAMESPACE_EVEREST_END
 
 #endif

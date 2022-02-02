@@ -82,7 +82,7 @@ void ThreadBase::AddTimerTaskToActuateUpdate()
 			if (code)
 			{
 				EVEREST_LOG_ERROR("ThreadBase::AddTimerTaskToActuateUpdate error,thread_name:{},error_code:{},error_message:{}",
-					FullName().c_str(),int32_t(code.value()),code.message());
+													FullName(),int32_t(code.value()),code.message());
 
 				return;
 			}
@@ -113,19 +113,22 @@ void ThreadBase::AddTimerTaskToActuateUpdate()
 
 void ThreadBase::Snapshot(std::shared_ptr<ThreadBase> to, SnapshotCb&& cb)
 {
-	Post([to = to,cb = std::move(cb),this] () mutable 
-		{
-			ThreadMonitorData data;
-			data.thread_id_ = this->ThisThreadId();
-			data.thread_full_name_ = this->FullName();
-			data.pending_num_ = this->PendingNum();
-			data.interval_ = this->interval_;
-			data.execute_once_max_time_ = this->execute_once_max_time_;
-			data.thread_state_flag_.set(ThreadStateBitFlag::kStartedPos, this->started_flag_);
-			data.thread_state_flag_.set(ThreadStateBitFlag::kStoppedPos, this->IsStopped());
+  Post([to = to, cb = std::move(cb), this]() mutable 
+  {
+	  ThreadMonitorData data;
+	  data.thread_id_ = this->ThisThreadId();
+	  data.thread_full_name_ = this->FullName();
+	  data.pending_num_ = this->PendingNum();
+	  data.interval_ = this->interval_;
+	  data.execute_once_max_time_ = this->execute_once_max_time_;
+	  data.thread_state_flag_.set(ThreadStateBitFlag::kStartedPos,this->started_flag_);
+	  data.thread_state_flag_.set(ThreadStateBitFlag::kStoppedPos,this->IsStopped());
 
-			to->Post([cb = std::move(cb), data = std::move(data)]()mutable{ cb(std::move(data)); });
-		});
+	  to->Post([cb = std::move(cb), data = std::move(data)]() mutable
+	  {
+		  cb(std::move(data));
+	  });
+  });
 }
 
 void ThreadBase::SetThreadIndex(uint32_t index)

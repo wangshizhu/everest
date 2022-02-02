@@ -35,7 +35,10 @@ public:
 	template<class T>
 	void PostByIndex(T&& cb,std::size_t index);
 
+	std::shared_ptr<ThreadType> GetAnyThread();
+
 private:
+	// TODO:增加参数列表，向线程对象传递构造函数参数
 	void CreateAllThread();
 
 	template<class K>

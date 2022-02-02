@@ -1,0 +1,66 @@
+net_thread_allocate_policy:
+  - id: 1
+    # 网络线程模型，[1,2]可选
+    # 1代表reactor单线程模式，网络（监听、连接、已连接）都使用相同线程
+    # 2代表reactor多线程模式，监听、连接单线程模式，所有监听、连接操作都使用相同线程，
+    # 已连接使用多线程模式，所有已连接从线程池中分配线程
+    net_thread_mode: 1
+    # 处理已连接的线程数量
+    session_thread_num: 1
+    # 每个连接接收数据BUFF池大小，512K
+    read_buff_pool_size: 524288
+    # 每个连接发送数据BUFF池大小，512K
+    write_buff_pool_size: 524288
+  - id: 2
+    net_thread_mode: 1
+    session_thread_num: 1
+    # 每个连接接收数据BUFF池大小，512K
+    read_buff_pool_size: 524288
+    # 每个连接发送数据BUFF池大小，512K
+    write_buff_pool_size: 524288
+
+service:
+  -
+    service_id: 1
+    type: 'listen'
+    ip: '0.0.0.0'
+    port: 9527
+    # 网络协议，true:使用ipv4 false:使用ipv6
+    tcp_ipv4: true
+    # 是否禁用Nagle
+    no_delay: true
+    # listen参数 backlog
+    listen_backlog: 1024
+    # 网络线程分配策略id
+    policy_id: 1
+  - 
+    service_id: 2
+    type: 'connect'
+    ip: 127.0.0.1
+    port: 9528
+    # 网络协议，true:使用ipv4 false:使用ipv6
+    tcp_ipv4: true
+    # 是否禁用Nagle
+    no_delay: true
+    # listen参数 backlog
+    listen_backlog: 1024
+    # 网络线程分配策略id
+    policy_id: 2
+  - 
+    service_id: 3
+    type: 'listen'
+    ip: '0.0.0.0'
+    port: 9529
+    # 网络协议，true:使用ipv4 false:使用ipv6
+    tcp_ipv4: true
+    # 是否禁用Nagle
+    no_delay: true
+    # listen参数 backlog
+    listen_backlog: 1024
+    # 网络线程分配策略id
+    policy_id: 1
+
+server: [1,2,3]
+
+
+
