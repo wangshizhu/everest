@@ -22,6 +22,8 @@ enum class NetThreadMode
 
 class ThreadAllocateConfiguration
 {
+	static constexpr uint32_t kReadBuffPoolSize = 1024 * 512;
+	static constexpr uint32_t kWriteBuffPoolSize = 1024 * 512;
 public:
 	// 策略id
 	uint32_t policy_id_ = 0;
@@ -31,6 +33,12 @@ public:
 
 	// 处理session的线程池大小
 	std::size_t session_thread_pool_size_ = 2;
+
+  // 新连接的接收消息BUFF池大小,默认512K
+  uint32_t read_buff_pool_size_ = kReadBuffPoolSize;
+
+  // 新连接的发送消息BUFF池大小,默认512K
+  uint32_t write_buff_pool_size_ = kWriteBuffPoolSize;
 };
 
 NAMESPACE_EVEREST_END

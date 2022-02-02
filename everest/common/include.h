@@ -56,8 +56,6 @@
 // ÅäÖÃÊı¾İ
 #include "configuration/thread_allocate_configuration.h"
 #include "configuration/service_config.h"
-#include "configuration/listen_configuration.h"
-#include "configuration/session_configuration.h"
 #include "configuration/configuration_manager.h"
 
 // ¼à¿ØÆ÷

@@ -259,9 +259,7 @@
     <ClInclude Include="..\everest\common\include.h" />
     <ClInclude Include="..\everest\common\platform.h" />
     <ClInclude Include="..\everest\configuration\configuration_manager.h" />
-    <ClInclude Include="..\everest\configuration\listen_configuration.h" />
     <ClInclude Include="..\everest\configuration\service_config.h" />
-    <ClInclude Include="..\everest\configuration\session_configuration.h" />
     <ClInclude Include="..\everest\configuration\thread_allocate_configuration.h" />
     <ClInclude Include="..\everest\control_monitor\control_monitor.h" />
     <ClInclude Include="..\everest\control_monitor\monitor_base.h" />

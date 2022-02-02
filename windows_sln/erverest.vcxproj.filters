@@ -231,12 +231,6 @@
     <ClInclude Include="..\everest\service\service.h">
       <Filter>service\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\everest\configuration\listen_configuration.h">
-      <Filter>configuration\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\everest\configuration\session_configuration.h">
-      <Filter>configuration\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\everest\configuration\thread_allocate_configuration.h">
       <Filter>configuration\include</Filter>
     </ClInclude>
