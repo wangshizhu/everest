@@ -67,6 +67,7 @@ INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/asio-1.16.1/include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/spd/include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/fmt/include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/random/include)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/date/include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/everest)
 
 # ---------------------------------------------------------------------------------------
