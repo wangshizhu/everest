@@ -3,7 +3,7 @@
 
 NAMESPACE_EVEREST_BEGIN
 
-class ServiceNetThreadManager final : public everest::NonCopyable
+class ServiceNetThreadManager final : private everest::NonCopyable
 {
 public:
 	ServiceNetThreadManager(uint32_t policy_id);

@@ -3,7 +3,7 @@
 
 NAMESPACE_EVEREST_BEGIN
 
-class ConfigurationManager : public everest::NonCopyable
+class ConfigurationManager : private everest::NonCopyable
 {
 public:
 	ConfigurationManager();

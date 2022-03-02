@@ -3,8 +3,7 @@
 class SelfSession : public everest::SessionBase
 {
 public:
-  template<typename... Args>
-  SelfSession(Args&&... args) :SessionBase(std::forward<Args>(args)...)
+  SelfSession()
   {
   }
 public:
@@ -20,7 +19,8 @@ class SelfSessionCreator : public everest::SessionCreator
 public:
   std::shared_ptr<everest::SessionBase> CreateSession() override
   {
-    return everest::SessionBase::CreateSession<SelfSession>();
+    return std::make_shared<SelfSession>();
+    //return everest::SessionBase::CreateSession<SelfSession>();
   }
 };
 

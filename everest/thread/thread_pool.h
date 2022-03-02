@@ -4,7 +4,7 @@
 NAMESPACE_EVEREST_BEGIN
 
 template<class ThreadType>
-class ThreadPool : public everest::NonCopyable
+class ThreadPool : private everest::NonCopyable
 {
 	static constexpr std::size_t kThreadPoolMinSize = 2;
 	static constexpr std::size_t kThreadPoolMaxSize = 10;

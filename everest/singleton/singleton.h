@@ -4,7 +4,7 @@
 NAMESPACE_EVEREST_BEGIN
 
 template <class T>
-class ThreadUnsafeSingleton : public everest::NonCopyable
+class ThreadUnsafeSingleton : private everest::NonCopyable
 {
 public:
 	ThreadUnsafeSingleton()
@@ -31,7 +31,7 @@ private:
 template <class T> T* ThreadUnsafeSingleton<T>::m_pT = nullptr;
 
 template <class T>
-class ThreadSafeSingleton : public everest::NonCopyable
+class ThreadSafeSingleton : private everest::NonCopyable
 {
 public:
 	static T* GetInstance()

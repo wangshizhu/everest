@@ -3,7 +3,7 @@
 
 NAMESPACE_EVEREST_BEGIN
 
-class Address : public everest::NonCopyable
+class Address : private everest::NonCopyable
 {
 public:
 	Address(const std::string& ip, uint16_t port);

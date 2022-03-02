@@ -3,7 +3,7 @@
 
 NAMESPACE_EVEREST_BEGIN
 
-class ThreadBase : public everest::NonCopyable
+class ThreadBase : private everest::NonCopyable
 {
 	struct PrivateFlag {};
 

@@ -3,7 +3,7 @@
 
 NAMESPACE_EVEREST_BEGIN
 
-class ServiceBase final : public everest::NonCopyable
+class ServiceBase final : private everest::NonCopyable
 {
 	struct ServicePrivateFlag {};
 	friend class LauncherBase;
@@ -16,6 +16,8 @@ public:
 	void Stop();
 
 	ServiceIdType GetServiceId()const;
+
+	void RegisterSession(SessionIdType session_id, SessionSharedPtr session);
 
 private:
 	/*
@@ -31,6 +33,8 @@ private:
 private:
 	ServiceIdType service_id_;
 	ListenerSharedPtr listened_;
+	std::unordered_map<SessionIdType, SessionSharedPtr> session_;
+	std::size_t online_;
 };
 
 NAMESPACE_EVEREST_END

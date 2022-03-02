@@ -3,7 +3,7 @@
 
 NAMESPACE_EVEREST_BEGIN
 
-class Listener final : public everest::NonCopyable
+class Listener final : private everest::NonCopyable
 {
 	struct PrivateFlag {};
 	friend class ServiceBase;
@@ -32,6 +32,8 @@ private:
 	// 构造ip地址和端口
 	std::optional<everest_tcp::endpoint> MakeEndpoint();
 
+	SessionIdType GenerateSessionId();
+
 private:
 	asio::io_context& io_context_;
 
@@ -42,6 +44,8 @@ private:
 	NetThreadAllocateMgrSharedPtr net_thread_allocate_;
 
 	ServiceIdType service_id_;
+
+	uint32_t auto_incre_session_id_;
 };
 
 using ListenerSharedPtr = std::shared_ptr<everest::Listener>;

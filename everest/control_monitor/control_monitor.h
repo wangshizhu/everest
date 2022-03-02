@@ -3,7 +3,7 @@
 
 NAMESPACE_EVEREST_BEGIN
 
-class ControlMonitor final : public everest::NonCopyable
+class ControlMonitor final : private everest::NonCopyable
 {
 public:
 	ControlMonitor();

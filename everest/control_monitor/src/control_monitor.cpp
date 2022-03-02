@@ -13,6 +13,7 @@ ControlMonitor::~ControlMonitor()
 void ControlMonitor::Update()
 {
 	thread_monitor_.Update();
+	service_monitor_.Update();
 }
 
 void ControlMonitor::RegisterThread(ThreadBaseSharedPtr thread_ptr)

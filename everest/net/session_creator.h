@@ -3,7 +3,7 @@
 
 NAMESPACE_EVEREST_BEGIN
 
-class SessionCreator : public everest::NonCopyable 
+class SessionCreator : private everest::NonCopyable 
 {
 public:
   virtual std::shared_ptr<SessionBase> CreateSession() = 0;

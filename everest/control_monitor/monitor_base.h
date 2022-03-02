@@ -8,7 +8,7 @@ using ThreadBaseSharedPtr = std::shared_ptr<ThreadBase>;
 using ThreadBaseWeakPtr = std::weak_ptr<ThreadBase>;
 
 template<class MonitorType>
-class MonitorBase : public everest::NonCopyable
+class MonitorBase : private everest::NonCopyable
 {
 protected:
 	// 每次快照时间间隔

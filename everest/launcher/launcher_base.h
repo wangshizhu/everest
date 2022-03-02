@@ -11,7 +11,7 @@ NAMESPACE_EVEREST_BEGIN
 /// 3.OnStartLauncher()
 /// </summary>
 
-class LauncherBase : public everest::NonCopyable
+class LauncherBase : private everest::NonCopyable
 {
 public:
 	LauncherBase();

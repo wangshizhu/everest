@@ -3,10 +3,11 @@
 
 NAMESPACE_EVEREST_BEGIN
 
-class SessionBase : public everest::NonCopyable
+class SessionBase : private everest::NonCopyable
 {
 	struct PrivateFlag {};
 public:
+	SessionBase();
 	SessionBase(const PrivateFlag& placehold);
 	virtual ~SessionBase();
 
@@ -29,7 +30,8 @@ public:
 
 	void SetSessionDirection(SessionDirection session_direction);
 
-	void GetSessionId()const;
+	void SetSessionId(SessionIdType session_id);
+	SessionIdType GetSessionId()const;
 
 public:
 	virtual SessionType GetSessionType() = 0;
@@ -43,6 +45,7 @@ private:
 	everest_tcp::endpoint local_;
 	everest_tcp::endpoint remote_;
 	std::unique_ptr<everest_tcp::socket> socket_;
+	SessionIdType session_id_;
 };
 
 NAMESPACE_EVEREST_END

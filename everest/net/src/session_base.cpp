@@ -1,7 +1,12 @@
 NAMESPACE_EVEREST_BEGIN
 
+SessionBase::SessionBase() 
+	:session_direction_(SessionDirection::kNone), socket_(nullptr), session_id_(0)
+{
+}
+
 SessionBase::SessionBase(const PrivateFlag& placehold)
-	:session_direction_(SessionDirection::kNone), socket_(nullptr)
+	:session_direction_(SessionDirection::kNone), socket_(nullptr), session_id_(0)
 {
 }
 
@@ -32,10 +37,15 @@ void SessionBase::SetSessionDirection(SessionDirection session_direction)
 	session_direction_ = session_direction;
 }
 
-//void SessionBase::GetSessionId()const
-//{
-//	return socket_.
-//}
+void SessionBase::SetSessionId(SessionIdType session_id)
+{
+	session_id_ = session_id;
+}
+
+SessionIdType SessionBase::GetSessionId()const
+{
+	return session_id_;
+}
 
 void SessionBase::SetLocalEndpoint()
 {
@@ -49,6 +59,8 @@ void SessionBase::SetLocalEndpoint()
 	}
 	
 	local_ = local;
+
+	EVEREST_LOG_INFO("SessionBase::SetLocalEndpoint local_address:{},local_port:{}", local_.address().to_string(), local_.port());
 }
 
 void SessionBase::SetRemoteEndpoint()
@@ -63,6 +75,8 @@ void SessionBase::SetRemoteEndpoint()
 	}
 
 	remote_ = remote;
+
+	EVEREST_LOG_INFO("SessionBase::SetRemoteEndpoint remote_address:{},remote_port:{}", remote_.address().to_string(), remote_.port());
 }
 
 NAMESPACE_EVEREST_END

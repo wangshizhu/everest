@@ -39,4 +39,13 @@ ServiceBaseSharedPtr ServiceMonitor::GetService(ServiceIdType service_id)
 	return iter->second;
 }
 
+void ServiceMonitor::RegisterSession(ServiceIdType service_id, SessionSharedPtr session)
+{
+	monitor_thread_->Post([self = this, service_id = service_id,
+												session_id = session->GetSessionId(), session = session]()
+	{
+		self->GetService(service_id)->RegisterSession(session_id,session);
+	});
+}
+
 NAMESPACE_EVEREST_END

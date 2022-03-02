@@ -4,7 +4,7 @@ Listener::Listener(ServiceIdType service_id,SessionCreatorSharedPtr session_crea
                    NetThreadAllocateMgrSharedPtr net_thread_allocate,const PrivateFlag&)
   : io_context_(net_thread_allocate->GetListenerConnectorThread()->GetIoContextRef()),
   acceptor_(io_context_),session_creator_(session_creator),
-  net_thread_allocate_(net_thread_allocate),service_id_(service_id)
+  net_thread_allocate_(net_thread_allocate),service_id_(service_id),auto_incre_session_id_(0)
 {
 }
 
@@ -144,6 +144,23 @@ std::optional<everest_tcp::endpoint> Listener::MakeEndpoint()
   return std::make_optional<everest_tcp::endpoint>(ep);
 }
 
+SessionIdType Listener::GenerateSessionId()
+{
+  if (auto_incre_session_id_ == std::numeric_limits<uint32_t>::max())
+  {
+    auto_incre_session_id_ = 0;
+  }
+
+  ++auto_incre_session_id_;
+
+  std::bitset<sizeof(SessionIdType) * 8> tmp;
+  tmp |= service_id_;
+  tmp <<= 32;
+  tmp |= auto_incre_session_id_;
+
+  return tmp.to_ullong();
+}
+
 void Listener::StartAccept() 
 {
   acceptor_.async_accept(net_thread_allocate_->AllocateSessionThread()->GetIoContextRef(),
@@ -161,8 +178,11 @@ void Listener::HandleAccept(const asio::error_code& error,everest_tcp::socket ne
     EVEREST_LOG_INFO("Listener::HandleAccept");
 
     auto&& session = session_creator_->CreateSession();
+    session->SetSessionId(GenerateSessionId());
     session->SetSocket(std::move(new_socket));
     session->SetSessionDirection(SessionDirection::kNegative);
+
+    g_control_monitor->GetServiceMonitor().RegisterSession(service_id_, session);
   }
 
   StartAccept();
