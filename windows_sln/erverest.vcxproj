@@ -277,6 +277,8 @@
     <ClInclude Include="..\everest\net\session_base.h" />
     <ClInclude Include="..\everest\net\session_creator.h" />
     <ClInclude Include="..\everest\non_copyable\non_copyable.h" />
+    <ClInclude Include="..\everest\object_pool\object_pool.h" />
+    <ClInclude Include="..\everest\object_pool\src\object_pool.ipp" />
     <ClInclude Include="..\everest\service\service.h" />
     <ClInclude Include="..\everest\singleton\singleton.h" />
     <ClInclude Include="..\everest\spdlog_wrapper\everest_spdlog.h" />

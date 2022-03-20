@@ -11,7 +11,10 @@
 #include <bitset>
 #include <optional>
 #include <utility>
+#include <set>
+#include <unordered_set>
 #include <map>
+#include <mutex>
 #include <unordered_map>
 #include <stdint.h>
 
@@ -33,6 +36,9 @@
 
 // 单体
 #include "singleton/singleton.h"
+
+// 对象池
+#include "object_pool/object_pool.h"
 
 // log相关
 #include "spdlog_wrapper/logger_create_info.h"

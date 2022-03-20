@@ -124,6 +124,15 @@
     <Filter Include="launcher\src">
       <UniqueIdentifier>{9a811f8f-a4ba-4883-87a7-98144471dfef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="object_pool">
+      <UniqueIdentifier>{08cd9ee3-7f44-4aed-a470-a76ef18548d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="object_pool\include">
+      <UniqueIdentifier>{33753625-b909-4d1e-93b8-e65fe58fe068}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="object_pool\src">
+      <UniqueIdentifier>{445f19d2-4ba4-4347-8dd2-2df010ae0e48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\everest\singleton\singleton.h">
@@ -266,6 +275,12 @@
     </ClInclude>
     <ClInclude Include="..\everest\net\session_creator.h">
       <Filter>net\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\object_pool\object_pool.h">
+      <Filter>object_pool\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\object_pool\src\object_pool.ipp">
+      <Filter>object_pool\src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
