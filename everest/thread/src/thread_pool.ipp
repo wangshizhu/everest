@@ -1,3 +1,5 @@
+#ifndef THREAD_POOL_IPP_
+#define THREAD_POOL_IPP_
 
 NAMESPACE_EVEREST_BEGIN
 
@@ -130,5 +132,6 @@ std::size_t ThreadPool<ThreadType>::GetThreadIndexByHashValue(std::size_t hash_v
 	return hash_value % pool_size_;
 }
 
-
 NAMESPACE_EVEREST_END
+
+#endif // !THREAD_POOL_IPP_
