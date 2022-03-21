@@ -24,6 +24,12 @@
 // 平台相关
 #include "common/platform.h"
 
+// 小工具函数
+#include "common/helper.h"
+
+// 整型类型数据安全加、减、乘、除
+#include "calculator/safe_integral_calculator.h"
+
 // 随机数
 #include "effolkronium/random.hpp"
 

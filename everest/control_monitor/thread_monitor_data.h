@@ -30,7 +30,7 @@ enum ThreadState
 class ThreadMonitorData
 {
 	static constexpr std::string_view thread_state_describe[] = { "wait_start","running","no_start_stopped","stopped" };
-	static constexpr std::size_t kThreadStateBitNum = sizeof(int8_t) * ONE_BYTE_TO_BIT;
+	static constexpr std::size_t kThreadStateBitNum = sizeof(int8_t) * kOneByteBit;
 public:
 	// Ïß³Ìid
 	ThreadIdType thread_id_ = 0;

@@ -5,13 +5,6 @@
 #include <map>
 #include <type_traits>
 
-// trait type that stripping const¡¢volatile¡¢reference
-template <typename T>
-struct TraitTypeStrippingCVR
-{
-	using RealType = std::remove_cv_t<std::remove_reference_t<T>>;
-};
-
 template <typename T>
 auto Abs(T&& t)noexcept
 {

@@ -282,6 +282,9 @@
     <ClInclude Include="..\everest\object_pool\src\object_pool.ipp">
       <Filter>object_pool\src</Filter>
     </ClInclude>
+    <ClInclude Include="..\everest\common\helper.h">
+      <Filter>common\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\everest\thread\src\thread_base.cpp">

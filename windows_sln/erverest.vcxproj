@@ -256,6 +256,7 @@
     <ClInclude Include="..\everest\cmd_line\cmdline.h" />
     <ClInclude Include="..\everest\cmd_line\command_line_parser.h" />
     <ClInclude Include="..\everest\common\define.h" />
+    <ClInclude Include="..\everest\common\helper.h" />
     <ClInclude Include="..\everest\common\include.h" />
     <ClInclude Include="..\everest\common\platform.h" />
     <ClInclude Include="..\everest\configuration\configuration_manager.h" />

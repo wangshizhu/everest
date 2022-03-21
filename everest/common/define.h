@@ -10,7 +10,7 @@
 // 线程Update更新时间间隔,100ms
 #define THREAD_UPDATE_INTERVAL (1000*1000*100)
 
-#define ONE_BYTE_TO_BIT (8)
+constexpr uint16_t kOneByteBit = 8;
 
 // try宏定义
 #define TRY_MACRO try{
