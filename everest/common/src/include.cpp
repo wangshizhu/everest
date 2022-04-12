@@ -1,5 +1,8 @@
 #include "common/include.h"
 
+// buffer
+#include "buffer/buffer.cpp"
+
 // ÃüÁîĞĞ
 #include "cmd_line/src/command_line_parser.cpp"
 

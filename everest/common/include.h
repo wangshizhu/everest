@@ -11,6 +11,8 @@
 #include <bitset>
 #include <optional>
 #include <utility>
+#include <limits>
+#include <type_traits>
 #include <set>
 #include <unordered_set>
 #include <map>
@@ -27,11 +29,17 @@
 // 小工具函数
 #include "common/helper.h"
 
+// 拷贝时触发移动
+#include "multi_producer_multi_consumer/move_on_copy.h"
+
 // 整型类型数据安全加、减、乘、除
 #include "calculator/safe_integral_calculator.h"
 
 // 随机数
 #include "effolkronium/random.hpp"
+
+// buffer
+#include "buffer/buffer.h"
 
 // 命令行参数
 #include "cmd_line/cmdline.h"
