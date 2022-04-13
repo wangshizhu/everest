@@ -35,6 +35,38 @@ private:
   std::size_t capacity_;
 };
 
+class Buffer final : public BufferBase
+{
+  static constexpr std::size_t kDefaultCapacity = 512;
+  static constexpr std::size_t kExpandStep = 512;
+  static constexpr std::size_t kMaxCapacity = 1024 * 1024 * 2;
+
+private:
+  class BufferHolder
+  {
+  public:
+    BufferHolder(std::size_t capacity);
+    ~BufferHolder();
+
+  public:
+    int8_t* data_;
+  };
+
+public:
+  Buffer(std::size_t init_capacity = kDefaultCapacity);
+
+public:
+  std::optional<std::size_t> WriteSome(const int8_t* from, std::size_t write_size) override;
+
+private:
+  std::size_t FixCapacity(std::size_t capacity);
+
+  void Expand(std::size_t new_capacity);
+
+private:
+  std::unique_ptr<BufferHolder> data_;
+};
+
 NAMESPACE_EVEREST_END
 
 #endif // !BUFFER_H_

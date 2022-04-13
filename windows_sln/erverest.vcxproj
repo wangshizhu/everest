@@ -162,6 +162,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\everest\buffer\buffer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\everest\cmd_line\src\command_line_parser.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -252,6 +255,7 @@
     <ClInclude Include="..\3rd\lock-free-queue\concurrentqueue.h" />
     <ClInclude Include="..\3rd\lock-free-queue\lightweightsemaphore.h" />
     <ClInclude Include="..\3rd\random\include\effolkronium\random.hpp" />
+    <ClInclude Include="..\everest\buffer\buffer.h" />
     <ClInclude Include="..\everest\calculator\safe_integral_calculator.h" />
     <ClInclude Include="..\everest\cmd_line\cmdline.h" />
     <ClInclude Include="..\everest\cmd_line\command_line_parser.h" />

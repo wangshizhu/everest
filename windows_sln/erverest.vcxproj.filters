@@ -133,6 +133,15 @@
     <Filter Include="object_pool\src">
       <UniqueIdentifier>{445f19d2-4ba4-4347-8dd2-2df010ae0e48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="buffer">
+      <UniqueIdentifier>{229f208a-b977-4d44-bd72-d5d4e664e841}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="buffer\include">
+      <UniqueIdentifier>{9d9c951c-248a-428f-8f1b-41abf760702a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="buffer\src">
+      <UniqueIdentifier>{cb7c7cf4-3769-476a-bbfd-0b04d029b3f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\everest\singleton\singleton.h">
@@ -285,6 +294,9 @@
     <ClInclude Include="..\everest\common\helper.h">
       <Filter>common\include</Filter>
     </ClInclude>
+    <ClInclude Include="..\everest\buffer\buffer.h">
+      <Filter>buffer\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\everest\thread\src\thread_base.cpp">
@@ -352,6 +364,9 @@
     </ClCompile>
     <ClCompile Include="..\everest\net\src\listener.cpp">
       <Filter>net\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\buffer\buffer.cpp">
+      <Filter>buffer\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
