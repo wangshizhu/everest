@@ -60,11 +60,6 @@ std::optional<std::size_t> BufferBase::WriteSome(const int8_t* from, std::size_t
 {
   if (write_size > RemainSize())
   {
-    Tidy();
-  }
-
-  if (write_size > RemainSize())
-  {
     return std::nullopt;
   }
 
@@ -85,6 +80,8 @@ std::optional<std::size_t> BufferBase::ReadSome(int8_t* to, std::size_t read_siz
   std::copy(read_,read_ + read_size,to);
 
   read_ += read_size;
+
+  Tidy();
 
   return read_size;
 }

@@ -1,5 +1,8 @@
 #include "common/include.h"
 
+// helper
+#include "common/src/helper.cpp"
+
 // buffer
 #include "buffer/buffer.cpp"
 

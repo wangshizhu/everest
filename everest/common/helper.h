@@ -8,6 +8,8 @@ struct TraitTypeStrippingCVR
 	using RealType = std::remove_cv_t<std::remove_reference_t<T>>;
 };
 
+NAMESPACE_EVEREST_BEGIN
+
 /*
 * @brief 从给定【整型类型From对象】的【指定位begin_pos】提取【指定位数disjunction_bit_num】后，
 * 根据每一位的值构造出给定【整型类型To对象】
@@ -42,6 +44,11 @@ To DisjuctionBit(From from)
 
 	return To(from >> begin_pos) & tmp.to_ullong();
 }
+
+// 获取当前线程id
+uint64_t GetCurrentThreadIdUint64();
+
+NAMESPACE_EVEREST_END
 
 #endif // !HELPER_H_
 

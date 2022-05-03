@@ -142,6 +142,15 @@
     <Filter Include="buffer\src">
       <UniqueIdentifier>{cb7c7cf4-3769-476a-bbfd-0b04d029b3f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="packet">
+      <UniqueIdentifier>{42cb53b2-e910-4db4-8f37-6ed0be1366da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="packet\include">
+      <UniqueIdentifier>{33bc143e-7440-4496-8e77-d4941cca566d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="packet\src">
+      <UniqueIdentifier>{91feecfe-418e-4753-bdf4-1fa29cca6bf1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\everest\singleton\singleton.h">
@@ -297,6 +306,15 @@
     <ClInclude Include="..\everest\buffer\buffer.h">
       <Filter>buffer\include</Filter>
     </ClInclude>
+    <ClInclude Include="..\everest\packet\packet.h">
+      <Filter>packet\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\packet\packet_maker.h">
+      <Filter>packet\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\packet\packet_handler.h">
+      <Filter>packet\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\everest\thread\src\thread_base.cpp">
@@ -367,6 +385,9 @@
     </ClCompile>
     <ClCompile Include="..\everest\buffer\buffer.cpp">
       <Filter>buffer\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\common\src\helper.cpp">
+      <Filter>common\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

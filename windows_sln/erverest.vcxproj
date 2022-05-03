@@ -168,6 +168,9 @@
     <ClCompile Include="..\everest\cmd_line\src\command_line_parser.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\everest\common\src\helper.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\everest\common\src\include.cpp" />
     <ClCompile Include="..\everest\configuration\src\configuration_manager.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -284,6 +287,9 @@
     <ClInclude Include="..\everest\non_copyable\non_copyable.h" />
     <ClInclude Include="..\everest\object_pool\object_pool.h" />
     <ClInclude Include="..\everest\object_pool\src\object_pool.ipp" />
+    <ClInclude Include="..\everest\packet\packet.h" />
+    <ClInclude Include="..\everest\packet\packet_handler.h" />
+    <ClInclude Include="..\everest\packet\packet_maker.h" />
     <ClInclude Include="..\everest\service\service.h" />
     <ClInclude Include="..\everest\singleton\singleton.h" />
     <ClInclude Include="..\everest\spdlog_wrapper\everest_spdlog.h" />

@@ -7,10 +7,12 @@
 #include <chrono>
 #include <thread>
 #include <iostream>
+#include <sstream>
 #include <assert.h>
 #include <bitset>
 #include <optional>
 #include <utility>
+#include <string>
 #include <limits>
 #include <type_traits>
 #include <set>
@@ -101,6 +103,11 @@
 #include "net/session_base.h"
 #include "net/session_creator.h"
 #include "net/listener.h"
+
+// 消息包相关
+#include "packet/packet.h"
+#include "packet/packet_maker.h"
+#include "packet/packet_handler.h"
 
 // 服务
 #include "service/service.h"
