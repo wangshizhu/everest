@@ -84,7 +84,10 @@ private:
   std::map<packet_id_t, PacketMakerABC::UniquePacketMakerABC> maker_;
 };
 
-#define PACKET_MAKER_MGR_SINGLETON() everest::ThreadSafeSingleton<everest::PacketMakerManager>::GetInstance()
+EVEREST_INLINE everest::PacketMakerManager* PacketMakerMgrSingleton()
+{
+  return everest::ThreadSafeSingleton<everest::PacketMakerManager>::GetInstance();
+}
 
 template<class PacketType>
 class PacketMakerRegister final
@@ -92,7 +95,7 @@ class PacketMakerRegister final
 public:
   PacketMakerRegister()
   {
-    PACKET_MAKER_MGR_SINGLETON()->Register(PacketMaker<PacketType>::MakeUnique());
+    PacketMakerMgrSingleton()->Register(PacketMaker<PacketType>::MakeUnique());
   }
 };
 

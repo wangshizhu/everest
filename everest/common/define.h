@@ -12,6 +12,8 @@
 
 constexpr uint16_t kOneByteBit = 8;
 
+#define EVEREST_INLINE inline
+
 // try∫Í∂®“Â
 #define TRY_MACRO try{
 

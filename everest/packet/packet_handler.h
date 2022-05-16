@@ -62,7 +62,10 @@ private:
   std::map<packet_id_t, UniquePacketHandlerABC> handler_;
 };
 
-#define PACKET_HANDLER_MGR_SINGLETON() everest::ThreadSafeSingleton<everest::PacketHandlerManager>::GetInstance()
+EVEREST_INLINE everest::PacketHandlerManager* PacketHandlerMgrSingleton()
+{
+  return everest::ThreadSafeSingleton<everest::PacketHandlerManager>::GetInstance();
+}
 
 template<class PacketType,class SessionType>
 class PacketHandlerRegister
@@ -70,7 +73,7 @@ class PacketHandlerRegister
 public:
   PacketHandlerRegister()
   {
-    PACKET_HANDLER_MGR_SINGLETON()->Register(PacketHandler<PacketType,SessionType>::MakeUniquePacketHandler());
+    PacketHandlerMgrSingleton()->Register(PacketHandler<PacketType,SessionType>::MakeUniquePacketHandler());
   }
 };
 

@@ -9,7 +9,7 @@ TestStrand::TestStrand(std::size_t consumer_thread_num,
   {
     consumer_thread_.push_back(std::thread([this]
     {
-      LOG_INFO("create consumer thread {}", everest::GetCurrentThreadIdUint64());
+      LOG_INFO("create consumer thread {}", everest::GetCurrentThreadId());
       strand_queue_.Run();
     }));
   }
@@ -58,7 +58,7 @@ void TestStrand::MainThreadRun()
 
 void TestStrand::ProducerThreadRun(std::size_t thread_index)
 {
-  LOG_INFO("create producer thread {}",everest::GetCurrentThreadIdUint64());
+  LOG_INFO("create producer thread {}",everest::GetCurrentThreadId());
   thread_local bool onoff = true;
   while (true)
   {
@@ -99,13 +99,13 @@ void TestStrand::ProducerThreadProduceDataToSameStrandClient(std::size_t thread_
   for (auto i = 0;i<10;++i)
   {
     DataFootPrint data;
-    data.trigger_thread_id_ = everest::GetCurrentThreadIdUint64();
-    data.producer_thread_id_ = everest::GetCurrentThreadIdUint64();
+    data.trigger_thread_id_ = everest::GetCurrentThreadId();
+    data.producer_thread_id_ = everest::GetCurrentThreadId();
     data.data_index_ = i;
 
     strand_client->strand_.Dispatch([data = data]() mutable
     {
-      data.consumer_thread_id_ = everest::GetCurrentThreadIdUint64();
+      data.consumer_thread_id_ = everest::GetCurrentThreadId();
       data.Logged();
     });
   }
@@ -118,16 +118,16 @@ void TestStrand::ConsumerThreadProduceDataToSameStrandClient(std::size_t thread_
   for (auto i = 0;i<10;++i)
   {
     DataFootPrint data;
-    data.trigger_thread_id_ = everest::GetCurrentThreadIdUint64();
+    data.trigger_thread_id_ = everest::GetCurrentThreadId();
     data.data_index_ = i;
 
     strand_queue_.Push([data = data, &strand_client]() mutable
     {
-      data.producer_thread_id_ = everest::GetCurrentThreadIdUint64();
+      data.producer_thread_id_ = everest::GetCurrentThreadId();
 
       strand_client->strand_.Dispatch([data = data] ()mutable
       {
-        data.consumer_thread_id_ = everest::GetCurrentThreadIdUint64();
+        data.consumer_thread_id_ = everest::GetCurrentThreadId();
         data.Logged();
       });
     });

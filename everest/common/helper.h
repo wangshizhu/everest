@@ -46,7 +46,7 @@ To DisjuctionBit(From from)
 }
 
 // 获取当前线程id
-uint64_t GetCurrentThreadIdUint64();
+uint64_t GetCurrentThreadId();
 
 NAMESPACE_EVEREST_END
 

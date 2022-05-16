@@ -12,7 +12,7 @@ int main(int argc,char** argv)
   CREATE_DEFAULT_LOGGER("test_strand", info);
 
   {
-    TestStrand test_strand(10,2,10);
+    TestStrand test_strand(10,1,10);
     LOG_INFO("create test_strand success");
     test_strand.MainThreadRun();
   }

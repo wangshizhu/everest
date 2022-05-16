@@ -8,7 +8,7 @@ std::string GetCurrentThreadIdStr()
   return ss.str();
 }
 
-uint64_t GetCurrentThreadIdUint64()
+uint64_t GetCurrentThreadId()
 {
   static thread_local uint64_t current_thread_id = std::stoull(GetCurrentThreadIdStr());
   return current_thread_id;
