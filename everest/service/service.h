@@ -18,6 +18,7 @@ public:
 	ServiceIdType GetServiceId()const;
 
 	void RegisterSession(SessionIdType session_id, SessionSharedPtr session);
+	void UnregisterSession(SessionIdType session_id);
 
 private:
 	/*

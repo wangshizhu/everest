@@ -153,7 +153,7 @@ SessionIdType Listener::GenerateSessionId()
 
   ++auto_incre_session_id_;
 
-  std::bitset<sizeof(SessionIdType) * 8> tmp;
+  std::bitset<sizeof(SessionIdType) * kOneByteBit> tmp;
   tmp |= service_id_;
   tmp <<= 32;
   tmp |= auto_incre_session_id_;

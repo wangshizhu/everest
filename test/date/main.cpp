@@ -35,6 +35,8 @@ int main()
 		auto utc0 = everest::TimeCapsule::LocalTimeZoneDurationCountToDestTimeZoneDurationCount(-28800,0);
 		std::cout << "today00:00:00 to utc0:" << utc0 << std::endl;
 
+		std::cout << "-28800 is:" << everest::TimeCapsule::FormatTimePoint(-28800) << std::endl;
+
 		auto USA_EST_5 = everest::TimeCapsule::DestTimeZoneDurationCountBaseOnLocalTimeZone(now, -5);
 		std::cout << "today00:00:00 to USA_EST_5:" << USA_EST_5<<" ,format:"<< everest::TimeCapsule::FormatTimePoint(USA_EST_5) << std::endl;
 

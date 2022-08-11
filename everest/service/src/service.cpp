@@ -31,6 +31,19 @@ void ServiceBase::RegisterSession(SessionIdType session_id,SessionSharedPtr sess
   ++online_;
 }
 
+void ServiceBase::UnregisterSession(SessionIdType session_id)
+{
+  auto iter = session_.find(session_id);
+  if (iter == session_.cend())
+  {
+    EVEREST_LOG_ERROR("ServiceBase::UnregisterSession dont find registered session,session_id:{}", session_id);
+    return;
+  }
+
+  session_.erase(session_id);
+  --online_;
+}
+
 std::shared_ptr<Listener> ServiceBase::CreateListener(SessionCreatorSharedPtr session_creator, 
 																											NetThreadAllocateMgrSharedPtr net_thread_allocate)
 {

@@ -15,9 +15,7 @@ public:
   using SharedPacketABC = std::shared_ptr<PacketABC>;
 
 public:
-  virtual ~PacketABC()
-  {
-  }
+  virtual ~PacketABC() = default;
 
 public:
   virtual UniquePacketABC MakeUniquePacket() const = 0;

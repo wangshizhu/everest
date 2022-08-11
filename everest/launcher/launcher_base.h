@@ -72,7 +72,7 @@ private:
 	ThreadBaseSharedPtr monitor_thread_;
 
 	// 线程分配策略
-    std::map<uint32_t, NetThreadAllocateMgrSharedPtr> net_thread_allocate_map_;
+  std::map<uint32_t, NetThreadAllocateMgrSharedPtr> net_thread_allocate_map_;
 };
 
 NAMESPACE_EVEREST_END
