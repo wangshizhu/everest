@@ -2,7 +2,7 @@
 NAMESPACE_EVEREST_BEGIN
 
 ThreadBase::ThreadBase(const PrivateFlag& placehold)
-	:index_(0), run_timer_(context_), interval_(THREAD_UPDATE_INTERVAL),
+	:index_(0), run_timer_(context_), interval_(kThreadUpdateInterval),
 	pending_num_(0), started_flag_(false), execute_once_max_time_(0)
 {
 	started_.clear();

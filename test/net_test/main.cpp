@@ -12,6 +12,15 @@ public:
     return everest::SessionType::kExternal;
   }
 
+  void OnClose() override
+  {
+  }
+
+  bool OnRead() override
+  {
+    return true;
+  }
+
 };
 
 class SelfSessionCreator : public everest::SessionCreator

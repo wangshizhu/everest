@@ -5,6 +5,8 @@ NAMESPACE_EVEREST_BEGIN
 
 extern int32_t g_local_time_zone;
 
+using TimeStampType = uint64_t;
+
 class TimeCapsule
 {
 public:
@@ -12,7 +14,7 @@ public:
 	/*
 	* @brief 当前时区自1970-01-01 00:00:00至当前的秒数
 	*/
-	static uint64_t Now() noexcept
+	static TimeStampType Now() noexcept
 	{
 		return std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 	}
@@ -20,7 +22,7 @@ public:
 	/*
 	* @brief 当前时区自1970-01-01 00:00:00至当前的毫秒数
 	*/
-	static uint64_t NowMillSeconds() noexcept
+	static TimeStampType NowMillSeconds() noexcept
 	{
 		return TimePointToDurationCount<std::chrono::system_clock::duration,std::chrono::milliseconds>(std::chrono::system_clock::now());
 	}
@@ -28,7 +30,7 @@ public:
 	/*
 	* @brief 当前时区自1970-01-01 00:00:00至当前的微秒数
 	*/
-	static uint64_t NowMicroSeconds() noexcept
+	static TimeStampType NowMicroSeconds() noexcept
 	{
 		return TimePointToDurationCount<std::chrono::system_clock::duration, std::chrono::microseconds>(std::chrono::system_clock::now());
 	}
@@ -36,7 +38,7 @@ public:
 	/*
 	* @brief 当前时区自1970-01-01 00:00:00至当前的纳秒数
 	*/
-	static uint64_t NowNanoSeconds() noexcept
+	static TimeStampType NowNanoSeconds() noexcept
 	{
 		return TimePointToDurationCount<std::chrono::system_clock::duration, std::chrono::nanoseconds>(std::chrono::system_clock::now());
 	}

@@ -50,6 +50,14 @@ public:
 	*/
 	void RegisterSession(ServiceIdType service_id, SessionSharedPtr session);
 
+	/*
+	* @brief: 移除session
+	* @param: [in] service_id service id
+	* @param: [in] session_id session_id
+	* @note: 线程安全
+	*/
+	void UnregisterSession(ServiceIdType service_id, SessionIdType session_id);
+
 private:
 	std::map<ServiceIdType, ServiceBaseSharedPtr> service_;
 };

@@ -32,7 +32,7 @@ private:
 	// 构造ip地址和端口
 	std::optional<everest_tcp::endpoint> MakeEndpoint();
 
-	SessionIdType GenerateSessionId();
+	void AutoIncrSequenceId();
 
 private:
 	asio::io_context& io_context_;

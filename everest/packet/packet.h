@@ -3,8 +3,6 @@
 
 NAMESPACE_EVEREST_BEGIN
 
-using packet_id_t = uint32_t;
-
 /*
 * abstract packet base class
 */
@@ -22,19 +20,23 @@ public:
 
   virtual SharedPacketABC MakeSharedPacket() const = 0;
 
-  virtual packet_id_t GetPacketId() const = 0;
+  virtual PacketIdType GetPacketId() const = 0;
 
   virtual std::size_t Size() const = 0;
 
+  virtual void Serialize(BufferBase& buffer) const = 0;
+
+  virtual void Unserialize(BufferBase& buffer) const = 0;
+
 };
 
-template<class BodyType,packet_id_t packet_id>
+template<class BodyType, PacketIdType packet_id>
 class Packet : public PacketABC
 {
 public:
   using UniquePacket = std::unique_ptr<Packet>;
   using SharedPacket = std::shared_ptr<Packet>;
-  static constexpr packet_id_t kPacketId = packet_id;
+  static constexpr PacketIdType kPacketId = packet_id;
 
 public:
   UniquePacketABC MakeUniquePacket() const override
@@ -47,7 +49,7 @@ public:
     return MakeShared();
   }
 
-  packet_id_t GetPacketId() const override
+  PacketIdType GetPacketId() const override
   {
     return kPacketId;
   }
@@ -55,6 +57,16 @@ public:
   std::size_t Size() const override
   {
     return body_.ByteSize();
+  }
+
+  void Serialize(BufferBase& buffer) const override
+  {
+    buffer << body_;
+  }
+
+  void Unserialize(BufferBase& buffer) const override
+  {
+    buffer >> body_;
   }
 
 public:

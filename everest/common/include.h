@@ -81,6 +81,7 @@
 #include "configuration/configuration_manager.h"
 
 // 监控器
+#include "net/net_define.h"
 #include "thread/thread_define.h"
 #include "control_monitor/monitor_base.h"
 #include "control_monitor/thread_monitor_data.h"
@@ -99,15 +100,17 @@
 
 // 网络
 #include "net/address.h"
-#include "net/net_define.h"
+#include "net/session_id.h"
 #include "net/session_base.h"
 #include "net/session_creator.h"
 #include "net/listener.h"
 
 // 消息包相关
+#include "packet/packet_head.h"
 #include "packet/packet.h"
 #include "packet/packet_maker.h"
 #include "packet/packet_handler.h"
+#include "packet/packet_serialize.h"
 
 // 服务
 #include "service/service.h"

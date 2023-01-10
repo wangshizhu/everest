@@ -133,9 +133,10 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../3rd/date/include;%(AdditionalIncludeDirectories);../everest;../3rd/fmt/include;../3rd/asio-1.16.1/include;../3rd/spd/include;../3rd/random/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../3rd/date/include;%(AdditionalIncludeDirectories);../everest;../3rd/fmt/include;../3rd/asio-1.16.1/include;../3rd/spd/include;../3rd/random/include;../3rd/protobuf-3.18.0/src</AdditionalIncludeDirectories>
       <AdditionalModuleDependencies>%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -214,6 +215,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\everest\net\src\session_id.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\everest\packet\src\packet_serialize.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\everest\service\src\service.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -284,12 +291,15 @@
     <ClInclude Include="..\everest\net\net_define.h" />
     <ClInclude Include="..\everest\net\session_base.h" />
     <ClInclude Include="..\everest\net\session_creator.h" />
+    <ClInclude Include="..\everest\net\session_id.h" />
     <ClInclude Include="..\everest\non_copyable\non_copyable.h" />
     <ClInclude Include="..\everest\object_pool\object_pool.h" />
     <ClInclude Include="..\everest\object_pool\src\object_pool.ipp" />
     <ClInclude Include="..\everest\packet\packet.h" />
     <ClInclude Include="..\everest\packet\packet_handler.h" />
+    <ClInclude Include="..\everest\packet\packet_head.h" />
     <ClInclude Include="..\everest\packet\packet_maker.h" />
+    <ClInclude Include="..\everest\packet\packet_serialize.h" />
     <ClInclude Include="..\everest\service\service.h" />
     <ClInclude Include="..\everest\singleton\singleton.h" />
     <ClInclude Include="..\everest\spdlog_wrapper\everest_spdlog.h" />

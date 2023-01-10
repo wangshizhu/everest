@@ -37,9 +37,13 @@
 #include "configuration/src/configuration_manager.cpp"
 
 // 网络
+#include "net/src/session_id.cpp"
 #include "net/src/address.cpp"
 #include "net/src/session_base.cpp"
 #include "net/src/listener.cpp"
+
+// 消息包相关
+#include "packet/src/packet_serialize.cpp"
 
 // 服务
 #include "service/src/service.cpp"

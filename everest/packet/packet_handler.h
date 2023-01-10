@@ -8,7 +8,7 @@ class PacketHandlerABC
 public:
   virtual bool HandlePacket(PacketABC::SharedPacketABC pakcet, SessionSharedPtr session) const = 0;
 
-  virtual packet_id_t GetPacketId() const = 0;
+  virtual PacketIdType GetPacketId() const = 0;
 };
 
 using UniquePacketHandlerABC = std::unique_ptr<PacketHandlerABC>;
@@ -27,7 +27,7 @@ public:
     return HandlePacket(concrete_packet,concrete_session);
   }
 
-  packet_id_t GetPacketId() const override
+  PacketIdType GetPacketId() const override
   {
     return PacketType::kPacketId;
   }
@@ -59,7 +59,7 @@ public:
   }
 
 private:
-  std::map<packet_id_t, UniquePacketHandlerABC> handler_;
+  std::map<PacketIdType, UniquePacketHandlerABC> handler_;
 };
 
 EVEREST_INLINE everest::PacketHandlerManager* PacketHandlerMgrSingleton()

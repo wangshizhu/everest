@@ -144,21 +144,15 @@ std::optional<everest_tcp::endpoint> Listener::MakeEndpoint()
   return std::make_optional<everest_tcp::endpoint>(ep);
 }
 
-SessionIdType Listener::GenerateSessionId()
+void Listener::AutoIncrSequenceId()
 {
+  // TODO: 这里有问题
   if (auto_incre_session_id_ == std::numeric_limits<uint32_t>::max())
   {
     auto_incre_session_id_ = 0;
   }
 
   ++auto_incre_session_id_;
-
-  std::bitset<sizeof(SessionIdType) * kOneByteBit> tmp;
-  tmp |= service_id_;
-  tmp <<= 32;
-  tmp |= auto_incre_session_id_;
-
-  return tmp.to_ullong();
 }
 
 void Listener::StartAccept() 
@@ -177,8 +171,10 @@ void Listener::HandleAccept(const asio::error_code& error,everest_tcp::socket ne
   {
     EVEREST_LOG_INFO("Listener::HandleAccept");
 
+    AutoIncrSequenceId();
+
     auto&& session = session_creator_->CreateSession();
-    session->SetSessionId(GenerateSessionId());
+    session->SetSessionId(SessionId(service_id_,auto_incre_session_id_));
     session->SetSocket(std::move(new_socket));
     session->SetSessionDirection(SessionDirection::kNegative);
 

@@ -17,7 +17,7 @@ public:
 
   virtual PacketABC::SharedPacketABC MakeSharedPacket() const = 0;
 
-  virtual packet_id_t GetPacketId() const = 0;
+  virtual PacketIdType GetPacketId() const = 0;
 };
 
 template<class PacketType>
@@ -25,7 +25,7 @@ class PacketMaker final : public PacketMakerABC
 {
 public:
   using UniquePacketMaker = std::unique_ptr<PacketMaker>;
-  static constexpr packet_id_t kPacketId = PacketType::kPacketId;
+  static constexpr PacketIdType kPacketId = PacketType::kPacketId;
 
 public:
   PacketABC::UniquePacketABC MakeUniquePacket() const override
@@ -38,7 +38,7 @@ public:
     return PacketType::MakeShared();
   }
 
-  packet_id_t GetPacketId() const override
+  PacketIdType GetPacketId() const override
   {
     return kPacketId;
   }
@@ -58,7 +58,7 @@ public:
     maker_[maker->GetPacketId()] = std::move(maker);
   }
 
-  PacketABC::UniquePacketABC MakeUniquePacket(packet_id_t packet_id) const
+  PacketABC::UniquePacketABC MakeUniquePacket(PacketIdType packet_id) const
   {
     auto iter = maker_.find(packet_id);
     if (iter == maker_.cend())
@@ -69,7 +69,7 @@ public:
     return iter->second->MakeUniquePacket();
   }
 
-  PacketABC::SharedPacketABC MakeSharedPacket(packet_id_t packet_id) const
+  PacketABC::SharedPacketABC MakeSharedPacket(PacketIdType packet_id) const
   {
     auto iter = maker_.find(packet_id);
     if (iter == maker_.cend())
@@ -81,7 +81,7 @@ public:
   }
 
 private:
-  std::map<packet_id_t, PacketMakerABC::UniquePacketMakerABC> maker_;
+  std::map<PacketIdType, PacketMakerABC::UniquePacketMakerABC> maker_;
 };
 
 EVEREST_INLINE everest::PacketMakerManager* PacketMakerMgrSingleton()

@@ -29,6 +29,9 @@ void ServiceBase::RegisterSession(SessionIdType session_id,SessionSharedPtr sess
 
   session_[session_id] = session;
   ++online_;
+  
+  // 开始接收网络消息
+  session->Read();
 }
 
 void ServiceBase::UnregisterSession(SessionIdType session_id)

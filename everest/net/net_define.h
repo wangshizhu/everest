@@ -28,6 +28,12 @@ using SessionIdType = uint64_t;
 
 using everest_tcp = asio::ip::tcp;
 
+using PacketIdType = uint32_t;
+using PacketLengthType = uint32_t;
+
+constexpr uint16_t kPacketIdByteLen = sizeof(PacketIdType);
+constexpr uint16_t kPacketLengthByteLen = sizeof(PacketLengthType);
+
 NAMESPACE_EVEREST_END
 
 #endif // !NET_DEFINE_H_

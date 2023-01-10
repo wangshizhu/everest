@@ -315,6 +315,15 @@
     <ClInclude Include="..\everest\packet\packet_handler.h">
       <Filter>packet\include</Filter>
     </ClInclude>
+    <ClInclude Include="..\everest\net\session_id.h">
+      <Filter>net\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\packet\packet_head.h">
+      <Filter>packet\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\packet\packet_serialize.h">
+      <Filter>packet\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\everest\thread\src\thread_base.cpp">
@@ -388,6 +397,12 @@
     </ClCompile>
     <ClCompile Include="..\everest\common\src\helper.cpp">
       <Filter>common\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\net\src\session_id.cpp">
+      <Filter>net\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\packet\src\packet_serialize.cpp">
+      <Filter>packet\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
