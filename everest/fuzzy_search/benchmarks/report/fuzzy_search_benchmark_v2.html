@@ -1,0 +1,349 @@
+<title>公司名搜索与名字分布</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap">
+<style>
+  :root {
+    --bg: #f4f6f9;
+    --surface: #ffffff;
+    --surface-soft: #eef3f9;
+    --ink: #15202b;
+    --ink-2: #3c4b5c;
+    --muted: #64748b;
+    --line: #dbe3ec;
+    --blue: #2a78d6;
+    --orange: #eb6834;
+    --shadow: 0 1px 2px rgba(21, 32, 43, 0.05), 0 10px 30px rgba(21, 32, 43, 0.06);
+    --radius: 14px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d131a;
+      --surface: #151d26;
+      --surface-soft: #1b2530;
+      --ink: #e9eef5;
+      --ink-2: #c2ccd8;
+      --muted: #94a3b4;
+      --line: #26323e;
+      --blue: #3987e5;
+      --orange: #d95926;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 30px rgba(0, 0, 0, 0.24);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d131a;
+    --surface: #151d26;
+    --surface-soft: #1b2530;
+    --ink: #e9eef5;
+    --ink-2: #c2ccd8;
+    --muted: #94a3b4;
+    --line: #26323e;
+    --blue: #3987e5;
+    --orange: #d95926;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 30px rgba(0, 0, 0, 0.24);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 28px 56px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 1080px; margin: 0 auto; }
+  .hero { padding: 8px 0 30px; border-bottom: 1px solid var(--line); }
+  .eyebrow { font-size: 12px; letter-spacing: 0.12em; color: var(--muted); margin: 0 0 14px; }
+  h1, h2, h3 { text-wrap: balance; }
+  h1 {
+    font-family: "Noto Serif SC", "Songti SC", "SimSun", serif;
+    font-size: clamp(30px, 5vw, 44px);
+    line-height: 1.25;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+  }
+  .subtitle { max-width: 64ch; color: var(--ink-2); font-size: 16px; margin: 0; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 10px; border: 1px solid var(--line); border-radius: 999px;
+    background: var(--surface); color: var(--ink-2); font-size: 12.5px;
+    font-variant-numeric: tabular-nums;
+  }
+  .chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--muted); opacity: 0.7; }
+  .summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 28px 0 0; }
+  .stat {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 18px 18px 16px; box-shadow: var(--shadow);
+  }
+  .stat-label { color: var(--muted); font-size: 12.5px; margin: 0 0 8px; }
+  .stat-value {
+    font-size: clamp(24px, 2.8vw, 32px); font-weight: 700; line-height: 1.15;
+    font-variant-numeric: tabular-nums; letter-spacing: -0.01em;
+  }
+  .stat-value small { font-size: 0.52em; font-weight: 500; color: var(--ink-2); margin-left: 3px; }
+  .stat-note { color: var(--muted); font-size: 12.5px; margin: 8px 0 0; line-height: 1.55; }
+  main { display: flex; flex-direction: column; gap: 42px; margin-top: 42px; }
+  .section-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .section-head h2 {
+    font-family: "Noto Serif SC", "Songti SC", "SimSun", serif;
+    font-size: clamp(22px, 3vw, 28px); line-height: 1.3; margin: 0; font-weight: 700;
+  }
+  .section-kicker { color: var(--muted); font-size: 12px; letter-spacing: 0.1em; }
+  .section-intro { max-width: 74ch; color: var(--ink-2); margin: 8px 0 18px; }
+  .table-wrap {
+    overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--surface); box-shadow: var(--shadow);
+  }
+  table { width: 100%; border-collapse: collapse; min-width: 560px; }
+  th, td { padding: 12px 16px; text-align: right; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+  th:first-child, td:first-child { text-align: left; }
+  thead th { color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: 0.03em; background: var(--surface-soft); }
+  tbody tr:last-child td { border-bottom: 0; }
+  td strong { font-weight: 700; }
+  .table-note { color: var(--muted); font-size: 12.5px; margin: 10px 0 0; max-width: 78ch; }
+  .chart-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 14px; margin-top: 16px; }
+  .chart {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 18px 20px 20px; box-shadow: var(--shadow); min-width: 0;
+  }
+  .chart h3 { margin: 0 0 4px; font-size: 15px; }
+  .chart .chart-note { color: var(--muted); font-size: 12.5px; margin: 0 0 14px; }
+  .bar-row { display: grid; grid-template-columns: 62px minmax(0, 1fr) 122px; align-items: center; gap: 10px; margin: 7px 0; }
+  .bar-label { color: var(--ink-2); font-size: 12.5px; white-space: nowrap; }
+  .track { height: 10px; border-radius: 999px; background: var(--surface-soft); overflow: hidden; }
+  .fill { height: 100%; border-radius: 999px; background: var(--blue); }
+  .bar-value { color: var(--ink-2); font-size: 12.5px; text-align: right; font-variant-numeric: tabular-nums; }
+  .name-list {
+    columns: 2; column-gap: 28px; margin: 0; padding: 0; list-style: none;
+    font-family: "Cascadia Mono", "Consolas", "Noto Sans Mono", monospace; font-size: 13px; line-height: 1.9;
+  }
+  .name-list li { break-inside: avoid; padding: 1px 0; color: var(--ink-2); white-space: nowrap; }
+  .name-box {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 18px 20px; box-shadow: var(--shadow);
+  }
+  .name-box h3 { margin: 0 0 4px; font-size: 15px; }
+  .name-box .chart-note { color: var(--muted); font-size: 12.5px; margin: 0 0 14px; }
+  .file-note { color: var(--muted); font-size: 12.5px; margin: 14px 0 0; }
+  .file-note code { font-family: "Cascadia Mono", "Consolas", monospace; color: var(--ink-2); background: var(--surface-soft); padding: 2px 5px; border-radius: 5px; }
+  .note { color: var(--muted); font-size: 13px; line-height: 1.65; max-width: 78ch; }
+  .foot { margin-top: 10px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12.5px; display: flex; flex-wrap: wrap; gap: 8px 18px; }
+  .foot span { white-space: nowrap; }
+  @media (max-width: 860px) {
+    .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .chart-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 620px) {
+    body { font-size: 14.5px; padding-block: 20px 44px; }
+    .summary { grid-template-columns: 1fr; }
+    .bar-row { grid-template-columns: 54px minmax(0, 1fr) 96px; gap: 8px; }
+    .bar-label, .bar-value { font-size: 11.5px; }
+    .name-list { columns: 1; }
+    th, td { padding: 10px 12px; }
+    main { gap: 34px; margin-top: 32px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<div class="page">
+  <header class="hero">
+    <p class="eyebrow">第二版 · 2026-10-30 · 500 万名字 · 单服务程序</p>
+    <h1>公司名搜索与名字分布</h1>
+    <p class="subtitle">这次额外统计了不同字数名字在 500 万中的占比，并把 10 万条名字写进文件，方便直接查看名字长什么样；性能结果仍基于同一批 500 万名字。</p>
+    <div class="chips">
+      <span class="chip">500 万名字</span>
+      <span class="chip">2–8 个字</span>
+      <span class="chip">70% 中文 / 30% 英文</span>
+      <span class="chip">名字不重复</span>
+      <span class="chip">Windows 正式版</span>
+    </div>
+  </header>
+
+  <section class="summary" aria-label="关键数字">
+    <div class="stat">
+      <p class="stat-label">2 个字的名字</p>
+      <p class="stat-value">5.7<small>%</small></p>
+      <p class="stat-note">约 28.4 万个；2 字组合容易重复，最终占比最低</p>
+    </div>
+    <div class="stat">
+      <p class="stat-label">3 个字的名字</p>
+      <p class="stat-value">14.1<small>%</small></p>
+      <p class="stat-note">约 70.6 万个</p>
+    </div>
+    <div class="stat">
+      <p class="stat-label">4–8 个字的名字</p>
+      <p class="stat-value">约 16<small>%</small></p>
+      <p class="stat-note">每个长度约 80 万个，分布比较均匀</p>
+    </div>
+    <div class="stat">
+      <p class="stat-label">平均名字长度</p>
+      <p class="stat-value">5.35<small>字</small></p>
+      <p class="stat-note">10 万条名字样例已写入文件</p>
+    </div>
+  </section>
+
+  <main>
+    <section aria-labelledby="distribution-title">
+      <div class="section-head">
+        <span class="section-kicker">01 · 名字长度</span>
+        <h2 id="distribution-title">2 字名字明显偏少，4–8 字各占约 16%</h2>
+      </div>
+      <p class="section-intro">生成时每个名字的长度是在 2–8 之间随机抽取的，但名字要求不重复。2 个字的名字组合少，重复后会被丢弃，所以最终 2 字名字只占 5.7%；3 个字占 14.1%；4–8 个字各有约 16%。</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th scope="col">名字长度</th><th scope="col">名字数量</th><th scope="col">占 500 万的比例</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>2 个字</td><td>284,072</td><td><strong>5.7%</strong></td></tr>
+            <tr><td>3 个字</td><td>706,277</td><td><strong>14.1%</strong></td></tr>
+            <tr><td>4 个字</td><td>797,974</td><td>16.0%</td></tr>
+            <tr><td>5 个字</td><td>803,817</td><td>16.1%</td></tr>
+            <tr><td>6 个字</td><td>801,541</td><td>16.0%</td></tr>
+            <tr><td>7 个字</td><td>803,135</td><td>16.1%</td></tr>
+            <tr><td>8 个字</td><td>803,184</td><td>16.1%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">共 5,000,000 个名字；平均 5.35 个字；约 70% 中文字符、30% 英文字母，英文大小写混合。</p>
+
+      <div class="chart-grid">
+        <div class="chart">
+          <h3>名字长度占比</h3>
+          <p class="chart-note">按字数统计，百分比相加约 100%</p>
+          <div class="bar-row"><span class="bar-label">2 个字</span><div class="track"><div class="fill" style="width:31.7%" title="5.7% · 284,072 个"></div></div><span class="bar-value">5.7% · 28.4 万</span></div>
+          <div class="bar-row"><span class="bar-label">3 个字</span><div class="track"><div class="fill" style="width:78.3%" title="14.1% · 706,277 个"></div></div><span class="bar-value">14.1% · 70.6 万</span></div>
+          <div class="bar-row"><span class="bar-label">4 个字</span><div class="track"><div class="fill" style="width:88.9%" title="16.0% · 797,974 个"></div></div><span class="bar-value">16.0% · 79.8 万</span></div>
+          <div class="bar-row"><span class="bar-label">5 个字</span><div class="track"><div class="fill" style="width:89.4%" title="16.1% · 803,817 个"></div></div><span class="bar-value">16.1% · 80.4 万</span></div>
+          <div class="bar-row"><span class="bar-label">6 个字</span><div class="track"><div class="fill" style="width:88.9%" title="16.0% · 801,541 个"></div></div><span class="bar-value">16.0% · 80.2 万</span></div>
+          <div class="bar-row"><span class="bar-label">7 个字</span><div class="track"><div class="fill" style="width:89.4%" title="16.1% · 803,135 个"></div></div><span class="bar-value">16.1% · 80.3 万</span></div>
+          <div class="bar-row"><span class="bar-label">8 个字</span><div class="track"><div class="fill" style="width:89.4%" title="16.1% · 803,184 个"></div></div><span class="bar-value">16.1% · 80.3 万</span></div>
+        </div>
+        <div class="name-box">
+          <h3>名字样例（20 条）</h3>
+          <p class="chart-note">从 10 万条样例里抽 20 条；字符为合成的随机中文/英文，不代表真实公会名。</p>
+          <ul class="name-list">
+            <li>一下一墮乒叮喓丂</li>
+            <li>並三丁乖倁bld</li>
+            <li>Qno</li>
+            <li>亪一乇一僑</li>
+            <li>丸宥LUv丁q</li>
+            <li>七P丕員l专j佡</li>
+            <li>伴丈丅</li>
+            <li>刽一K</li>
+            <li>伷t久余亴d</li>
+            <li>丅丁C三</li>
+            <li>l丣伓V</li>
+            <li>丂b丁七一y</li>
+            <li>一伳三oF</li>
+            <li>丂世仉丱</li>
+            <li>墳一嚉M上vl</li>
+            <li>t丆M丅娣婷丁倃</li>
+            <li>一乾t一一两咮</li>
+            <li>亹一丂H乍丼卂丁</li>
+            <li>丞丆o一J</li>
+            <li>丕一丱价丁丁伐m</li>
+          </ul>
+          <p class="file-note">完整样例：<code>benchmarks/results/names_sample_100k.txt</code>，共 100,000 行，每行一个名字；从 500 万名字中每隔 50 个取一个。</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="performance-title">
+      <div class="section-head">
+        <span class="section-kicker">02 · 性能</span>
+        <h2 id="performance-title">和第一版结论一致：速度快，内存主要花在搜索目录</h2>
+      </div>
+      <p class="section-intro">以下是第二次运行的结果，数据集和第一次相同，仍是 500 万名字、两套配置。数字会有正常的运行波动，看量级即可。</p>
+      <p class="table-note" style="margin: 0 0 14px">“支持 1 个字”表示 1 个字和 2 个字以上都能搜；“只支持 2 个字以上”表示输入 1 个字会提示太短。</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th scope="col">内存项目</th><th scope="col">只支持 2 个字以上</th><th scope="col">支持 1 个字</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>搜索目录（整理后）</td><td><strong>约 475 MB</strong></td><td><strong>约 526 MB</strong></td></tr>
+            <tr><td>刚添加完的临时数据</td><td>约 604 MB</td><td>约 721 MB</td></tr>
+            <tr><td>程序总占用（整理后，含测试数据）</td><td>约 1.13 GB</td><td>约 1.16 GB</td></tr>
+            <tr><td>整理时程序最高占用</td><td>约 1.93 GB</td><td>约 2.26 GB</td></tr>
+            <tr><td>删除 10% 后（未整理）</td><td>约 1.17 GB</td><td>约 1.21 GB</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap" style="margin-top:14px">
+        <table>
+          <thead>
+            <tr><th scope="col">搜索方式</th><th scope="col">支持 1 个字 · 每秒</th><th scope="col">支持 1 个字 · 99% 用时</th><th scope="col">只支持 2 字以上 · 每秒</th><th scope="col">只支持 2 字以上 · 99% 用时</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1 个字 · 随机</td><td><strong>21.5 万</strong></td><td>0.018 毫秒</td><td>不支持</td><td>—</td></tr>
+            <tr><td>1 个字 · 常见</td><td><strong>70.4 万</strong></td><td>0.003 毫秒</td><td>不支持</td><td>—</td></tr>
+            <tr><td>2 个字 · 随机</td><td><strong>13.8 万</strong></td><td>0.022 毫秒</td><td><strong>11.7 万</strong></td><td>0.025 毫秒</td></tr>
+            <tr><td>2 个字 · 常见</td><td><strong>37.0 万</strong></td><td>0.004 毫秒</td><td><strong>35.2 万</strong></td><td>0.006 毫秒</td></tr>
+            <tr><td>3–8 个字 · 随机</td><td><strong>0.71 万</strong></td><td>1.67 毫秒</td><td><strong>0.72 万</strong></td><td>1.64 毫秒</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">平均返回条数：1 个字和“常见 2 个字”会达到 500 条上限；2 个字随机约 253 条；3 个字以上约 8 条。99% 用时表示 99% 的搜索在这个时间内完成。</p>
+
+      <div class="table-wrap" style="margin-top:14px">
+        <table>
+          <thead>
+            <tr><th scope="col">操作</th><th scope="col">只支持 2 个字以上</th><th scope="col">支持 1 个字</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>添加 500 万个名字</td><td>5.6 秒（约 88.7 万条/秒）</td><td>6.4 秒（约 78.0 万条/秒）</td></tr>
+            <tr><td>删除 50 万个名字（10%）</td><td>0.12 秒</td><td>0.22 秒</td></tr>
+            <tr><td>第一次整理</td><td>4.8 秒</td><td>7.6 秒</td></tr>
+            <tr><td>删除后再整理</td><td>3.6 秒</td><td>6.5 秒</td></tr>
+            <tr><td>第一次整理时最高占用</td><td>约 1.93 GB</td><td>约 2.26 GB</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">“搜索目录”是搜索功能自己新增的数据；“程序总占用”还包含 500 万条测试名字和查询样本。生产按服务拆分后，单个服务程序的数据更少，内存和整理峰值会相应下降。</p>
+    </section>
+
+    <section aria-labelledby="notes-title">
+      <div class="section-head">
+        <span class="section-kicker">03 · 测试说明</span>
+        <h2 id="notes-title">名字是合成数据，长度分布会受到“名字不重复”的影响</h2>
+      </div>
+      <p class="section-intro">名字随机生成：500 万条、2–8 个字、约 70% 中文字符和 30% 英文字母，常见字符出现得更频繁，英文大小写混合。为了让名字不重复，生成时会丢弃重复名字；2 个字的名字组合少，重复最多，所以最终占比最低。样例文件里的生僻字来自 CJK 区间的合成字符池，不代表真实公会名。</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th scope="col">项目</th><th scope="col">条件</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>机器</td><td>Windows 11 · Intel i7-12700F · 64 GB 内存</td></tr>
+            <tr><td>构建</td><td>正式版构建（Release，优化开启）· 只用一个处理线程</td></tr>
+            <tr><td>数据</td><td>500 万条不重复名字，2–8 个字，70% 中文 / 30% 英文</td></tr>
+            <tr><td>样例文件</td><td>100,000 行，每行一个名字，从 500 万中每隔 50 个取一个</td></tr>
+            <tr><td>范围</td><td>只测搜索功能；不含网络、客户端、数据库和其他业务</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">这些数字用于判断量级和做取舍，不是线上承诺。线上 Linux 机器、真实名字分布、服务拆分方式不同，结果会有差异；建议上线前在目标环境用真实数据再跑一次。</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>fuzzy_search 基准测试 · 第二版</span>
+    <span>测试日期：2026-10-30</span>
+    <span>数据：result_min1_v2.json / result_min2_v2.json</span>
+    <span>样例：names_sample_100k.txt</span>
+  </footer>
+</div>

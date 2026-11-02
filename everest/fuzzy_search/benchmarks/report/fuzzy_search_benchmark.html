@@ -1,0 +1,610 @@
+<title>公司名搜索性能测试</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap">
+<style>
+  :root {
+    --bg: #f4f6f9;
+    --surface: #ffffff;
+    --surface-soft: #eef3f9;
+    --ink: #15202b;
+    --ink-2: #3c4b5c;
+    --muted: #64748b;
+    --line: #dbe3ec;
+    --blue: #2a78d6;
+    --orange: #eb6834;
+    --blue-soft: #e8f1fc;
+    --orange-soft: #fdeee7;
+    --shadow: 0 1px 2px rgba(21, 32, 43, 0.05), 0 10px 30px rgba(21, 32, 43, 0.06);
+    --radius: 14px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d131a;
+      --surface: #151d26;
+      --surface-soft: #1b2530;
+      --ink: #e9eef5;
+      --ink-2: #c2ccd8;
+      --muted: #94a3b4;
+      --line: #26323e;
+      --blue: #3987e5;
+      --orange: #d95926;
+      --blue-soft: #1b2c42;
+      --orange-soft: #35241d;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 30px rgba(0, 0, 0, 0.24);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d131a;
+    --surface: #151d26;
+    --surface-soft: #1b2530;
+    --ink: #e9eef5;
+    --ink-2: #c2ccd8;
+    --muted: #94a3b4;
+    --line: #26323e;
+    --blue: #3987e5;
+    --orange: #d95926;
+    --blue-soft: #1b2c42;
+    --orange-soft: #35241d;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 30px rgba(0, 0, 0, 0.24);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 28px 56px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 1080px; margin: 0 auto; }
+  .hero { padding: 8px 0 32px; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin: 0 0 14px;
+  }
+  h1, h2, h3 { text-wrap: balance; }
+  h1 {
+    font-family: "Noto Serif SC", "Songti SC", "SimSun", serif;
+    font-size: clamp(30px, 5vw, 46px);
+    line-height: 1.25;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+  }
+  .subtitle { max-width: 62ch; color: var(--ink-2); font-size: 16px; margin: 0; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink-2);
+    font-size: 12.5px;
+    font-variant-numeric: tabular-nums;
+  }
+  .chip::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+    opacity: 0.7;
+  }
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin: 28px 0 0;
+  }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 18px 16px;
+    box-shadow: var(--shadow);
+  }
+  .stat-label { color: var(--muted); font-size: 12.5px; margin: 0 0 8px; }
+  .stat-value {
+    font-size: clamp(22px, 2.6vw, 30px);
+    font-weight: 700;
+    line-height: 1.15;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+  .stat-value small { font-size: 0.55em; font-weight: 500; color: var(--ink-2); margin-left: 3px; }
+  .stat-note { color: var(--muted); font-size: 12.5px; margin: 8px 0 0; line-height: 1.55; }
+  main { display: flex; flex-direction: column; gap: 44px; margin-top: 44px; }
+  .section-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .section-head h2 {
+    font-family: "Noto Serif SC", "Songti SC", "SimSun", serif;
+    font-size: clamp(22px, 3vw, 28px);
+    line-height: 1.3;
+    margin: 0;
+    font-weight: 700;
+  }
+  .section-kicker { color: var(--muted); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .section-intro { max-width: 70ch; color: var(--ink-2); margin: 8px 0 18px; }
+  .callout {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--blue);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    box-shadow: var(--shadow);
+  }
+  .callout h2 {
+    font-family: "Noto Serif SC", "Songti SC", "SimSun", serif;
+    font-size: 22px;
+    margin: 0 0 8px;
+  }
+  .callout p { margin: 0 0 10px; color: var(--ink-2); }
+  .callout ul { margin: 10px 0 0; padding-left: 1.15em; color: var(--ink-2); }
+  .callout li { margin: 6px 0; }
+  .callout li strong { color: var(--ink); }
+  .compare {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+  }
+  .option {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--blue);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+  }
+  .option.b { border-top-color: var(--orange); }
+  .option h3 { margin: 0 0 4px; font-size: 17px; }
+  .option .option-sub { color: var(--muted); font-size: 12.5px; margin: 0 0 12px; }
+  .option dl { margin: 0; display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; }
+  .option dt { color: var(--ink-2); font-size: 13.5px; }
+  .option dd { margin: 0; text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .option .verdict { margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 13.5px; }
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+  table { width: 100%; border-collapse: collapse; min-width: 620px; }
+  th, td { padding: 12px 16px; text-align: right; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+  th:first-child, td:first-child { text-align: left; }
+  thead th { color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: 0.03em; background: var(--surface-soft); }
+  tbody tr:last-child td { border-bottom: 0; }
+  td strong { font-weight: 700; }
+  .table-note { color: var(--muted); font-size: 12.5px; margin: 10px 0 0; }
+  .chart-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+  .chart {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 20px 20px;
+    box-shadow: var(--shadow);
+    min-width: 0;
+  }
+  .chart h3 { margin: 0 0 4px; font-size: 15px; }
+  .chart .chart-note { color: var(--muted); font-size: 12.5px; margin: 0 0 14px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; color: var(--muted); font-size: 12px; margin: 0 0 14px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+  .s1 { background: var(--blue); }
+  .s2 { background: var(--orange); }
+  .bar-group { margin-top: 14px; }
+  .bar-group:first-of-type { margin-top: 0; }
+  .bar-group-label { color: var(--ink-2); font-size: 13px; margin-bottom: 7px; }
+  .bar-line {
+    display: grid;
+    grid-template-columns: 84px minmax(0, 1fr) 106px;
+    align-items: center;
+    gap: 10px;
+    margin: 5px 0;
+  }
+  .bar-name { color: var(--muted); font-size: 12px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .track { height: 10px; border-radius: 999px; background: var(--surface-soft); overflow: hidden; }
+  .fill { height: 100%; border-radius: 999px; }
+  .fill.s1 { background: var(--blue); }
+  .fill.s2 { background: var(--orange); }
+  .value { color: var(--ink-2); font-size: 12.5px; text-align: right; font-variant-numeric: tabular-nums; }
+  .value.muted { color: var(--muted); }
+  .note {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.65;
+    max-width: 74ch;
+  }
+  .glossary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; }
+  .glossary div { padding: 13px 0; border-bottom: 1px solid var(--line); min-width: 0; }
+  .glossary dt { font-weight: 600; color: var(--ink); margin: 0 0 2px; }
+  .glossary dd { margin: 0; color: var(--ink-2); font-size: 13.5px; }
+  .foot {
+    margin-top: 12px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 12.5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+  }
+  .foot span { white-space: nowrap; }
+  @media (max-width: 860px) {
+    .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .chart-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 620px) {
+    body { font-size: 14.5px; padding-block: 20px 44px; }
+    .summary { grid-template-columns: 1fr; }
+    .compare { grid-template-columns: 1fr; }
+    .glossary { grid-template-columns: 1fr; }
+    .bar-line { grid-template-columns: 74px minmax(0, 1fr) 88px; gap: 8px; }
+    .bar-name { font-size: 11.5px; }
+    .value { font-size: 11.5px; }
+    th, td { padding: 10px 12px; }
+    .hero { padding-bottom: 24px; }
+    main { gap: 36px; margin-top: 34px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; }
+  }
+</style>
+
+<div class="page">
+  <header class="hero">
+    <p class="eyebrow">性能测试 · 2026-10-30 · 单服务程序 · 不并发</p>
+    <h1>公司名搜索性能测试</h1>
+    <p class="subtitle">500 万个公司名放在一个服务程序里，会占多少内存、搜得多快、日常添加和整理要花多少时间。报告给出两套方案的对比，供策划决定是否支持“只输入一个字”的搜索。</p>
+    <div class="chips">
+      <span class="chip">500 万名字</span>
+      <span class="chip">2–8 个字</span>
+      <span class="chip">70% 中文 / 30% 英文</span>
+      <span class="chip">不区分大小写</span>
+      <span class="chip">Windows 正式版</span>
+    </div>
+  </header>
+
+  <section class="summary" aria-label="关键数字">
+    <div class="stat">
+      <p class="stat-label">搜索目录占用</p>
+      <p class="stat-value">475–526<small>MB</small></p>
+      <p class="stat-note">整理后；支持 1 字比只支持 2 字多约 51 MB</p>
+    </div>
+    <div class="stat">
+      <p class="stat-label">1 个字搜索</p>
+      <p class="stat-value">14.0<small>万次/秒</small></p>
+      <p class="stat-note">随机查询；常见字约 56.2 万次/秒</p>
+    </div>
+    <div class="stat">
+      <p class="stat-label">2 个字搜索</p>
+      <p class="stat-value">10.7–14.8<small>万次/秒</small></p>
+      <p class="stat-note">支持 1 字 / 只支持 2 字以上的随机查询</p>
+    </div>
+    <div class="stat">
+      <p class="stat-label">3 个字以上搜索</p>
+      <p class="stat-value">0.74<small>万次/秒</small></p>
+      <p class="stat-note">明显更慢；但 99% 的搜索在 1.6 毫秒内</p>
+    </div>
+  </section>
+
+  <main>
+    <section aria-labelledby="decision-title">
+      <div class="callout">
+        <p class="section-kicker">给策划的结论</p>
+        <h2 id="decision-title">如果玩家会只输入一个字，建议开启；否则可以关掉省内存</h2>
+        <p>两套方案的搜索速度都远高于玩家实际需要。真正的取舍是：<strong>多花约 50 MB，换“输入一个字也能搜”</strong>。</p>
+        <ul>
+          <li><strong>支持 1 个字：</strong>全量 500 万名字放在一个服务程序里时，搜索目录约 526 MB；1 字随机搜索约 14 万次/秒，常见字约 56 万次/秒。</li>
+          <li><strong>只支持 2 个字以上：</strong>搜索目录约 475 MB；2 字随机搜索约 14.8 万次/秒，比开启 1 字时更快。</li>
+          <li><strong>3 个字以上：</strong>两种方案都约 0.74–0.76 万次/秒，99% 的搜索在 1.6 毫秒内。按玩家 5 秒才能搜一次的节奏，不构成瓶颈。</li>
+          <li><strong>最占内存的时刻是“整理”：</strong>全量 500 万放在一个服务程序里时，整理期间程序最高约 1.9–2.3 GB（含 500 万条测试名字）。建议在低峰整理，或把 500 万拆到多个服务程序。</li>
+          <li><strong>结果最多 500 条：</strong>常见字和常见组合会达到 500 条上限；系统到 500 条就停，这是当前速度的关键。</li>
+        </ul>
+      </div>
+
+      <div class="compare" aria-label="两种配置对比">
+        <div class="option">
+          <h3>支持 1 个字</h3>
+          <p class="option-sub">玩家输入一个字就能搜；适合“想到什么就搜什么”的体验</p>
+          <dl>
+            <dt>搜索目录</dt><dd>约 526 MB</dd>
+            <dt>1 字 · 随机</dt><dd>14.0 万次/秒</dd>
+            <dt>1 字 · 常见</dt><dd>56.2 万次/秒</dd>
+            <dt>2 字 · 随机</dt><dd>10.7 万次/秒</dd>
+            <dt>2 字 · 常见</dt><dd>20.0 万次/秒</dd>
+          </dl>
+          <p class="verdict">多占约 51 MB，换来 1 字搜索；如果玩家经常只输入一个字，值得开启。</p>
+        </div>
+        <div class="option b">
+          <h3>只支持 2 个字以上</h3>
+          <p class="option-sub">省内存、2 字搜索更快；但玩家输入一个字时无法搜索</p>
+          <dl>
+            <dt>搜索目录</dt><dd>约 475 MB</dd>
+            <dt>1 字 · 随机</dt><dd>不支持</dd>
+            <dt>1 字 · 常见</dt><dd>不支持</dd>
+            <dt>2 字 · 随机</dt><dd>14.8 万次/秒</dd>
+            <dt>2 字 · 常见</dt><dd>35.7 万次/秒</dd>
+          </dl>
+          <p class="verdict">少占约 51 MB，2 字搜索更快；如果产品明确要求至少输入两个字，选这套。</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="memory-title">
+      <div class="section-head">
+        <span class="section-kicker">01 · 内存</span>
+        <h2 id="memory-title">搜索目录本身不大，整理时会临时翻倍</h2>
+      </div>
+      <p class="section-intro">“搜索目录”是系统为了快速找名字额外维护的一份数据，不包含游戏里原本就有的公会信息。下表的“程序总占用”还包含 500 万条测试名字和查询样本，所以比搜索目录大。</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">内存项目</th>
+              <th scope="col">只支持 2 个字以上</th>
+              <th scope="col">支持 1 个字</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>搜索目录（整理后）</td><td><strong>约 475 MB</strong></td><td><strong>约 526 MB</strong></td></tr>
+            <tr><td>刚添加完的临时数据</td><td>约 604 MB</td><td>约 721 MB</td></tr>
+            <tr><td>程序总占用（整理后，含测试数据）</td><td>约 1.13 GB</td><td>约 1.16 GB</td></tr>
+            <tr><td>整理时程序最高占用</td><td>约 1.90 GB</td><td>约 2.26 GB</td></tr>
+            <tr><td>整理时比平时多占</td><td>约 0.77 GB</td><td>约 1.10 GB</td></tr>
+            <tr><td>删除 10% 名字后（未整理）</td><td>约 1.17 GB</td><td>约 1.21 GB</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">“刚添加完的临时数据”是还没整理的状态；“程序总占用”包含测试用的 500 万条名字和查询样本，生产环境要在此基础上加搜索目录的额外占用。实际按服务拆分后，每个服务程序的数据更少，内存和整理峰值会相应下降。</p>
+
+      <div class="chart-grid">
+        <div class="chart">
+          <h3>搜索目录（整理后）</h3>
+          <p class="chart-note">单位：MB；只统计搜索功能自己新增的数据</p>
+          <div class="legend">
+            <span><i class="dot s1"></i>支持 1 个字</span>
+            <span><i class="dot s2"></i>只支持 2 个字以上</span>
+          </div>
+          <div class="bar-group">
+            <div class="bar-group-label">整理后的搜索目录</div>
+            <div class="bar-line">
+              <span class="bar-name"><i class="dot s1"></i>1 字配置</span>
+              <div class="track"><div class="fill s1" style="width:87.7%" title="526 MB"></div></div>
+              <span class="value">526 MB</span>
+            </div>
+            <div class="bar-line">
+              <span class="bar-name"><i class="dot s2"></i>2 字配置</span>
+              <div class="track"><div class="fill s2" style="width:79.2%" title="475 MB"></div></div>
+              <span class="value">475 MB</span>
+            </div>
+          </div>
+        </div>
+        <div class="chart">
+          <h3>整理时程序最高占用</h3>
+          <p class="chart-note">单位：GB；包含测试数据和整理时的临时数据</p>
+          <div class="legend">
+            <span><i class="dot s1"></i>支持 1 个字</span>
+            <span><i class="dot s2"></i>只支持 2 个字以上</span>
+          </div>
+          <div class="bar-group">
+            <div class="bar-group-label">第一次整理期间的峰值</div>
+            <div class="bar-line">
+              <span class="bar-name"><i class="dot s1"></i>1 字配置</span>
+              <div class="track"><div class="fill s1" style="width:90.5%" title="2.26 GB"></div></div>
+              <span class="value">2.26 GB</span>
+            </div>
+            <div class="bar-line">
+              <span class="bar-name"><i class="dot s2"></i>2 字配置</span>
+              <div class="track"><div class="fill s2" style="width:76.1%" title="1.90 GB"></div></div>
+              <span class="value">1.90 GB</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="speed-title">
+      <div class="section-head">
+        <span class="section-kicker">02 · 搜索速度</span>
+        <h2 id="speed-title">1–2 个字非常快，3 个字以上明显变慢</h2>
+      </div>
+      <p class="section-intro">测试只用一个处理线程、不经过网络，每次最多返回 500 条。“随机查询”是从 500 万名字里随机截取一段；“常见查询”是常见字或常见组合，通常会返回大量结果。每秒次数越高越好；用时越短越好。</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">搜索方式</th>
+              <th scope="col">支持 1 个字 · 每秒</th>
+              <th scope="col">支持 1 个字 · 99% 用时</th>
+              <th scope="col">只支持 2 字以上 · 每秒</th>
+              <th scope="col">只支持 2 字以上 · 99% 用时</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1 个字 · 随机</td><td><strong>14.0 万</strong></td><td>0.033 毫秒</td><td>不支持</td><td>—</td></tr>
+            <tr><td>1 个字 · 常见</td><td><strong>56.2 万</strong></td><td>0.007 毫秒</td><td>不支持</td><td>—</td></tr>
+            <tr><td>2 个字 · 随机</td><td><strong>10.7 万</strong></td><td>0.032 毫秒</td><td><strong>14.8 万</strong></td><td>0.020 毫秒</td></tr>
+            <tr><td>2 个字 · 常见</td><td><strong>20.0 万</strong></td><td>0.009 毫秒</td><td><strong>35.7 万</strong></td><td>0.008 毫秒</td></tr>
+            <tr><td>3–8 个字 · 随机</td><td><strong>0.74 万</strong></td><td>1.53 毫秒</td><td><strong>0.76 万</strong></td><td>1.55 毫秒</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">平均返回条数：1 个字和“常见 2 个字”会达到 500 条上限；2 个字随机约 253 条；3 个字以上约 8 条。99% 用时表示 99% 的搜索在这个时间内完成。</p>
+
+      <div class="chart-grid">
+        <div class="chart">
+          <h3>1–2 个字：每秒可处理次数</h3>
+          <p class="chart-note">单位：万次/秒；只用一个处理线程；数值越高越好</p>
+          <div class="legend">
+            <span><i class="dot s1"></i>支持 1 个字</span>
+            <span><i class="dot s2"></i>只支持 2 个字以上</span>
+          </div>
+          <div class="bar-group">
+            <div class="bar-group-label">1 个字 · 随机</div>
+            <div class="bar-line"><span class="bar-name"><i class="dot s1"></i>1 字配置</span><div class="track"><div class="fill s1" style="width:23.3%" title="14.0 万次/秒"></div></div><span class="value">14.0 万</span></div>
+            <div class="bar-line"><span class="bar-name"><i class="dot s2"></i>2 字配置</span><div class="track"></div><span class="value muted">不支持</span></div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-group-label">1 个字 · 常见</div>
+            <div class="bar-line"><span class="bar-name"><i class="dot s1"></i>1 字配置</span><div class="track"><div class="fill s1" style="width:93.6%" title="56.2 万次/秒"></div></div><span class="value">56.2 万</span></div>
+            <div class="bar-line"><span class="bar-name"><i class="dot s2"></i>2 字配置</span><div class="track"></div><span class="value muted">不支持</span></div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-group-label">2 个字 · 随机</div>
+            <div class="bar-line"><span class="bar-name"><i class="dot s1"></i>1 字配置</span><div class="track"><div class="fill s1" style="width:17.8%" title="10.7 万次/秒"></div></div><span class="value">10.7 万</span></div>
+            <div class="bar-line"><span class="bar-name"><i class="dot s2"></i>2 字配置</span><div class="track"><div class="fill s2" style="width:24.7%" title="14.8 万次/秒"></div></div><span class="value">14.8 万</span></div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-group-label">2 个字 · 常见</div>
+            <div class="bar-line"><span class="bar-name"><i class="dot s1"></i>1 字配置</span><div class="track"><div class="fill s1" style="width:33.4%" title="20.0 万次/秒"></div></div><span class="value">20.0 万</span></div>
+            <div class="bar-line"><span class="bar-name"><i class="dot s2"></i>2 字配置</span><div class="track"><div class="fill s2" style="width:59.6%" title="35.7 万次/秒"></div></div><span class="value">35.7 万</span></div>
+          </div>
+        </div>
+        <div class="chart">
+          <h3>3–8 个字：每秒可处理次数</h3>
+          <p class="chart-note">单位：万次/秒；虽然比 1–2 字慢，但 99% 的搜索在 1.6 毫秒内</p>
+          <div class="legend">
+            <span><i class="dot s1"></i>支持 1 个字</span>
+            <span><i class="dot s2"></i>只支持 2 个字以上</span>
+          </div>
+          <div class="bar-group">
+            <div class="bar-group-label">3–8 个字 · 随机</div>
+            <div class="bar-line"><span class="bar-name"><i class="dot s1"></i>1 字配置</span><div class="track"><div class="fill s1" style="width:74.2%" title="0.74 万次/秒"></div></div><span class="value">0.74 万</span></div>
+            <div class="bar-line"><span class="bar-name"><i class="dot s2"></i>2 字配置</span><div class="track"><div class="fill s2" style="width:76.2%" title="0.76 万次/秒"></div></div><span class="value">0.76 万</span></div>
+          </div>
+          <p class="chart-note" style="margin-top:14px">按 5 秒一次的搜索限制，10 万在线玩家的理论上限约 2 万次/秒。1–2 字有充足余量；3 个字以上只有在“所有玩家每 5 秒都搜一次”的极端情况下才接近上限，实际使用频率通常远低于此。</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="write-title">
+      <div class="section-head">
+        <span class="section-kicker">03 · 添加与整理</span>
+        <h2 id="write-title">添加 500 万很快，整理需要几秒</h2>
+      </div>
+      <p class="section-intro">“整理”是把刚添加的临时记录合并成正式目录，并清掉已删除名字留下的空位。整理期间内存会临时升高，所以建议放在低峰。</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">操作</th>
+              <th scope="col">只支持 2 个字以上</th>
+              <th scope="col">支持 1 个字</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>添加 500 万个名字</td><td>5.6 秒（约 89 万条/秒）</td><td>7.1 秒（约 71 万条/秒）</td></tr>
+            <tr><td>删除 50 万个名字（10%）</td><td>0.17 秒</td><td>0.12 秒</td></tr>
+            <tr><td>第一次整理</td><td>4.5 秒</td><td>8.4 秒</td></tr>
+            <tr><td>删除后再整理</td><td>4.0 秒</td><td>6.3 秒</td></tr>
+            <tr><td>第一次整理时最高占用</td><td>约 1.90 GB</td><td>约 2.26 GB</td></tr>
+            <tr><td>删除后整理时最高占用</td><td>约 1.63 GB</td><td>约 1.85 GB</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">删除 50 万条后不整理，程序实际占用只多约 4%；不需要每次删除都立刻整理，可以攒到低峰一起做。</p>
+
+      <div class="chart-grid">
+        <div class="chart">
+          <h3>添加与整理耗时</h3>
+          <p class="chart-note">单位：秒；数值越低越好</p>
+          <div class="legend">
+            <span><i class="dot s1"></i>支持 1 个字</span>
+            <span><i class="dot s2"></i>只支持 2 个字以上</span>
+          </div>
+          <div class="bar-group">
+            <div class="bar-group-label">添加 500 万</div>
+            <div class="bar-line"><span class="bar-name"><i class="dot s1"></i>1 字配置</span><div class="track"><div class="fill s1" style="width:71%" title="7.1 秒"></div></div><span class="value">7.1 秒</span></div>
+            <div class="bar-line"><span class="bar-name"><i class="dot s2"></i>2 字配置</span><div class="track"><div class="fill s2" style="width:56%" title="5.6 秒"></div></div><span class="value">5.6 秒</span></div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-group-label">第一次整理</div>
+            <div class="bar-line"><span class="bar-name"><i class="dot s1"></i>1 字配置</span><div class="track"><div class="fill s1" style="width:84%" title="8.4 秒"></div></div><span class="value">8.4 秒</span></div>
+            <div class="bar-line"><span class="bar-name"><i class="dot s2"></i>2 字配置</span><div class="track"><div class="fill s2" style="width:45%" title="4.5 秒"></div></div><span class="value">4.5 秒</span></div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-group-label">删除后再整理</div>
+            <div class="bar-line"><span class="bar-name"><i class="dot s1"></i>1 字配置</span><div class="track"><div class="fill s1" style="width:63%" title="6.3 秒"></div></div><span class="value">6.3 秒</span></div>
+            <div class="bar-line"><span class="bar-name"><i class="dot s2"></i>2 字配置</span><div class="track"><div class="fill s2" style="width:40%" title="4.0 秒"></div></div><span class="value">4.0 秒</span></div>
+          </div>
+        </div>
+        <div class="chart">
+          <h3>怎么读这些数字</h3>
+          <p class="chart-note">给策划的换算</p>
+          <ul class="note" style="padding-left:1.15em;margin:0">
+            <li>1 毫秒 = 1/1000 秒；玩家几乎感知不到。</li>
+            <li>“每秒 14 万次”表示一个处理线程一秒能完成 14 万次搜索。</li>
+            <li>500 万名字全放在一个服务程序里是“最坏情况”；如果按服务拆成 N 份，单个服务程序的搜索目录和整理峰值大致按比例下降。</li>
+            <li>整理期间会临时多占约 0.8–1.1 GB；安排低峰或分批整理，避免和开服高峰重叠。</li>
+            <li>常见字/常见组合会返回 500 条；如果产品希望看到更多结果，需要重新评估速度和内存。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="glossary-title">
+      <div class="section-head">
+        <span class="section-kicker">04 · 名词解释</span>
+        <h2 id="glossary-title">几个容易混的词</h2>
+      </div>
+      <dl class="glossary">
+        <div><dt>搜索目录</dt><dd>系统为了快速找名字额外维护的一份数据，不包含游戏里原本的公会信息。</dd></div>
+        <div><dt>整理</dt><dd>把刚添加的临时记录合并成正式目录，并清掉已删除名字留下的空位；整理时内存会临时升高。</dd></div>
+        <div><dt>临时数据</dt><dd>刚添加、还没整理的名字记录；整理后会被合并。</dd></div>
+        <div><dt>每秒次数</dt><dd>一个处理线程一秒能完成多少次操作；数值越高越好。</dd></div>
+        <div><dt>毫秒</dt><dd>1 毫秒 = 1/1000 秒；1.6 毫秒约等于眨一次眼的千分之一。</dd></div>
+        <div><dt>常见查询</dt><dd>常见字或常见组合，通常会返回大量结果，容易达到 500 条上限。</dd></div>
+        <div><dt>500 条上限</dt><dd>每次搜索最多返回 500 家公司；达到上限就停止，以保护速度。</dd></div>
+        <div><dt>服务程序</dt><dd>一个独立运行的服务程序；500 万名字全放在一个服务程序里是本次测试的最坏情况。</dd></div>
+      </dl>
+    </section>
+
+    <section aria-labelledby="env-title">
+      <div class="section-head">
+        <span class="section-kicker">05 · 测试说明</span>
+        <h2 id="env-title">这些数字是在什么条件下得到的</h2>
+      </div>
+      <p class="section-intro">测试在本机 Windows 11 的正式版构建（Release，优化开启）上运行，只用一个处理线程，不经过网络、客户端和数据库，只测搜索功能本身。名字是随机生成的：500 万条、2–8 个字、约 70% 中文字符和 30% 英文字母，常见中文字符出现得更频繁，英文大小写混合。</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th scope="col">项目</th><th scope="col">条件</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>机器</td><td>Windows 11 · Intel i7-12700F · 64 GB 内存</td></tr>
+            <tr><td>构建</td><td>正式版构建（Release，优化开启）· 只用一个处理线程</td></tr>
+            <tr><td>数据</td><td>500 万条随机名字，2–8 个字，70% 中文 / 30% 英文，大小写混合</td></tr>
+            <tr><td>查询</td><td>随机查询从名字中截取；常见查询取高频字/高频组合；每次最多 500 条</td></tr>
+            <tr><td>范围</td><td>只测搜索功能；不含网络、客户端、数据库和其他业务</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">这些数字用于判断量级和做取舍，不是线上承诺。线上 Linux 机器、真实名字分布、服务拆分方式不同，结果会有差异；建议上线前在目标环境用真实数据再跑一次。</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>fuzzy_search 基准测试</span>
+    <span>测试日期：2026-10-30</span>
+    <span>数据文件：result_min1.json / result_min2.json</span>
+  </footer>
+</div>
