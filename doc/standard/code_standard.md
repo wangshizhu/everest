@@ -86,7 +86,7 @@
 	
 	1. 起服阶段不算
 
-11. 代码文件统一使用UTF-8，只有.bat和.cmd使用CRLF，其他文件一律使用LF
+11. 代码文件统一使用 UTF-8（无 BOM）；换行符统一使用 LF。只有 .bat 和 .cmd 使用 CRLF，且内容必须为纯 ASCII。`everest/` 已统一为 UTF-8；CRLF 换行在组件重写时转换，未重写文件暂时保持原样。
 
 ## cpp规范
 	
@@ -94,9 +94,9 @@
 	
 2. 禁止在构造、析构函数内调用virtual函数
 	
-3. 如果对象表现出non-copyable语义，则一定要加NONCOPYABLE
+3. 如果对象表现出 non-copyable 语义，继承 `NonCopyable` 或显式 `= delete` 拷贝构造/赋值
 	
-4. 如果对象表现出only-move-copyable语义，则一定要加ONLY_MOVE_COPYABLE
+4. 如果对象表现出 only-move-copyable 语义，使用 `= default` 的移动构造/赋值，并 `= delete` 拷贝构造/赋值
 	
 5. 如果对象表现出single语义，则一定要实现single
 	
@@ -148,8 +148,6 @@
 
 29. 协程与多线程安全：协程中跨co_await挂起点禁止持有裸指针、引用、迭代器等生命周期不确定的对象（与异步回调禁捕指针同源），挂起点恢复后重新获取；共享数据的并发访问要有明确的同步约定；持锁期间禁止调用可能阻塞或回调用户代码的函数
 
-30. 成员变量、成员函数要按照不同section分类，公有成员变量、私有成员变量、保护成员变量、公有成员函数、私有成员函数、保护成员函数
-	
 ## lua规范
 	
 1. lua文件内的函数如果不需要对外开放调用，则声明为local function
@@ -218,48 +216,57 @@ cpp例子：
 	
 	/**
 	 * @file calculator.h
-	 * @brief 简单计算器接口
-	 * @author 张三 <zhangsan@example.com>
-	 * @date 2024-01-15
-	 * @version 1.0.0
+	 * @brief 简单计算器接口。
 	 */
 	
 	/**
-	 * @defgroup math 数学运算
-	 * @brief 基础数学运算函数组
-	 * @{
+	 * @brief 计算器错误码。
 	 */
+	enum class CalculatorError {
+	    // 成功。
+	    kOK,
+	    // 结果指针为空。
+	    kNullResult,
+	    // 整数溢出。
+	    kOverflow,
+	};
 	
 	/**
-	 * @brief 计算两数之和
-	 *
-	 * @details 该函数执行整数加法，并处理溢出检查。
-	 *
-	 * @param[in]  a 第一个加数
-	 * @param[in]  b 第二个加数
-	 * @param[out] result 结果指针，不能为 NULL
-	 *
-	 * @return 成功返回 0，失败返回负数错误码
-	 * @retval  0 计算成功
-	 * @retval -1 result 为 NULL
-	 * @retval -2 发生整数溢出
-	 *
-	 * @pre  result 必须指向有效内存
-	 * @post 成功时 *result 保存 a+b 的值
-	 *
-	 * @note  该函数线程安全
-	 * @warning 传入未初始化指针会导致未定义行为
-	 * @see   subtract()
-	 * @deprecated 建议使用 add_ex()
-	 *
-	 * @code
-	 * int r;
-	 * if (add(1, 2, &r) == 0) {
-	 *     printf("%d\n", r); // 输出 3
-	 * }
-	 * @endcode
+	 * @brief 简单计算器接口。
 	 */
-	int add(int a, int b, int *result);
+	class Calculator {
+	public:
+	    // 计算器名称。
+	    using Name = std::string;
+	
+	    /**
+	     * @brief 计算两数之和。
+	     *
+	     * @param a 第一个加数。
+	     * @param b 第二个加数。
+	     * @param result 结果指针，不能为空。
+	     * @return 成功返回 kOK，失败返回对应错误码。
+	     * @note 该函数线程安全。
+	     * @warning 传入未初始化的指针会导致未定义行为。
+	     * @deprecated 建议使用 Subtract()。
+	     */
+	    static CalculatorError Add(int a, int b, int* result);
+	
+	private:
+	    // 名称；为空表示未初始化。
+	    Name name_;
+	};
+
+只在 .cpp 中出现的辅助函数在定义处写 Doxygen：
+
+	/**
+	 * @brief 校验结果指针是否有效。
+	 * @param result 结果指针。
+	 * @return 有效返回 true。
+	 */
+	static bool IsValidResult(const int* result) {
+	    return result != nullptr;
+	}
 	
 lua例子
 	
@@ -406,4 +413,4 @@ proto例子
 			*/
 		}
 
-7. 一行代码没有超过180个字符时不需要换行
+7. 单行代码不超过 180 个字符；超过时换行，续行缩进 4 个空格
