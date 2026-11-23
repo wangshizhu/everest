@@ -11,33 +11,33 @@ public:
 public:
 
 	/*
-	* @brief:¸ù¾İ·şÎñid»ñÈ¡·şÎñµÄÅäÖÃ
-	* @return:·şÎñÅäÖÃÊı¾İ
+	* @brief:æ ¹æ®æœåŠ¡idè·å–æœåŠ¡çš„é…ç½®
+	* @return:æœåŠ¡é…ç½®æ•°æ®
 	*/
 	const ServiceConfig* GetServiceConfig(ServiceIdType service_id) const;
 
 	/*
-	* @brief:Ìí¼Ó·şÎñÅäÖÃ
-	* @param: [in] service_config ÅäÖÃÊı¾İ
+	* @brief:æ·»åŠ æœåŠ¡é…ç½®
+	* @param: [in] service_config é…ç½®æ•°æ®
 	*/
 	void AddServiceConfig(const ServiceConfig& service_config);
 
 	/*
-	* @brief: ¼ì²é·şÎñÅäÖÃÊı¾İÊÇ·ñÕıÈ·
-	* @return: bool true:ÅäÖÃÕıÈ· false:ÅäÖÃ´íÎó
+	* @brief: æ£€æŸ¥æœåŠ¡é…ç½®æ•°æ®æ˜¯å¦æ­£ç¡®
+	* @return: bool true:é…ç½®æ­£ç¡® false:é…ç½®é”™è¯¯
 	*/
 	bool CheckServiceConfig()const;
 
 	/*
-	* @brief:»ñÈ¡¹²ÏíµÄÍøÂçÏß³Ì·ÖÅä²ßÂÔÅäÖÃ£¬¼´¶à¸ö·şÎñÊ¹ÓÃÏàÍ¬µÄÍøÂçÏß³Ì·ÖÅä²ßÂÔ
-	* @param: [in] policy_id: ÍøÂçÏß³Ì·ÖÅä²ßÂÔid
-	* @return:ÍøÂçÏß³Ì·ÖÅä²ßÂÔÅäÖÃÊı¾İÖ¸Õë£¬Èç¹ûÎªnullptr£¬ËµÃ÷Ã¿¸ö·şÎñ¶¼Ê¹ÓÃ×Ô¼ºµÄÍøÂçÏß³Ì·ÖÅä²ßÂÔ
+	* @brief:è·å–å…±äº«çš„ç½‘ç»œçº¿ç¨‹åˆ†é…ç­–ç•¥é…ç½®ï¼Œå³å¤šä¸ªæœåŠ¡ä½¿ç”¨ç›¸åŒçš„ç½‘ç»œçº¿ç¨‹åˆ†é…ç­–ç•¥
+	* @param: [in] policy_id: ç½‘ç»œçº¿ç¨‹åˆ†é…ç­–ç•¥id
+	* @return:ç½‘ç»œçº¿ç¨‹åˆ†é…ç­–ç•¥é…ç½®æ•°æ®æŒ‡é’ˆï¼Œå¦‚æœä¸ºnullptrï¼Œè¯´æ˜æ¯ä¸ªæœåŠ¡éƒ½ä½¿ç”¨è‡ªå·±çš„ç½‘ç»œçº¿ç¨‹åˆ†é…ç­–ç•¥
 	*/
 	const ThreadAllocateConfiguration* GetNetThreadAllocateConfig(uint32_t policy_id) const;
 
 	/*
-	* @brief:Ìí¼ÓÏß³Ì·ÖÅä²ßÂÔÅäÖÃ
-	* @param: [in] config ÅäÖÃÊı¾İ
+	* @brief:æ·»åŠ çº¿ç¨‹åˆ†é…ç­–ç•¥é…ç½®
+	* @param: [in] config é…ç½®æ•°æ®
 	*/
 	void AddThreadAllocateConfig(const ThreadAllocateConfiguration& config);
 

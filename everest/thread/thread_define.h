@@ -4,10 +4,10 @@
 enum class ThreadType
 {
 	kInvalid = 0,
-	kCommon,				// »ùÀàÏß³ÌÀàĞÍ
-	kMonitor,				// ÔËĞĞ¼à¿ØÆ÷Ïß³Ì
-	kNetListenerConnector,	// ½ÓÊÜ¼àÌıºÍÁ¬½ÓµÄÍøÂçÏß³Ì
-	kNetSession,			// ´¦ÀíÒÑÁ¬½ÓµÄÏß³Ì
+	kCommon,				// åŸºç±»çº¿ç¨‹ç±»å‹
+	kMonitor,				// è¿è¡Œç›‘æ§å™¨çº¿ç¨‹
+	kNetListenerConnector,	// æ¥å—ç›‘å¬å’Œè¿æ¥çš„ç½‘ç»œçº¿ç¨‹
+	kNetSession,			// å¤„ç†å·²è¿æ¥çš„çº¿ç¨‹
 };
 
 #endif

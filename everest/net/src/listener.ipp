@@ -23,19 +23,19 @@ bool Listener<SessionType>::StartListen()
 		return false;
 	}
 
-	// °ó¶¨
+	// ç»‘å®š
 	if (!Bind(ep.value()))
 	{
 		return false;
 	}
 
-	// ÉèÖÃsocket option
+	// è®¾ç½®socket option
 	if (!SetSocketOption())
 	{
 		return false;
 	}
 
-	// ¼àÌı
+	// ç›‘å¬
 	if (!Listen())
 	{
 		return false;
@@ -67,7 +67,7 @@ bool Listener<SessionType>::Bind(const everest_tcp::endpoint& ep)
 {
 	asio::error_code ec;
 
-	// °ó¶¨
+	// ç»‘å®š
 	acceptor_.bind(ep, ec);
 	if (ec)
 	{
@@ -90,7 +90,7 @@ bool Listener<SessionType>::SetSocketOption()
 
 	asio::error_code ec;
 
-	// ÉèÖÃsocket option
+	// è®¾ç½®socket option
 	acceptor_.set_option(everest_tcp::acceptor::reuse_address(true), ec);
 	if (ec)
 	{
@@ -125,12 +125,12 @@ std::optional<everest_tcp::endpoint> Listener<SessionType>::MakeEndpoint()
 	everest_tcp::endpoint ep;
 
 	auto service_config = CONFIGURATION_SINGLETON()->GetServiceConfig(service_id_);
-	// ÉèÖÃ¶Ë¿Ú
+	// è®¾ç½®ç«¯å£
 	ep.port(service_config->port_);
 
 	asio::error_code ec;
 
-	// ÉèÖÃĞ­Òé
+	// è®¾ç½®åè®®
 	if (service_config->ipv4_)
 	{
 		ep.address(asio::ip::make_address_v4(service_config->ip_,ec));

@@ -30,7 +30,7 @@ void ServiceBase::RegisterSession(SessionIdType session_id,SessionSharedPtr sess
   session_[session_id] = session;
   ++online_;
   
-  // ¿ªÊ¼½ÓÊÕÍøÂçÏûÏ¢
+  // å¼€å§‹æ¥æ”¶ç½‘ç»œæ¶ˆæ¯
   session->Read();
 }
 

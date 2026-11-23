@@ -15,10 +15,10 @@ public:
 
 	void OnThreadStart();
 
-	// ×¢²áÏß³Ì
+	// æ³¨å†Œçº¿ç¨‹
 	void RegisterThread(ThreadBaseSharedPtr thread_ptr);
 
-	// ×¢²á·şÎñ
+	// æ³¨å†ŒæœåŠ¡
 	void RegisterService(ServiceBaseSharedPtr service_ptr);
 
 	ThreadMonitor& GetThreadMonitor();
@@ -26,13 +26,13 @@ public:
 	ServiceMonitor& GetServiceMonitor();
 
 private:
-	// Ïß³Ì¼à¿ØÆ÷
+	// çº¿ç¨‹ç›‘æ§å™¨
 	ThreadMonitor thread_monitor_;
 
-	// ·şÎñ¼à¿ØÆ÷
+	// æœåŠ¡ç›‘æ§å™¨
 	ServiceMonitor service_monitor_;
 
-	// Ö´ĞĞ¼à¿ØÆ÷µÄÏß³Ì
+	// æ‰§è¡Œç›‘æ§å™¨çš„çº¿ç¨‹
 	ThreadBaseSharedPtr monitor_thread_;
 };
 

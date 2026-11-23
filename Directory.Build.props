@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <!--
+    MSVC 14.38 (VS 2022 17.8) promotes the STL4043 stdext::checked_array_iterator
+    deprecation warning to C4996 in several vendored projects. The macro below is
+    the official suppression recommended by the MSVC STL and does not change code.
+  -->
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+</Project>

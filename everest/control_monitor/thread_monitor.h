@@ -23,10 +23,10 @@ private:
 	void Snapshot();
 
 private:
-	// ËùÓĞÏß³ÌµÄÉÏ´Î¼à¿ØÊı¾İ
+	// æ‰€æœ‰çº¿ç¨‹çš„ä¸Šæ¬¡ç›‘æ§æ•°æ®
 	std::unordered_map<ThreadIdType, ThreadMonitorData> thread_monitor_data_;
 
-	// ËùÓĞÏß³ÌµÄÈõÒıÓÃ
+	// æ‰€æœ‰çº¿ç¨‹çš„å¼±å¼•ç”¨
 	std::vector<ThreadBaseWeakPtr> registed_thread_;
 };
 

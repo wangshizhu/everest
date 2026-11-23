@@ -53,7 +53,7 @@ void ThreadMonitor::Snapshot()
 		thread_base->Snapshot(monitor_thread_,
 													[this](ThreadMonitorData data)
 		{
-			// 记录最后一次收集数据时间点
+			// 璁板綍鏈�鍚庝竴娆℃敹闆嗘暟鎹椂闂寸偣
 			data.last_timepoint_ = g_tls_clock->LatestTimePoint();
 
 			this->thread_monitor_data_[data.thread_id_] = data;

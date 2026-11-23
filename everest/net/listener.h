@@ -26,10 +26,10 @@ private:
 
 	void StartAccept();
 
-	// ´¦ÀíĞÂÁ¬½Ó
+	// å¤„ç†æ–°è¿æ¥
 	void HandleAccept(const asio::error_code& error,everest_tcp::socket new_socket);
 
-	// ¹¹ÔìipµØÖ·ºÍ¶Ë¿Ú
+	// æ„é€ ipåœ°å€å’Œç«¯å£
 	std::optional<everest_tcp::endpoint> MakeEndpoint();
 
 	void AutoIncrSequenceId();

@@ -22,65 +22,65 @@
 #include <unordered_map>
 #include <stdint.h>
 
-// Í¨ÓÃ¶¨Òå
+// é€šç”¨å®šä¹‰
 #include "common/define.h"
 
-// Æ½Ì¨Ïà¹Ø
+// å¹³å°ç›¸å…³
 #include "common/platform.h"
 
-// Ğ¡¹¤¾ßº¯Êı
+// å°å·¥å…·å‡½æ•°
 #include "common/helper.h"
 
-// ¿½±´Ê±´¥·¢ÒÆ¶¯
+// æ‹·è´æ—¶è§¦å‘ç§»åŠ¨
 #include "multi_producer_multi_consumer/move_on_copy.h"
 
-// ÕûĞÍÀàĞÍÊı¾İ°²È«¼Ó¡¢¼õ¡¢³Ë¡¢³ı
+// æ•´å‹ç±»å‹æ•°æ®å®‰å…¨åŠ ã€å‡ã€ä¹˜ã€é™¤
 #include "calculator/safe_integral_calculator.h"
 
-// Ëæ»úÊı
+// éšæœºæ•°
 #include "effolkronium/random.hpp"
 
 // buffer
 #include "buffer/buffer.h"
 
-// ÃüÁîĞĞ²ÎÊı
+// å‘½ä»¤è¡Œå‚æ•°
 #include "cmd_line/cmdline.h"
 #include "cmd_line/command_line_parser.h"
 
-// ½ûÖ¹¿½±´Ïà¹Ø
+// ç¦æ­¢æ‹·è´ç›¸å…³
 #include "non_copyable/non_copyable.h"
 
-// µ¥Ìå
+// å•ä½“
 #include "singleton/singleton.h"
 
-// ¶ÔÏó³Ø
+// å¯¹è±¡æ± 
 #include "object_pool/object_pool.h"
 
-// logÏà¹Ø
+// logç›¸å…³
 #include "spdlog_wrapper/logger_create_info.h"
 #include "spdlog_wrapper/everest_spdlog.h"
 
-// ¶¨Ê±Æ÷ºÍÊ±ÖÓÏà¹Ø
+// å®šæ—¶å™¨å’Œæ—¶é’Ÿç›¸å…³
 #include "timer/clock.h"
 #include "timer/timer.h"
 
-// ¸ñÊ½»¯Ïà¹Ø
+// æ ¼å¼åŒ–ç›¸å…³
 #include "fmt/format.h"
 #include "fmt/chrono.h"
 
-// Ê±¼äÏà¹Ø
+// æ—¶é—´ç›¸å…³
 #include "date/date.h"
 #include "time_capsule/time_capsule.h"
 
 // asio
 #include <asio.hpp>
 
-// ÅäÖÃÊı¾İ
+// é…ç½®æ•°æ®
 #include "configuration/thread_allocate_configuration.h"
 #include "configuration/service_config.h"
 #include "configuration/configuration_manager.h"
 
-// ¼à¿ØÆ÷
+// ç›‘æ§å™¨
 #include "net/net_define.h"
 #include "thread/thread_define.h"
 #include "control_monitor/monitor_base.h"
@@ -89,7 +89,7 @@
 #include "control_monitor/service_monitor.h"
 #include "control_monitor/control_monitor.h"
 
-// Ïß³ÌÏà¹Ø
+// çº¿ç¨‹ç›¸å…³
 #include "thread/thread_base.h"
 #include "thread/thread_pool.h"
 #include "thread/monitor_thread.h"
@@ -98,24 +98,24 @@
 #include "thread/session_thread_pool.h"
 #include "thread/net_thread_allocate.h"
 
-// ÍøÂç
+// ç½‘ç»œ
 #include "net/address.h"
 #include "net/session_id.h"
 #include "net/session_base.h"
 #include "net/session_creator.h"
 #include "net/listener.h"
 
-// ÏûÏ¢°üÏà¹Ø
+// æ¶ˆæ¯åŒ…ç›¸å…³
 #include "packet/packet_head.h"
 #include "packet/packet.h"
 #include "packet/packet_maker.h"
 #include "packet/packet_handler.h"
 #include "packet/packet_serialize.h"
 
-// ·şÎñ
+// æœåŠ¡
 #include "service/service.h"
 
-// ½ø³Ì
+// è¿›ç¨‹
 #include "launcher/launcher_base.h"
 
 #endif

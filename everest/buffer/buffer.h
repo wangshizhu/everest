@@ -75,13 +75,13 @@ public:
 
 public:
   /*
-  * @brief:À©ÕÅÊ½µÄĞ´
+  * @brief:æ‰©å¼ å¼çš„å†™
   *
-  * @param [in] from Íâ²¿Êı¾İµÄ¶ÁÈ¡Î»ÖÃ
+  * @param [in] from å¤–éƒ¨æ•°æ®çš„è¯»å–ä½ç½®
   *
-  * @param [in] write_size ´ÓÍâ²¿Êı¾İµÄ¶ÁÈ¡Î»ÖÃ¶ÁÈ¡¶àÉÙ
+  * @param [in] write_size ä»å¤–éƒ¨æ•°æ®çš„è¯»å–ä½ç½®è¯»å–å¤šå°‘
   *
-  * @return bool true: Ğ´³É¹¦ false: Ğ´Ê§°Ü£¬Ö»ÓĞµ±write_size³¬¹ıÁËkMaxCapacity£¬²Å»áĞ´Ê§°Ü
+  * @return bool true: å†™æˆåŠŸ false: å†™å¤±è´¥ï¼Œåªæœ‰å½“write_sizeè¶…è¿‡äº†kMaxCapacityï¼Œæ‰ä¼šå†™å¤±è´¥
   */
   bool ExpandWrite(const int8_t* from, std::size_t write_size);
 

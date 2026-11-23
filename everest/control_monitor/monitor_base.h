@@ -11,9 +11,9 @@ template<class MonitorType>
 class MonitorBase : private everest::NonCopyable
 {
 protected:
-	// Ã¿´Î¿ìÕÕÊ±¼ä¼ä¸ô
+	// æ¯æ¬¡å¿«ç…§æ—¶é—´é—´éš”
 	static constexpr uint32_t kSnapshotTimerDuration = 1;
-	// ¼à¿Ø×î´óÊıÁ¿
+	// ç›‘æ§æœ€å¤§æ•°é‡
 	static constexpr std::size_t kMonitorObjectMaxNum = 100;
 
 public:
@@ -32,10 +32,10 @@ protected:
 	virtual void OnThreadStart() = 0;
 
 protected:
-	// ÊÕ¼¯ËùÓĞÏß³ÌµÄ¼à¿ØÊı¾İ¶¨Ê±Æ÷
+	// æ”¶é›†æ‰€æœ‰çº¿ç¨‹çš„ç›‘æ§æ•°æ®å®šæ—¶å™¨
 	everest::Timer<std::chrono::seconds> snapshot_timer_;
 
-	// Ö´ĞĞ¼à¿ØÆ÷µÄÏß³Ì
+	// æ‰§è¡Œç›‘æ§å™¨çš„çº¿ç¨‹
 	ThreadBaseSharedPtr monitor_thread_;
 };
 

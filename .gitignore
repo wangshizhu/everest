@@ -1,6 +1,8 @@
 /bin/*
 /tmp/*
 /libs/*
+/test/**/x64/
+/test/**/bin/
 *.log
 *.tlog
 *.obj
@@ -27,3 +29,6 @@
 *.csv
 *.recipe
 *.FileListAbsolute.*
+
+# Claude Code local settings (machine-specific permissions), keep the rest of .claude/ tracked
+.claude/settings.local.json

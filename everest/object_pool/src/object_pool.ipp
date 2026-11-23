@@ -74,7 +74,7 @@ void ObjectPool<T>::Shrink()
 {
 	std::lock_guard<std::mutex> guard(mutex_);
 
-	// Î´Ê¹ÓÃÁĞ±íÀï±£Ö¤ÖÁÉÙÓĞÄ¬ÈÏÊıÁ¿kDefaultExpandStepµÄ¶ÔÏó
+	// æœªä½¿ç”¨åˆ—è¡¨é‡Œä¿è¯è‡³å°‘æœ‰é»˜è®¤æ•°é‡kDefaultExpandStepçš„å¯¹è±¡
 	if (free_.size() <= kDefaultExpandStep)
 	{
 		return;

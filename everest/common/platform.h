@@ -5,7 +5,7 @@
 #pragma warning(disable:4996)
 
 #ifndef WIN32_LEAN_AND_MEAN 
-//#include <winsock2.h>		// ±ØĞëÔÚwindows.hÖ®Ç°°üº¬£¬ ·ñÔòÍøÂçÄ£¿é±àÒë»á³ö´í
+//#include <winsock2.h>		// å¿…é¡»åœ¨windows.hä¹‹å‰åŒ…å«ï¼Œ å¦åˆ™ç½‘ç»œæ¨¡å—ç¼–è¯‘ä¼šå‡ºé”™
 //#include <mswsock.h> 
 #define WIN32_LEAN_AND_MEAN
 #endif

@@ -151,6 +151,12 @@
     <Filter Include="packet\src">
       <UniqueIdentifier>{91feecfe-418e-4753-bdf4-1fa29cca6bf1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="fuzzy_search">
+      <UniqueIdentifier>{d3f4a215-8c7b-4e9a-b1c2-6f5e4d3c2b1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fuzzy_search\detail">
+      <UniqueIdentifier>{e4a5b326-9d8c-4f0b-a2d3-7a6f5e4d3c2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\everest\singleton\singleton.h">
@@ -323,6 +329,30 @@
     </ClInclude>
     <ClInclude Include="..\everest\packet\packet_serialize.h">
       <Filter>packet\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\fuzzy_search\fuzzy_search_system.h">
+      <Filter>fuzzy_search</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\fuzzy_search\fuzzy_search_types.h">
+      <Filter>fuzzy_search</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\fuzzy_search\detail\fuzzy_search_base_index.h">
+      <Filter>fuzzy_search\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\fuzzy_search\detail\fuzzy_search_delta_index.h">
+      <Filter>fuzzy_search\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\fuzzy_search\detail\fuzzy_search_gram_key.h">
+      <Filter>fuzzy_search\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\fuzzy_search\detail\fuzzy_search_lifecycle.h">
+      <Filter>fuzzy_search\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\fuzzy_search\detail\fuzzy_search_posting.h">
+      <Filter>fuzzy_search\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\everest\fuzzy_search\detail\fuzzy_search_utf8.h">
+      <Filter>fuzzy_search\detail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

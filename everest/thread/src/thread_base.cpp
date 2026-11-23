@@ -38,20 +38,20 @@ void ThreadBase::Start()
 
 	started_flag_ = true;
 
-	// Ïß³ÌÊ±ÖÓÖØÖÃ
+	// çº¿ç¨‹æ—¶é’Ÿé‡ç½®
 	clock_.Restart();
 
-	// ½«´ËÊ±ÖÓÉèÖÃÎªÏß³ÌÊ±ÖÓ
+	// å°†æ­¤æ—¶é’Ÿè®¾ç½®ä¸ºçº¿ç¨‹æ—¶é’Ÿ
 	Post([this] { SetThreadLocalClock(&(this->clock_)); });
 	
-	// Ôö¼ÓÒ»¸ö¶¨Ê±ÈÎÎñ
+	// å¢åŠ ä¸€ä¸ªå®šæ—¶ä»»åŠ¡
 	AddTimerTaskToActuateUpdate();
 
-	// ´´½¨Ïß³Ì
+	// åˆ›å»ºçº¿ç¨‹
 	std::thread t([context = &context_]() {context->run(); });
 	thread_.swap(t);
 
-	// Ïò×ÓÀà´«µİÆô¶¯ÊÂ¼ş
+	// å‘å­ç±»ä¼ é€’å¯åŠ¨äº‹ä»¶
 	OnStart();
 }
 
@@ -87,24 +87,24 @@ void ThreadBase::AddTimerTaskToActuateUpdate()
 				return;
 			}
 
-			// ÔÙ´Îµ÷ÓÃAddTimerTaskToActuateUpdate£¬ÎªÁË²»¶ÏÇı¶¯Update
+			// å†æ¬¡è°ƒç”¨AddTimerTaskToActuateUpdateï¼Œä¸ºäº†ä¸æ–­é©±åŠ¨Update
 			this->AddTimerTaskToActuateUpdate();
 
-			// ²¦¶¯Ïß³ÌÊ±ÖÓ
+			// æ‹¨åŠ¨çº¿ç¨‹æ—¶é’Ÿ
 			this->clock_.TickTock();
 
 			TRY_MACRO
 
-			// ¼ÇÂ¼¸üĞÂÆğÊ¼Ê±¼ä
+			// è®°å½•æ›´æ–°èµ·å§‹æ—¶é—´
 			auto&& begin_time = std::chrono::steady_clock::now();
 
-			// ÒµÎñÂß¼­¸üĞÂ
+			// ä¸šåŠ¡é€»è¾‘æ›´æ–°
 			this->Update();
 
-			// ¼ÇÂ¼¸üĞÂ½áÊøÊ±¼ä
+			// è®°å½•æ›´æ–°ç»“æŸæ—¶é—´
 			auto&& end_time = std::chrono::steady_clock::now();
 
-			// ¸üĞÂÒ»´ÎËù»¨·ÑµÄÊ±¼ä
+			// æ›´æ–°ä¸€æ¬¡æ‰€èŠ±è´¹çš„æ—¶é—´
 			execute_once_max_time_ = std::max(execute_once_max_time_, uint64_t((end_time - begin_time).count()));
 
 			CATCH_MACRO

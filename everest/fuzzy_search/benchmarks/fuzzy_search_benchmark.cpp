@@ -1,13 +1,13 @@
 // fuzzy_search 基准测试：500 万名字，单进程、单线程、Windows Release。
 // 输出 JSON，供 make_report.py 生成面向策划的 HTML 报告。
-#include "system/fuzzy_search/fuzzy_search_system.h"
+#include "fuzzy_search/fuzzy_search_system.h"
 
 #ifdef _WIN32
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
-#include <windows.h>
 #include <psapi.h>
+#include <windows.h>
 #pragma comment(lib, "psapi.lib")
 #endif
 
@@ -34,7 +34,7 @@
 
 namespace {
 
-using System = metaverse::FuzzySearchSystem<std::uint64_t, true>;
+using System = everest::FuzzySearchSystem<std::uint64_t, true>;
 using Clock = std::chrono::steady_clock;
 
 constexpr std::uint32_t kNameCount = 5000000;
@@ -66,8 +66,7 @@ struct PhaseMemory {
 };
 
 std::uint64_t NowNs() {
-    return static_cast<std::uint64_t>(
-        std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now().time_since_epoch()).count());
+    return static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now().time_since_epoch()).count());
 }
 
 double SecondsSince(std::uint64_t startNs) {
@@ -115,10 +114,18 @@ std::size_t TotalRamBytes() {
     return 0;
 }
 #else
-std::size_t WorkingSetBytes() { return 0; }
-std::size_t PeakWorkingSetBytes() { return 0; }
-std::size_t PrivateBytes() { return 0; }
-std::size_t TotalRamBytes() { return 0; }
+std::size_t WorkingSetBytes() {
+    return 0;
+}
+std::size_t PeakWorkingSetBytes() {
+    return 0;
+}
+std::size_t PrivateBytes() {
+    return 0;
+}
+std::size_t TotalRamBytes() {
+    return 0;
+}
 #endif
 
 void AppendUtf8(std::string& out, char32_t codepoint) {
@@ -201,16 +208,14 @@ struct CountedGram {
 };
 
 template <typename Key, typename Encoder>
-std::vector<CountedGram> TopGrams(const std::unordered_map<Key, std::uint64_t>& counts,
-                                  std::size_t limit, Encoder encoder) {
+std::vector<CountedGram> TopGrams(const std::unordered_map<Key, std::uint64_t>& counts, std::size_t limit, Encoder encoder) {
     std::vector<std::pair<std::uint64_t, Key>> items;
     items.reserve(counts.size());
     for (const auto& entry : counts) {
         items.emplace_back(entry.second, entry.first);
     }
     const std::size_t take = std::min(limit, items.size());
-    std::partial_sort(items.begin(), items.begin() + static_cast<std::ptrdiff_t>(take), items.end(),
-                       [](const auto& left, const auto& right) { return left.first > right.first; });
+    std::partial_sort(items.begin(), items.begin() + static_cast<std::ptrdiff_t>(take), items.end(), [](const auto& left, const auto& right) { return left.first > right.first; });
     std::vector<CountedGram> result;
     result.reserve(take);
     for (std::size_t i = 0; i < take; ++i) {
@@ -232,17 +237,16 @@ System::Stats ToStats(const System& index) {
 
 void WriteStats(std::ostream& out, const System::Stats& stats) {
     out << "{"
-        << "\"live_documents\":" << stats.liveDocuments << ","
-        << "\"total_documents\":" << stats.totalDocuments << ","
-        << "\"tombstone_documents\":" << stats.tombstoneDocuments << ","
-        << "\"name_bytes\":" << stats.nameBytes << ","
-        << "\"base_gram_entries\":" << stats.baseGramEntries << ","
-        << "\"base_posting_bytes\":" << stats.basePostingBytes << ","
-        << "\"delta_gram_entries\":" << stats.deltaGramEntries << ","
-        << "\"delta_postings\":" << stats.deltaPostings << ","
-        << "\"estimated_bytes\":" << stats.estimatedBytes << ","
-        << "\"unigram_enabled\":" << (stats.unigramEnabled ? "true" : "false")
-        << "}";
+        << "\"live_documents\":" << stats.live_documents << ","
+        << "\"total_documents\":" << stats.total_documents << ","
+        << "\"tombstone_documents\":" << stats.tombstone_documents << ","
+        << "\"name_bytes\":" << stats.name_bytes << ","
+        << "\"base_gram_entries\":" << stats.base_gram_entries << ","
+        << "\"base_posting_bytes\":" << stats.base_posting_bytes << ","
+        << "\"delta_gram_entries\":" << stats.delta_gram_entries << ","
+        << "\"delta_postings\":" << stats.delta_postings << ","
+        << "\"estimated_bytes\":" << stats.estimated_bytes << ","
+        << "\"unigram_enabled\":" << (stats.unigram_enabled ? "true" : "false") << "}";
 }
 
 void WriteQueryResult(std::ostream& out, const QueryResult& result) {
@@ -255,8 +259,7 @@ void WriteQueryResult(std::ostream& out, const QueryResult& result) {
         << "\"p95_us\":" << std::fixed << std::setprecision(3) << result.p95Us << ","
         << "\"p99_us\":" << std::fixed << std::setprecision(3) << result.p99Us << ","
         << "\"avg_results\":" << std::fixed << std::setprecision(3) << result.avgResults << ","
-        << "\"capped_ratio\":" << std::fixed << std::setprecision(4) << result.cappedRatio
-        << "}";
+        << "\"capped_ratio\":" << std::fixed << std::setprecision(4) << result.cappedRatio << "}";
 }
 
 QueryResult RunQueries(const System& index, const std::vector<std::string>& queries, const std::string& label) {
@@ -270,7 +273,11 @@ QueryResult RunQueries(const System& index, const std::vector<std::string>& quer
     const std::size_t warmup = std::min<std::size_t>(queries.size(), 5000);
     for (std::size_t i = 0; i < warmup; ++i) {
         ids.clear();
-        index.Search(queries[i], kMaxResults, ids);
+        const auto status = index.Search(queries[i], kMaxResults, ids);
+        if (status != System::Status::kOk) {
+            std::cerr << "Warmup search failed: label=" << label << " status=" << static_cast<int>(status) << "\n";
+            std::exit(2);
+        }
     }
 
     std::vector<std::uint64_t> latencies;
@@ -287,8 +294,7 @@ QueryResult RunQueries(const System& index, const std::vector<std::string>& quer
             std::cerr << "Search failed: label=" << label << " status=" << static_cast<int>(status) << "\n";
             std::exit(2);
         }
-        latencies.push_back(static_cast<std::uint64_t>(
-            std::chrono::duration_cast<std::chrono::nanoseconds>(queryEnd - queryStart).count()));
+        latencies.push_back(static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::nanoseconds>(queryEnd - queryStart).count()));
         totalResults += ids.size();
         if (ids.size() == kMaxResults) ++capped;
     }
@@ -379,8 +385,7 @@ Dataset GenerateDataset(std::uint32_t minSearchLength) {
             ++unigramFreq[codepoint];
         }
         for (std::size_t i = 0; i + 1 < codepoints.size(); ++i) {
-            const std::uint64_t key = (static_cast<std::uint64_t>(codepoints[i]) << 32) |
-                                      static_cast<std::uint64_t>(codepoints[i + 1]);
+            const std::uint64_t key = (static_cast<std::uint64_t>(codepoints[i]) << 32) | static_cast<std::uint64_t>(codepoints[i + 1]);
             ++bigramFreq[key];
         }
         dataset.totalNameBytes += name.size();
@@ -389,8 +394,7 @@ Dataset GenerateDataset(std::uint32_t minSearchLength) {
     }
 
     dataset.avgCodepoints = static_cast<double>(codepointTotal) / static_cast<double>(kNameCount);
-    dataset.cjkRatio = static_cast<double>(cjkCharactersTotal) /
-                       static_cast<double>(cjkCharactersTotal + asciiCharactersTotal);
+    dataset.cjkRatio = static_cast<double>(cjkCharactersTotal) / static_cast<double>(cjkCharactersTotal + asciiCharactersTotal);
     dataset.asciiRatio = 1.0 - dataset.cjkRatio;
 
     const auto topUnigrams = TopGrams(unigramFreq, kHotGramCount, [](char32_t codepoint) { return EncodeCodepoint(codepoint); });
@@ -446,8 +450,7 @@ void WriteMemory(std::ostream& out, const PhaseMemory& memory) {
     out << "{"
         << "\"working_set_mb\":" << std::fixed << std::setprecision(2) << memory.workingSetMb << ","
         << "\"peak_working_set_mb\":" << std::fixed << std::setprecision(2) << memory.peakWorkingSetMb << ","
-        << "\"estimated_index_mb\":" << std::fixed << std::setprecision(2) << memory.estimatedIndexMb
-        << "}";
+        << "\"estimated_index_mb\":" << std::fixed << std::setprecision(2) << memory.estimatedIndexMb << "}";
 }
 
 void WriteBatchQps(std::ostream& out, const std::vector<double>& batchQps) {
@@ -464,12 +467,23 @@ std::string JsonEscape(std::string_view text) {
     result.reserve(text.size() + 8);
     for (char c : text) {
         switch (c) {
-            case '"': result += "\\\""; break;
-            case '\\': result += "\\\\"; break;
-            case '\n': result += "\\n"; break;
-            case '\r': result += "\\r"; break;
-            case '\t': result += "\\t"; break;
-            default: result += c;
+            case '"':
+                result += "\\\"";
+                break;
+            case '\\':
+                result += "\\\\";
+                break;
+            case '\n':
+                result += "\\n";
+                break;
+            case '\r':
+                result += "\\r";
+                break;
+            case '\t':
+                result += "\\t";
+                break;
+            default:
+                result += c;
         }
     }
     return result;
@@ -500,17 +514,16 @@ int Run(std::uint32_t minSearchLength, const std::string& outputPath, const std:
 #endif
     std::cout << "Generating 5,000,000 names (minSearch=" << minSearchLength << ")...\n";
     Dataset dataset = GenerateDataset(minSearchLength);
-    std::cout << "Dataset ready: avg codepoints=" << dataset.avgCodepoints
-              << " cjk=" << dataset.cjkRatio << " ascii=" << dataset.asciiRatio << "\n";
+    std::cout << "Dataset ready: avg codepoints=" << dataset.avgCodepoints << " cjk=" << dataset.cjkRatio << " ascii=" << dataset.asciiRatio << "\n";
     WriteNamesFile(dataset.names, namesOutput, 100000);
 
     const PhaseMemory baseline = MemoryNow();
     const std::size_t baselinePrivate = PrivateBytes();
 
     System::Options options;
-    options.maxStringLength = kMaxStringLength;
-    options.minSearchLength = minSearchLength;
-    options.caseInsensitive = true;
+    options.max_string_length = kMaxStringLength;
+    options.min_search_length = minSearchLength;
+    options.case_insensitive = true;
 
     System::Status createStatus = System::Status::kOk;
     auto index = System::Create(options, &createStatus);
@@ -541,7 +554,7 @@ int Run(std::uint32_t minSearchLength, const std::string& outputPath, const std:
     const double addSeconds = SecondsSince(addStartNs);
     const System::Stats afterAddStats = ToStats(*index);
     PhaseMemory afterAdd = MemoryNow();
-    afterAdd.estimatedIndexMb = BytesToMb(afterAddStats.estimatedBytes);
+    afterAdd.estimatedIndexMb = BytesToMb(afterAddStats.estimated_bytes);
     std::cout << "Add done: " << addSeconds << "s, qps=" << (kNameCount / addSeconds) << "\n";
 
     std::cout << "Compacting...\n";
@@ -551,20 +564,23 @@ int Run(std::uint32_t minSearchLength, const std::string& outputPath, const std:
         while (sampling.load(std::memory_order_relaxed)) {
             const std::size_t current = WorkingSetBytes();
             std::size_t previous = compactPeak.load(std::memory_order_relaxed);
-            while (current > previous &&
-                   !compactPeak.compare_exchange_weak(previous, current, std::memory_order_relaxed)) {
+            while (current > previous && !compactPeak.compare_exchange_weak(previous, current, std::memory_order_relaxed)) {
             }
             std::this_thread::sleep_for(std::chrono::milliseconds(5));
         }
     });
     const std::uint64_t compactStartNs = NowNs();
-    index->Compact();
+    const auto compactStatus = index->Compact();
     const double compactSeconds = SecondsSince(compactStartNs);
     sampling.store(false, std::memory_order_relaxed);
     sampler.join();
+    if (compactStatus != System::Status::kOk) {
+        std::cerr << "Compact failed: " << static_cast<int>(compactStatus) << "\n";
+        return 7;
+    }
     const System::Stats afterCompactStats = ToStats(*index);
     PhaseMemory afterCompact = MemoryNow();
-    afterCompact.estimatedIndexMb = BytesToMb(afterCompactStats.estimatedBytes);
+    afterCompact.estimatedIndexMb = BytesToMb(afterCompactStats.estimated_bytes);
     const double compactPeakMb = BytesToMb(compactPeak.load());
     std::cout << "Compact done: " << compactSeconds << "s peak=" << compactPeakMb << "MB\n";
 
@@ -599,7 +615,7 @@ int Run(std::uint32_t minSearchLength, const std::string& outputPath, const std:
     const double removeSeconds = SecondsSince(removeStartNs);
     const System::Stats afterRemoveStats = ToStats(*index);
     PhaseMemory afterRemove = MemoryNow();
-    afterRemove.estimatedIndexMb = BytesToMb(afterRemoveStats.estimatedBytes);
+    afterRemove.estimatedIndexMb = BytesToMb(afterRemoveStats.estimated_bytes);
     std::cout << "Remove done: " << removeSeconds << "s\n";
 
     std::cout << "Compacting after remove...\n";
@@ -609,20 +625,23 @@ int Run(std::uint32_t minSearchLength, const std::string& outputPath, const std:
         while (sampling.load(std::memory_order_relaxed)) {
             const std::size_t current = WorkingSetBytes();
             std::size_t previous = compactPeak.load(std::memory_order_relaxed);
-            while (current > previous &&
-                   !compactPeak.compare_exchange_weak(previous, current, std::memory_order_relaxed)) {
+            while (current > previous && !compactPeak.compare_exchange_weak(previous, current, std::memory_order_relaxed)) {
             }
             std::this_thread::sleep_for(std::chrono::milliseconds(5));
         }
     });
     const std::uint64_t compact2StartNs = NowNs();
-    index->Compact();
+    const auto compact2Status = index->Compact();
     const double compact2Seconds = SecondsSince(compact2StartNs);
     sampling.store(false, std::memory_order_relaxed);
     sampler2.join();
+    if (compact2Status != System::Status::kOk) {
+        std::cerr << "Compact failed: " << static_cast<int>(compact2Status) << "\n";
+        return 7;
+    }
     const System::Stats afterCompact2Stats = ToStats(*index);
     PhaseMemory afterCompact2 = MemoryNow();
-    afterCompact2.estimatedIndexMb = BytesToMb(afterCompact2Stats.estimatedBytes);
+    afterCompact2.estimatedIndexMb = BytesToMb(afterCompact2Stats.estimated_bytes);
     const double compact2PeakMb = BytesToMb(compactPeak.load());
 
     std::ofstream out(outputPath);
@@ -635,11 +654,9 @@ int Run(std::uint32_t minSearchLength, const std::string& outputPath, const std:
     out << "\"generated_at\":\"2026-10-30\",";
     out << "\"config\":{\"min_search\":" << minSearchLength << ",\"max_string\":" << kMaxStringLength
         << ",\"case_insensitive\":true,\"bmp_only\":true,\"max_results\":" << kMaxResults << "},";
-    out << "\"environment\":{\"compiler_msvc\":" << kCompilerVersion << ",\"pointer_bits\":" << (sizeof(void*) * 8)
-        << ",\"total_ram_mb\":" << BytesToMb(TotalRamBytes()) << "},";
-    out << "\"dataset\":{\"count\":" << kNameCount << ",\"name_bytes\":" << dataset.totalNameBytes
-        << ",\"avg_codepoints\":" << dataset.avgCodepoints << ",\"cjk_ratio\":" << dataset.cjkRatio
-        << ",\"ascii_ratio\":" << dataset.asciiRatio << ",\"seed\":" << kSeed << "},";
+    out << "\"environment\":{\"compiler_msvc\":" << kCompilerVersion << ",\"pointer_bits\":" << (sizeof(void*) * 8) << ",\"total_ram_mb\":" << BytesToMb(TotalRamBytes()) << "},";
+    out << "\"dataset\":{\"count\":" << kNameCount << ",\"name_bytes\":" << dataset.totalNameBytes << ",\"avg_codepoints\":" << dataset.avgCodepoints
+        << ",\"cjk_ratio\":" << dataset.cjkRatio << ",\"ascii_ratio\":" << dataset.asciiRatio << ",\"seed\":" << kSeed << "},";
     out << "\"names_file\":\"" << JsonEscape(namesOutput) << "\",";
     out << "\"length_distribution\":[";
     for (int length = 2; length <= 8; ++length) {
@@ -673,8 +690,7 @@ int Run(std::uint32_t minSearchLength, const std::string& outputPath, const std:
     WriteMemory(out, baseline);
     out << ",";
     out << "\"baseline_private_mb\":" << BytesToMb(baselinePrivate) << ",";
-    out << "\"add\":{\"count\":" << kNameCount << ",\"seconds\":" << addSeconds << ",\"qps\":"
-        << (kNameCount / addSeconds) << ",\"batch_qps\":";
+    out << "\"add\":{\"count\":" << kNameCount << ",\"seconds\":" << addSeconds << ",\"qps\":" << (kNameCount / addSeconds) << ",\"batch_qps\":";
     WriteBatchQps(out, addBatchQps);
     out << "},";
     out << "\"after_add\":";
@@ -682,8 +698,7 @@ int Run(std::uint32_t minSearchLength, const std::string& outputPath, const std:
     out << ",\"after_add_stats\":";
     WriteStats(out, afterAddStats);
     out << ",";
-    out << "\"compact1\":{\"seconds\":" << compactSeconds << ",\"peak_working_set_mb\":" << compactPeakMb
-        << ",\"after\":";
+    out << "\"compact1\":{\"seconds\":" << compactSeconds << ",\"peak_working_set_mb\":" << compactPeakMb << ",\"after\":";
     WriteMemory(out, afterCompact);
     out << ",\"after_stats\":";
     WriteStats(out, afterCompactStats);
@@ -694,14 +709,12 @@ int Run(std::uint32_t minSearchLength, const std::string& outputPath, const std:
         WriteQueryResult(out, queryResults[i]);
     }
     out << "],";
-    out << "\"remove\":{\"count\":" << kRemainCount << ",\"seconds\":" << removeSeconds << ",\"qps\":"
-        << (static_cast<double>(kRemainCount) / removeSeconds) << ",\"after\":";
+    out << "\"remove\":{\"count\":" << kRemainCount << ",\"seconds\":" << removeSeconds << ",\"qps\":" << (static_cast<double>(kRemainCount) / removeSeconds) << ",\"after\":";
     WriteMemory(out, afterRemove);
     out << ",\"after_stats\":";
     WriteStats(out, afterRemoveStats);
     out << "},";
-    out << "\"compact2\":{\"seconds\":" << compact2Seconds << ",\"peak_working_set_mb\":" << compact2PeakMb
-        << ",\"after\":";
+    out << "\"compact2\":{\"seconds\":" << compact2Seconds << ",\"peak_working_set_mb\":" << compact2PeakMb << ",\"after\":";
     WriteMemory(out, afterCompact2);
     out << ",\"after_stats\":";
     WriteStats(out, afterCompact2Stats);

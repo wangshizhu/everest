@@ -24,25 +24,25 @@ public:
 
 	ListenConnectType type_ = ListenConnectType::kNone;
 
-	// 网络协议，true:使用ipv4 false:使用ipv6
+	// 缃戠粶鍗忚锛宼rue:浣跨敤ipv4 false:浣跨敤ipv6
 	bool ipv4_ = true;
 
-	// 监听地址
+	// 鐩戝惉鍦板潃
 	std::string ip_ = "";
 
-	// 监听端口
+	// 鐩戝惉绔彛
 	uint16_t port_ = 0;
 
-	// 是否禁用Nagle
+	// 鏄惁绂佺敤Nagle
 	bool no_delay_ = true;
 
-	// 地址重用
+	// 鍦板潃閲嶇敤
 	bool reuse_addr_ = true;
 
-	// listen参数 backlog
+	// listen鍙傛暟 backlog
 	int32_t backlog_ = 1024;
 
-	// 网络线程分配策略id
+	// 缃戠粶绾跨▼鍒嗛厤绛栫暐id
 	uint32_t net_thread_allocate_policy_id_ = 0;
 
 };

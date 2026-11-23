@@ -18,43 +18,43 @@ public:
 
 public:
 	/*
-	* @brief: ×¢²áservice
+	* @brief: æ³¨å†Œservice
 	* @param: [in] monitor_object service
-	* @note: Ïß³Ì°²È«
+	* @note: çº¿ç¨‹å®‰å…¨
 	*/
 	void Register(ServiceBaseSharedPtr monitor_object) override;
 
 	/*
-	* @brief: monitorÏß³Ìµ÷¶ÈµÄupdate
+	* @brief: monitorçº¿ç¨‹è°ƒåº¦çš„update
 	*/
 	void Update() override;
 
 	/*
-	* @brief: monitorÏß³ÌÆô¶¯ÊÂ¼şº¯Êı
+	* @brief: monitorçº¿ç¨‹å¯åŠ¨äº‹ä»¶å‡½æ•°
 	*/
 	void OnThreadStart() override;
 
 public:
 	/*
-	* @brief: »ñÈ¡·şÎñ
+	* @brief: è·å–æœåŠ¡
 	* @param: [in] service_id service id
-	* @note: ·ÇÏß³Ì°²È«
+	* @note: éçº¿ç¨‹å®‰å…¨
 	*/
 	ServiceBaseSharedPtr GetService(ServiceIdType service_id);
 	
 	/*
-	* @brief: ×¢²ásession
+	* @brief: æ³¨å†Œsession
   * @param: [in] service_id service id
 	* @param: [in] session std::shared_ptr<SessionBase>
-  * @note: Ïß³Ì°²È«
+  * @note: çº¿ç¨‹å®‰å…¨
 	*/
 	void RegisterSession(ServiceIdType service_id, SessionSharedPtr session);
 
 	/*
-	* @brief: ÒÆ³ısession
+	* @brief: ç§»é™¤session
 	* @param: [in] service_id service id
 	* @param: [in] session_id session_id
-	* @note: Ïß³Ì°²È«
+	* @note: çº¿ç¨‹å®‰å…¨
 	*/
 	void UnregisterSession(ServiceIdType service_id, SessionIdType session_id);
 

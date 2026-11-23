@@ -77,13 +77,13 @@ void SessionBase::DoRead()
 		{
 			EVEREST_LOG_ERROR("SessionBase::DoRead read error code {},error msg {}",error.value(), error.message());
 
-			// ¹Ø±Õ
+			// å…³é—­
 			DoClose();
 
 			return;
 		}
 
-		// ¶ÁÈ¡
+		// è¯»å–
 		if (!OnRead())
 		{
 			return DoClose();
@@ -95,7 +95,7 @@ void SessionBase::DoRead()
 
 		EVEREST_LOG_DEBUG("SessionBase::DoRead can write size {}",read_data_.CanWriteSize());
 
-		// ¼ÌÐø´ÓÍøÂçÖÐ¶ÁÈ¡
+		// ç»§ç»­ä»Žç½‘ç»œä¸­è¯»å–
 		DoRead();
 	});
 }
@@ -186,7 +186,7 @@ void SessionBase::DoClose()
 
 	closed_ = true;
 
-	// Í¨ÖªserviceÒÆ³ýÕâ¸ösession
+	// é€šçŸ¥serviceç§»é™¤è¿™ä¸ªsession
 	g_control_monitor->GetServiceMonitor().UnregisterSession(GetServiceId(), GetSessionId());
 
 	OnClose();

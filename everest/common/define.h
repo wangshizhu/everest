@@ -8,17 +8,17 @@
 #define EVEREST_LOG_ERROR(...) NAMED_LOG_ERROR("everest",__VA_ARGS__)
 #define EVEREST_LOG_DEBUG(...) NAMED_LOG_DEBUG("everest",__VA_ARGS__)
 
-// Ïß³ÌUpdate¸üĞÂÊ±¼ä¼ä¸ô,100ms
+// çº¿ç¨‹Updateæ›´æ–°æ—¶é—´é—´éš”,100ms
 constexpr uint32_t kThreadUpdateInterval = 1000 * 1000 * 100;
 
 constexpr uint16_t kOneByteBit = 8;
 
 #define EVEREST_INLINE inline
 
-// tryºê¶¨Òå
+// tryå®å®šä¹‰
 #define TRY_MACRO try{
 
-// catchºê¶¨Òå
+// catchå®å®šä¹‰
 #define CATCH_MACRO } \
 catch(const std::exception& e) \
 { \

@@ -6,10 +6,10 @@ NAMESPACE_EVEREST_BEGIN
 enum class SessionType
 {
 	kNone = 0,
-	// Íâ²¿Á¬½Ó
+	// å¤–éƒ¨è¿žæŽ¥
 	kExternal = 1,
 
-	// ÄÚ²¿Á¬½Ó
+	// å†…éƒ¨è¿žæŽ¥
 	kInternal = 2,
 };
 
@@ -17,10 +17,10 @@ enum class SessionDirection
 {
 	kNone = 0,
 
-	// Ö÷¶¯Á¬½Ó£¬Í¨¹ýconnect´´½¨µÄÁ¬½Ó
+	// ä¸»åŠ¨è¿žæŽ¥ï¼Œé€šè¿‡connectåˆ›å»ºçš„è¿žæŽ¥
 	kPositive = 1,
 
-	// ±»¶¯Á¬½Ó£¬Í¨¹ýaccept´´½¨µÄÁ¬½Ó
+	// è¢«åŠ¨è¿žæŽ¥ï¼Œé€šè¿‡acceptåˆ›å»ºçš„è¿žæŽ¥
 	kNegative = 2,
 };
 

@@ -1,7 +1,7 @@
 #ifndef HELPER_H_
 #define HELPER_H_
 
-// trait type that stripping const¡¢volatile¡¢reference
+// trait type that stripping constã€volatileã€reference
 template <typename T>
 struct TraitTypeStrippingCVR
 {
@@ -11,19 +11,19 @@ struct TraitTypeStrippingCVR
 NAMESPACE_EVEREST_BEGIN
 
 /*
-* @brief ´Ó¸ø¶¨¡¾ÕûĞÍÀàĞÍFrom¶ÔÏó¡¿µÄ¡¾Ö¸¶¨Î»begin_pos¡¿ÌáÈ¡¡¾Ö¸¶¨Î»Êıdisjunction_bit_num¡¿ºó£¬
-* ¸ù¾İÃ¿Ò»Î»µÄÖµ¹¹Ôì³ö¸ø¶¨¡¾ÕûĞÍÀàĞÍTo¶ÔÏó¡¿
-* ÀıÈç£ºfrom ÖµÎª15£¬¶ÔÓ¦¶ş½øÖÆ£º0000 1111
+* @brief ä»ç»™å®šã€æ•´å‹ç±»å‹Fromå¯¹è±¡ã€‘çš„ã€æŒ‡å®šä½begin_posã€‘æå–ã€æŒ‡å®šä½æ•°disjunction_bit_numã€‘åï¼Œ
+* æ ¹æ®æ¯ä¸€ä½çš„å€¼æ„é€ å‡ºç»™å®šã€æ•´å‹ç±»å‹Toå¯¹è±¡ã€‘
+* ä¾‹å¦‚ï¼šfrom å€¼ä¸º15ï¼Œå¯¹åº”äºŒè¿›åˆ¶ï¼š0000 1111
 * begin_pos:1
 * disjunction_bit_num:3
-* ÖĞÀ¨ºÅÄÚµÄÎ»¼´ÒªÈ¡µÄÎ»0000 [111]1
-* ÓÃ[111]¹¹ÔìToÀàĞÍµÄ¶ÔÏó
+* ä¸­æ‹¬å·å†…çš„ä½å³è¦å–çš„ä½0000 [111]1
+* ç”¨[111]æ„é€ Toç±»å‹çš„å¯¹è±¡
 * 
-* @note: FromºÍTo±ØĞëÊÇÕûĞÍ£¬²»ÄÜÊÇboolĞÍ
+* @note: Fromå’ŒToå¿…é¡»æ˜¯æ•´å‹ï¼Œä¸èƒ½æ˜¯boolå‹
 *
-* @param [in] from FromÀàĞÍ¶ÔÏó 
+* @param [in] from Fromç±»å‹å¯¹è±¡ 
 *
-* @return ¸ø¶¨¡¾ÀàĞÍTo¶ÔÏó¡¿
+* @return ç»™å®šã€ç±»å‹Toå¯¹è±¡ã€‘
 */
 template<class To, uint16_t begin_pos, uint16_t disjunction_bit_num, class From,
 	typename = typename std::enable_if_t
@@ -45,7 +45,7 @@ To DisjuctionBit(From from)
 	return To(from >> begin_pos) & tmp.to_ullong();
 }
 
-// »ñÈ¡µ±Ç°Ïß³Ìid
+// è·å–å½“å‰çº¿ç¨‹id
 uint64_t GetCurrentThreadId();
 
 NAMESPACE_EVEREST_END

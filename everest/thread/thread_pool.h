@@ -38,7 +38,7 @@ public:
 	std::shared_ptr<ThreadType> GetAnyThread();
 
 private:
-	// TODO:Ôö¼Ó²ÎÊıÁĞ±í£¬ÏòÏß³Ì¶ÔÏó´«µİ¹¹Ôìº¯Êı²ÎÊı
+	// TODO:å¢åŠ å‚æ•°åˆ—è¡¨ï¼Œå‘çº¿ç¨‹å¯¹è±¡ä¼ é€’æ„é€ å‡½æ•°å‚æ•°
 	void CreateAllThread();
 
 	template<class K>

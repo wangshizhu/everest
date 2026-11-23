@@ -1,0 +1,20 @@
+# Normalize text files to LF in the repository and working tree.
+* text=auto eol=lf
+
+# Windows scripts must stay CRLF.
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+
+# Visual Studio project files stay CRLF to avoid VS rewrite churn.
+*.sln             text eol=crlf
+*.vcxproj         text eol=crlf
+*.vcxproj.filters text eol=crlf
+*.props           text eol=crlf
+*.targets         text eol=crlf
+
+# Vendored third-party code and build outputs must not be rewritten.
+3rd/**  -text
+libs/** -text
+tmp/**  -text
+*.lib   binary
+*.a     binary

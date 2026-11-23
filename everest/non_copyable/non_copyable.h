@@ -1,7 +1,7 @@
 /*
-* 禁止拷贝实现
-* 禁止拷贝的自定义类型需要private 继承此类
-* 例如：class Test : private NonCopyable
+* 绂佹鎷疯礉瀹炵幇
+* 绂佹鎷疯礉鐨勮嚜瀹氫箟绫诲瀷闇�瑕乸rivate 缁ф壙姝ょ被
+* 渚嬪锛歝lass Test : private NonCopyable
 */
 
 #ifndef NON_COPYABLE_H_

@@ -3,19 +3,19 @@
 
 NAMESPACE_EVEREST_BEGIN
 
-// ¹ØÓÚ¸ü¶àÏß³ÌÄ£ĞÍ£¬¿ÉÒÔ²Î¿¼ÕâÆªÎÄÕÂhttps://zhuanlan.zhihu.com/p/95662364
+// å…³äºæ›´å¤šçº¿ç¨‹æ¨¡å‹ï¼Œå¯ä»¥å‚è€ƒè¿™ç¯‡æ–‡ç« https://zhuanlan.zhihu.com/p/95662364
 enum class NetThreadMode
 {
 	/// <summary>
-	/// reactorµ¥Ïß³ÌÄ£Ê½
-	/// ÍøÂç£¨¼àÌı¡¢Á¬½Ó¡¢ÒÑÁ¬½Ó£©¶¼Ê¹ÓÃÏàÍ¬Ïß³Ì
+	/// reactorå•çº¿ç¨‹æ¨¡å¼
+	/// ç½‘ç»œï¼ˆç›‘å¬ã€è¿æ¥ã€å·²è¿æ¥ï¼‰éƒ½ä½¿ç”¨ç›¸åŒçº¿ç¨‹
 	/// </summary>
 	kReactorSingleThreadMode = 1,
 
 	/// <summary>
-	/// reactor¶àÏß³ÌÄ£Ê½
-	/// ¼àÌı¡¢Á¬½Óµ¥Ïß³ÌÄ£Ê½£¬ËùÓĞ¼àÌı¡¢Á¬½Ó²Ù×÷¶¼Ê¹ÓÃÏàÍ¬Ïß³Ì
-	/// ÒÑÁ¬½ÓÊ¹ÓÃ¶àÏß³ÌÄ£Ê½£¬ËùÓĞÒÑÁ¬½Ó´ÓÏß³Ì³ØÖĞ·ÖÅäÏß³Ì
+	/// reactorå¤šçº¿ç¨‹æ¨¡å¼
+	/// ç›‘å¬ã€è¿æ¥å•çº¿ç¨‹æ¨¡å¼ï¼Œæ‰€æœ‰ç›‘å¬ã€è¿æ¥æ“ä½œéƒ½ä½¿ç”¨ç›¸åŒçº¿ç¨‹
+	/// å·²è¿æ¥ä½¿ç”¨å¤šçº¿ç¨‹æ¨¡å¼ï¼Œæ‰€æœ‰å·²è¿æ¥ä»çº¿ç¨‹æ± ä¸­åˆ†é…çº¿ç¨‹
 	/// </summary>
 	kReactorMultiThreadMode = 2,
 };
@@ -25,19 +25,19 @@ class ThreadAllocateConfiguration
 	static constexpr uint32_t kReadBuffPoolSize = 1024 * 512;
 	static constexpr uint32_t kWriteBuffPoolSize = 1024 * 512;
 public:
-	// ²ßÂÔid
+	// ç­–ç•¥id
 	uint32_t policy_id_ = 0;
 
-	// ÍøÂçÏß³ÌÄ£ĞÍ
+	// ç½‘ç»œçº¿ç¨‹æ¨¡å‹
 	NetThreadMode net_io_mode_ = NetThreadMode::kReactorMultiThreadMode;
 
-	// ´¦ÀísessionµÄÏß³Ì³Ø´óĞ¡
+	// å¤„ç†sessionçš„çº¿ç¨‹æ± å¤§å°
 	std::size_t session_thread_pool_size_ = 2;
 
-  // ĞÂÁ¬½ÓµÄ½ÓÊÕÏûÏ¢BUFF³Ø´óĞ¡,Ä¬ÈÏ512K
+  // æ–°è¿æ¥çš„æ¥æ”¶æ¶ˆæ¯BUFFæ± å¤§å°,é»˜è®¤512K
   uint32_t read_buff_pool_size_ = kReadBuffPoolSize;
 
-  // ĞÂÁ¬½ÓµÄ·¢ËÍÏûÏ¢BUFF³Ø´óĞ¡,Ä¬ÈÏ512K
+  // æ–°è¿æ¥çš„å‘é€æ¶ˆæ¯BUFFæ± å¤§å°,é»˜è®¤512K
   uint32_t write_buff_pool_size_ = kWriteBuffPoolSize;
 };
 

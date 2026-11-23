@@ -3,7 +3,7 @@ NAMESPACE_EVEREST_BEGIN
 
 void GetSinksByLoggerCreateInfo(std::vector<spdlog::sink_ptr>& sinks, const std::string& logger_name, const LoggerCreateInfo& info)
 {
-	// 是否输出到控制台
+	// 鏄惁杈撳嚭鍒版帶鍒跺彴
 	if (info.to_stdout)
 	{
 		sinks.push_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
@@ -16,14 +16,14 @@ void GetSinksByLoggerCreateInfo(std::vector<spdlog::sink_ptr>& sinks, const std:
 	}
 	else
 	{
-		// 每天固定时间产生新log文件
+		// 姣忓ぉ鍥哄畾鏃堕棿浜х敓鏂發og鏂囦欢
 		if (info.daily)
 		{
 			auto daily_sink = std::make_shared<spdlog::sinks::daily_file_sink_mt>(logger_name, 0, 0, false);
 			sinks.push_back(daily_sink);
 		}
 
-		// 按照文件大小产生新log文件
+		// 鎸夌収鏂囦欢澶у皬浜х敓鏂發og鏂囦欢
 		if (info.rotate)
 		{
 			auto rotating_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(logger_name, info.log_file_size, 3);

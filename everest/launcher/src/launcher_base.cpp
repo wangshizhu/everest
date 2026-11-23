@@ -7,11 +7,11 @@ LauncherBase::LauncherBase()
 
 LauncherBase::~LauncherBase()
 {
-	// Í£Ö¹¼à¿ØÏß³Ì
+	// åœæ­¢ç›‘æŽ§çº¿ç¨‹
 	monitor_thread_->Stop();
 	monitor_thread_->Join();
 
-	// Í£Ö¹ËùÓÐÍøÂçÏß³Ì
+	// åœæ­¢æ‰€æœ‰ç½‘ç»œçº¿ç¨‹
 	for (auto&& [_,net_thread_allocate_ptr] : net_thread_allocate_map_)
 	{
 		net_thread_allocate_ptr->Stop();
@@ -21,7 +21,7 @@ LauncherBase::~LauncherBase()
 bool LauncherBase::StartLauncher()
 {
 	OnLoadServiceConfig();
-	// ¼ì²éÅäÖÃÊÇ·ñÕýÈ·
+	// æ£€æŸ¥é…ç½®æ˜¯å¦æ­£ç¡®
 	if (!CONFIGURATION_SINGLETON()->CheckServiceConfig())
 	{
 		return false;
@@ -29,13 +29,13 @@ bool LauncherBase::StartLauncher()
 
 	OnStartLauncherBefore();
 
-	// ´´½¨¼à¿ØÏß³Ì
+	// åˆ›å»ºç›‘æŽ§çº¿ç¨‹
 	if (!CreateMonitorThreadAndStart())
 	{
 		return false;
 	}
 
-	// ´´½¨ËùÓÐÍøÂçÏß³Ì·ÖÅä²ßÂÔ
+	// åˆ›å»ºæ‰€æœ‰ç½‘ç»œçº¿ç¨‹åˆ†é…ç­–ç•¥
 	if (!CreateAllNetThreadAllocate())
 	{
 		return false;
@@ -66,7 +66,7 @@ bool LauncherBase::CreateOneService(ServiceIdType service_id,SessionCreatorShare
 	} 
 	else if (service_config->type_ == ListenConnectType::kConnect)
 	{
-		// TODO: ´´½¨connector
+		// TODO: åˆ›å»ºconnector
 	} 
 	else 
 	{

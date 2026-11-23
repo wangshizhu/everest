@@ -13,13 +13,13 @@ public:
 
 public:
 	/*
-	* @brief ´´½¨Á¬½ÓµÄ¹¤³§º¯Êı£¬´´½¨Á¬½Ó±ØĞëµ÷ÓÃ´Ëº¯Êı£¬·ñÔò±àÒëÊ§°Ü
+	* @brief åˆ›å»ºè¿æ¥çš„å·¥å‚å‡½æ•°ï¼Œåˆ›å»ºè¿æ¥å¿…é¡»è°ƒç”¨æ­¤å‡½æ•°ï¼Œå¦åˆ™ç¼–è¯‘å¤±è´¥
 	*/
 	template<class SessionType, typename... Args>
 	static std::shared_ptr<SessionType> CreateSession(Args&&... args)
 	{
 		auto ptr = std::make_shared<SessionType>(std::forward<Args>(args)..., PrivateFlag());
-		// TODO: Ïò¿ØÖÆÖĞĞÄ±¨¸æ
+		// TODO: å‘æ§åˆ¶ä¸­å¿ƒæŠ¥å‘Š
 
 		return ptr;
 	}
@@ -65,7 +65,7 @@ private:
 	ExpandBuffer send_data_;
 	bool closed_;
 
-	// ×î½üµÄÒ»´Î´ÓÍøÂçÖĞ¶ÁÈ¡Ê±¼ä£¨µ¥Î»£ºÃë£©
+	// æœ€è¿‘çš„ä¸€æ¬¡ä»ç½‘ç»œä¸­è¯»å–æ—¶é—´ï¼ˆå•ä½ï¼šç§’ï¼‰
 	TimeStampType lastest_read_time_;
 };
 

@@ -39,16 +39,16 @@ private:
 	Duration ElapseToDuration() const;
 
 private:
-	// ¼ÆÊ±Æ÷Ê±³¤
+	// è®¡æ—¶å™¨æ—¶é•¿
 	Duration duration_;
 
-	// ÊÇ·ñÍ£Ö¹µÄ
+	// æ˜¯å¦åœæ­¢çš„
 	bool is_stop_;
 
-	// ÊÇ·ñÖØ¸´
+	// æ˜¯å¦é‡å¤
 	bool repeat_;
 
-	// ¿ªÊ¼¼ÆÊ±Ê±¼äµã
+	// å¼€å§‹è®¡æ—¶æ—¶é—´ç‚¹
 	SteadyTimePoint start_time_point_;
 };
 

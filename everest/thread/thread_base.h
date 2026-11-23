@@ -13,24 +13,24 @@ public:
 	virtual ~ThreadBase();
 
 public:
-	// Ïß³ÌÃû³Æ
+	// çº¿ç¨‹åç§°
 	virtual const char* Name()const;
 
-	// Ïß³ÌÀàĞÍ
+	// çº¿ç¨‹ç±»å‹
 	virtual ThreadType GetThreadType() const;
 
-	// ³õÊ¼»¯Ïß³Ì
+	// åˆå§‹åŒ–çº¿ç¨‹
 	virtual bool Init();
 
-	// Ïß³Ì¸üĞÂ
+	// çº¿ç¨‹æ›´æ–°
 	virtual void Update();
 
-	// Ïß³ÌÆô¶¯
+	// çº¿ç¨‹å¯åŠ¨
 	virtual void OnStart();
 
 public:
 	/*
-	* @brief ´´½¨Ïß³ÌµÄ¹¤³§º¯Êı£¬´´½¨Ïß³Ì±ØĞëµ÷ÓÃ´Ëº¯Êı£¬·ñÔò±àÒëÊ§°Ü
+	* @brief åˆ›å»ºçº¿ç¨‹çš„å·¥å‚å‡½æ•°ï¼Œåˆ›å»ºçº¿ç¨‹å¿…é¡»è°ƒç”¨æ­¤å‡½æ•°ï¼Œå¦åˆ™ç¼–è¯‘å¤±è´¥
 	*/
 	template<class ThreadType,typename... Args>
 	static std::shared_ptr<ThreadType> CreateThread(Args&&... args)
@@ -102,33 +102,33 @@ public:
 	ThreadIdType ThisThreadId() const;
 
 private:
-	// Ôö¼Ó¶¨Ê±ÈÎÎñ£¬Õâ¸öÈÎÎñÎªÁËÇı¶¯±¾Ïß³ÌUpdate
+	// å¢åŠ å®šæ—¶ä»»åŠ¡ï¼Œè¿™ä¸ªä»»åŠ¡ä¸ºäº†é©±åŠ¨æœ¬çº¿ç¨‹Update
 	void AddTimerTaskToActuateUpdate();
 
 private:
-	// Ïß³ÌÖ´ĞĞ»·¾³
+	// çº¿ç¨‹æ‰§è¡Œç¯å¢ƒ
 	asio::io_context context_;
 
-	// Ïß³Ì±àºÅ
+	// çº¿ç¨‹ç¼–å·
 	uint32_t index_;
 
-	// Ïß³ÌUpdate¶¨Ê±Æ÷
+	// çº¿ç¨‹Updateå®šæ—¶å™¨
 	asio::steady_timer run_timer_;
 
-	// ±¾Ïß³ÌÊ±ÖÓ
+	// æœ¬çº¿ç¨‹æ—¶é’Ÿ
 	Clock clock_;
 
-	// update¸üĞÂ¼ä¸ôÊ±¼ä
+	// updateæ›´æ–°é—´éš”æ—¶é—´
 	std::chrono::steady_clock::duration interval_;
 
-	// Î´´¦ÀíÈÎÎñÊıÁ¿
+	// æœªå¤„ç†ä»»åŠ¡æ•°é‡
 	std::atomic_size_t pending_num_;
 
-	// Ïß³Ìstart ±êÊ¶
+	// çº¿ç¨‹start æ ‡è¯†
 	std::atomic_flag  started_;
 	bool started_flag_;
 
-	// µ¥´ÎupdateÖ´ĞĞ×î´óÊ±¼ä
+	// å•æ¬¡updateæ‰§è¡Œæœ€å¤§æ—¶é—´
 	uint64_t execute_once_max_time_;
 
 	std::thread thread_;

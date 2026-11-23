@@ -22,13 +22,13 @@ public:
 
 private:
 	/*
-	* @brief ´´½¨¼àÌıÆ÷µÄ¹¤³§º¯Êı£¬´´½¨¼àÌıÆ÷±ØĞëµ÷ÓÃ´Ëº¯Êı£¬·ñÔò±àÒëÊ§°Ü
+	* @brief åˆ›å»ºç›‘å¬å™¨çš„å·¥å‚å‡½æ•°ï¼Œåˆ›å»ºç›‘å¬å™¨å¿…é¡»è°ƒç”¨æ­¤å‡½æ•°ï¼Œå¦åˆ™ç¼–è¯‘å¤±è´¥
 	*/
 	std::shared_ptr<Listener> CreateListener(SessionCreatorSharedPtr session_creator, 
 																					 NetThreadAllocateMgrSharedPtr net_thread_allocate);
 
 	/*
-	* @brief ´´½¨Á¬½ÓÆ÷µÄ¹¤³§º¯Êı,´´½¨Á¬½ÓÆ÷±ØĞëµ÷ÓÃ´Ëº¯Êı£¬·ñÔò±àÒëÊ§°Ü
+	* @brief åˆ›å»ºè¿æ¥å™¨çš„å·¥å‚å‡½æ•°,åˆ›å»ºè¿æ¥å™¨å¿…é¡»è°ƒç”¨æ­¤å‡½æ•°ï¼Œå¦åˆ™ç¼–è¯‘å¤±è´¥
 	*/
 
 private:

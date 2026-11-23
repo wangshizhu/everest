@@ -12,19 +12,19 @@ public:
 	}
 
 public:
-	// Ïß³ÌÃû³Æ
+	// çº¿ç¨‹åç§°
 	virtual const char* Name()const override;
 
-	// Ïß³ÌÀàĞÍ
+	// çº¿ç¨‹ç±»å‹
 	virtual ThreadType GetThreadType() const;
 
-	// ³õÊ¼»¯Ïß³Ì
+	// åˆå§‹åŒ–çº¿ç¨‹
 	virtual bool Init() override;
 
-	// Ïß³Ì¸üĞÂ
+	// çº¿ç¨‹æ›´æ–°
 	virtual void Update() override;
 
-	// Ïß³ÌÆô¶¯µÄÊÂ¼ş
+	// çº¿ç¨‹å¯åŠ¨çš„äº‹ä»¶
 	virtual void OnStart() override;
 };
 

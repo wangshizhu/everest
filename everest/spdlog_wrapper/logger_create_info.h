@@ -7,28 +7,28 @@ NAMESPACE_EVEREST_BEGIN
 
 struct LoggerCreateInfo
 {
-	// ÊÇ·ñÒì²½logger,Ä¬ÈÏtrue
+	// æ˜¯å¦å¼‚æ­¥logger,é»˜è®¤true
 	bool async_logger = true;
 
-	// ÊÇ·ñ¿ØÖÆÌ¨Êä³ö,Ä¬ÈÏtrue
+	// æ˜¯å¦æ§åˆ¶å°è¾“å‡º,é»˜è®¤true
 	bool to_stdout = true;
 
-	// ÊÇ·ñÃ¿ÈÕ²úÉúlogÎÄ¼ş,Ä¬ÈÏtrue
+	// æ˜¯å¦æ¯æ—¥äº§ç”Ÿlogæ–‡ä»¶,é»˜è®¤true
 	bool daily = true;
 
-	// ÊÇ·ñÉèÖÃlogÎÄ¼ş´óĞ¡,Ä¬ÈÏtrue
+	// æ˜¯å¦è®¾ç½®logæ–‡ä»¶å¤§å°,é»˜è®¤true
 	bool rotate = true;
 
-	// logÎÄ¼ş´óĞ¡£¬µ±rotateÎªtrueÊ±²ÅÓĞĞ§,Ä¬ÈÏ10M
+	// logæ–‡ä»¶å¤§å°ï¼Œå½“rotateä¸ºtrueæ—¶æ‰æœ‰æ•ˆ,é»˜è®¤10M
 	std::size_t log_file_size = 1024 * 1024 * 10;
 
-	// Ïû·ÑÏß³ÌÊıÁ¿,Ä¬ÈÏ1¸öÏû·ÑÏß³Ì
+	// æ¶ˆè´¹çº¿ç¨‹æ•°é‡,é»˜è®¤1ä¸ªæ¶ˆè´¹çº¿ç¨‹
 	std::size_t consumer_thread_num = 1;
 
-	// µ±Ê¹ÓÃÒì²½logÊ±£¬Òì²½log¶ÓÁĞ´óĞ¡,Ä¬ÈÏ8192
+	// å½“ä½¿ç”¨å¼‚æ­¥logæ—¶ï¼Œå¼‚æ­¥logé˜Ÿåˆ—å¤§å°,é»˜è®¤8192
 	std::size_t async_queue_size = spdlog::details::default_async_q_size;
 
-	// log¼¶±ğ
+	// logçº§åˆ«
 	spdlog::level::level_enum level = spdlog::level::debug;
 };
 

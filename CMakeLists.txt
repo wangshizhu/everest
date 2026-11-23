@@ -8,9 +8,15 @@ PROJECT(everest)
 # project init
 # ---------------------------------------------------------------------------------------
 SET(CMAKE_CXX_FLAGS "-g -pthread")
-SET(CMAKE_CXX_STANDARD 17)
+SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED True)
-ADD_DEFINITIONS ( -std=c++1z)
+
+# ---------------------------------------------------------------------------------------
+# default build type
+# ---------------------------------------------------------------------------------------
+IF(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    SET(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
+ENDIF()
 
 # ---------------------------------------------------------------------------------------
 # option
@@ -69,11 +75,38 @@ INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/fmt/include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/random/include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/date/include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/everest)
+# packet_serialize.cpp 包含 protobuf 头文件，需要内置 protobuf 的 src 目录。
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/protobuf-3.18.0/src)
 
 # ---------------------------------------------------------------------------------------
 # everest source code
 # ---------------------------------------------------------------------------------------
-AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/everest/common/src src_list)
+# 统一编译单元：只编译 include.cpp，它按依赖顺序 #include 其余所有 .cpp。
+# 不能用 AUX_SOURCE_DIRECTORY 收集整个目录，否则 helper.cpp 会被单独编译，
+# 而它有意不包含自己的头文件（依赖 include.cpp 先包含 common/include.h）。
+SET(src_list ${PROJECT_SOURCE_DIR}/everest/common/src/include.cpp)
+
+# ---------------------------------------------------------------------------------------
+# fuzzy_search (header-only)
+# ---------------------------------------------------------------------------------------
+# fuzzy_search 是 header-only 库，不参与统一编译单元，没有可编译的 .cpp。
+# 这里把头文件列入目标只为便于在 IDE 中浏览，实际编译覆盖由 test/fuzzy_search_test 承担；
+# 使用方可以 target_link_libraries(... fuzzy_search) 引入其头文件目录。
+SET(fuzzy_search_headers
+    ${PROJECT_SOURCE_DIR}/everest/fuzzy_search/fuzzy_search_system.h
+    ${PROJECT_SOURCE_DIR}/everest/fuzzy_search/fuzzy_search_types.h
+    ${PROJECT_SOURCE_DIR}/everest/fuzzy_search/detail/fuzzy_search_base_index.h
+    ${PROJECT_SOURCE_DIR}/everest/fuzzy_search/detail/fuzzy_search_delta_index.h
+    ${PROJECT_SOURCE_DIR}/everest/fuzzy_search/detail/fuzzy_search_gram_key.h
+    ${PROJECT_SOURCE_DIR}/everest/fuzzy_search/detail/fuzzy_search_lifecycle.h
+    ${PROJECT_SOURCE_DIR}/everest/fuzzy_search/detail/fuzzy_search_posting.h
+    ${PROJECT_SOURCE_DIR}/everest/fuzzy_search/detail/fuzzy_search_utf8.h
+)
+
+ADD_LIBRARY(fuzzy_search INTERFACE)
+TARGET_INCLUDE_DIRECTORIES(fuzzy_search INTERFACE
+    ${PROJECT_SOURCE_DIR}/everest
+    ${PROJECT_SOURCE_DIR}/3rd/spd/include)
 
 MESSAGE(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 MESSAGE(STATUS "src list:"${src_list})
@@ -88,9 +121,13 @@ MESSAGE(STATUS "cmake_current_source_dir:"${CMAKE_CURRENT_SOURCE_DIR})
 # ---------------------------------------------------------------------------------------
 # change library directory
 # ---------------------------------------------------------------------------------------
-SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/libs)
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/libs/${CMAKE_BUILD_TYPE})
 
-ADD_LIBRARY(${PROJECT_NAME} STATIC ${src_list})
+ADD_LIBRARY(${PROJECT_NAME} STATIC ${src_list} ${fuzzy_search_headers})
+
+if (MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE /utf-8)
+endif()
 
 # ---------------------------------------------------------------------------------------
 # compile definitions

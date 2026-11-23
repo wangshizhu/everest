@@ -5,25 +5,25 @@ NAMESPACE_EVEREST_BEGIN
 
 enum ThreadStateBitFlag
 {
-	// ÊÇ·ñÆô¶¯
+	// æ˜¯å¦å¯åŠ¨
 	kStartedPos = 0,
 
-	// ÊÇ·ñÍ£Ö¹
+	// æ˜¯å¦åœæ­¢
 	kStoppedPos = 1,
 };
 
 enum ThreadState
 {
-	// Î´Æô¶¯
+	// æœªå¯åŠ¨
 	kWaitingStart = 0,
 
-	// ÕıÔÚÔËĞĞ
+	// æ­£åœ¨è¿è¡Œ
 	kRunning = 1,
 
-	// Î´Æô¶¯µ«ÊÇÒÑÍ£Ö¹
+	// æœªå¯åŠ¨ä½†æ˜¯å·²åœæ­¢
 	kHavntStartStopped = 2,
 
-	// ÒÑÍ£Ö¹
+	// å·²åœæ­¢
 	kStopped = 3,
 };
 
@@ -32,25 +32,25 @@ class ThreadMonitorData
 	static constexpr std::string_view thread_state_describe[] = { "wait_start","running","no_start_stopped","stopped" };
 	static constexpr std::size_t kThreadStateBitNum = sizeof(int8_t) * kOneByteBit;
 public:
-	// Ïß³Ìid
+	// çº¿ç¨‹id
 	ThreadIdType thread_id_ = 0;
 
-	// Ïß³ÌÈ«Ãû
+	// çº¿ç¨‹å…¨å
 	std::string thread_full_name_ = "";
 
-	// ÅÅ¶ÓÈÎÎñÊıÁ¿
+	// æ’é˜Ÿä»»åŠ¡æ•°é‡
 	std::size_t pending_num_ = 0;
 
-	// Ïß³Ì¸üĞÂ¼ä¸ôÊ±¼ä
+	// çº¿ç¨‹æ›´æ–°é—´éš”æ—¶é—´
 	std::chrono::steady_clock::duration interval_ = std::chrono::steady_clock::duration(0);
 
-	// Ïß³ÌÊ±ÖÓµ±Ç°Ê±¼äµã
+	// çº¿ç¨‹æ—¶é’Ÿå½“å‰æ—¶é—´ç‚¹
 	Clock::SteadyTimePoint last_timepoint_;
 
-	// µ¥´Îupdate×î´óÖ´ĞĞÊ±¼ä
+	// å•æ¬¡updateæœ€å¤§æ‰§è¡Œæ—¶é—´
 	std::size_t execute_once_max_time_ = 0;
 
-	// Ïß³Ì×´Ì¬±ê¼ÇÎ»
+	// çº¿ç¨‹çŠ¶æ€æ ‡è®°ä½
 	std::bitset<kThreadStateBitNum> thread_state_flag_ = 0;
 
 public:

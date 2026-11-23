@@ -4,8 +4,8 @@
 NAMESPACE_EVEREST_BEGIN
 
 /// <summary>
-/// ½ø³Ì»ùÀà£¬Íâ²¿±ØĞëÍ¨¹ıµ÷ÓÃStartLauncher()²ÅÄÜÆô¶¯½ø³Ì
-/// »ùÀà»á°´ÕÕÈçÏÂµ÷ÓÃË³ĞòÏò×ÓÀà´«µİÊÂ¼ş£º
+/// è¿›ç¨‹åŸºç±»ï¼Œå¤–éƒ¨å¿…é¡»é€šè¿‡è°ƒç”¨StartLauncher()æ‰èƒ½å¯åŠ¨è¿›ç¨‹
+/// åŸºç±»ä¼šæŒ‰ç…§å¦‚ä¸‹è°ƒç”¨é¡ºåºå‘å­ç±»ä¼ é€’äº‹ä»¶ï¼š
 /// 1.OnLoadServiceConfig()
 /// 2.OnStartLauncherBefore()
 /// 3.OnStartLauncher()
@@ -19,43 +19,43 @@ public:
 
 public:
 	/*
-	* @brief:½ø³Ì¿ªÊ¼ÔËĞĞµÄÎ¨Ò»º¯Êı
+	* @brief:è¿›ç¨‹å¼€å§‹è¿è¡Œçš„å”¯ä¸€å‡½æ•°
 	*/
 	bool StartLauncher();
 
 protected:
 	/*
-	* @brief: ×ÓÀàĞèÒª¼ÓÔØÅäÖÃÊı¾İµ½ConfigurationManagerÖĞ£¬ÎªÏÂÃæ´´½¨listener»òÕßconnector·şÎñ×¼±¸ºÃÅäÖÃÊı¾İ
+	* @brief: å­ç±»éœ€è¦åŠ è½½é…ç½®æ•°æ®åˆ°ConfigurationManagerä¸­ï¼Œä¸ºä¸‹é¢åˆ›å»ºlisteneræˆ–è€…connectoræœåŠ¡å‡†å¤‡å¥½é…ç½®æ•°æ®
 	*/
 	virtual void OnLoadServiceConfig() = 0;
 
 	/*
-	* @brief:Ïò×ÓÀà´«µİ½ø³ÌÆô¶¯Ö®Ç°µÄÊÂ¼ş
+	* @brief:å‘å­ç±»ä¼ é€’è¿›ç¨‹å¯åŠ¨ä¹‹å‰çš„äº‹ä»¶
 	*/
 	virtual void OnStartLauncherBefore();
 
 	/*
-	* @brief:Ïò×ÓÀà´«µİ½ø³ÌÆô¶¯Ö®ºóµÄÊÂ¼ş
+	* @brief:å‘å­ç±»ä¼ é€’è¿›ç¨‹å¯åŠ¨ä¹‹åçš„äº‹ä»¶
 	*/
 	virtual void OnStartLauncher();
 
 	/*
-	* @brief:½ø³ÌÃû³Æ£¬ÀıÈç£ºcenter¡¢login¡¢gateµÈµÈ
+	* @brief:è¿›ç¨‹åç§°ï¼Œä¾‹å¦‚ï¼šcenterã€loginã€gateç­‰ç­‰
 	*/
 	virtual const char* Name()const = 0;
 
 protected:
 	/*
-	* @brief:×ÓÀà¿ÉÒÔÔÚĞéº¯ÊıOnStartLauncherÄÚ²¿´´½¨Ò»¸ö·şÎñ
-	* ·şÎñ£ºÖ»ÊÇlistener»òÕßconnector
+	* @brief:å­ç±»å¯ä»¥åœ¨è™šå‡½æ•°OnStartLauncherå†…éƒ¨åˆ›å»ºä¸€ä¸ªæœåŠ¡
+	* æœåŠ¡ï¼šåªæ˜¯listeneræˆ–è€…connector
 	* 
-	* @param [in] service_id ·şÎñid£¬ÄÚ²¿»á¸ù¾İ·şÎñidÈ¥ConfigurationManagerÖĞ²éÕÒÕâ¸ö·şÎñidµÄ
-	* ÅäÖÃÊı¾İ£¬ÅäÖÃÊı¾İ¾ö¶¨ÁËÕâ¸ö·şÎñÊÇlistener»¹ÊÇconnector
+	* @param [in] service_id æœåŠ¡idï¼Œå†…éƒ¨ä¼šæ ¹æ®æœåŠ¡idå»ConfigurationManagerä¸­æŸ¥æ‰¾è¿™ä¸ªæœåŠ¡idçš„
+	* é…ç½®æ•°æ®ï¼Œé…ç½®æ•°æ®å†³å®šäº†è¿™ä¸ªæœåŠ¡æ˜¯listenerè¿˜æ˜¯connector
 	* 
-	* @param [in] session_creator sessionµÄ¹¤³§º¯Êı£¬µ±acceptĞÂÁ¬½Ó»òÕßconnect³É¹¦Ê±Òª´´½¨session,
-	* ¾ßÌåÊÇÊ²Ã´sessionÔòÓÉÕâ¸ö¹¤³§º¯ÊıÀ´¾ö¶¨
+	* @param [in] session_creator sessionçš„å·¥å‚å‡½æ•°ï¼Œå½“acceptæ–°è¿æ¥æˆ–è€…connectæˆåŠŸæ—¶è¦åˆ›å»ºsession,
+	* å…·ä½“æ˜¯ä»€ä¹ˆsessionåˆ™ç”±è¿™ä¸ªå·¥å‚å‡½æ•°æ¥å†³å®š
 	* 
-	* @return bool ´´½¨³É¹¦·µ»Øtrue,·ñÔò·µ»Øfalse
+	* @return bool åˆ›å»ºæˆåŠŸè¿”å›true,å¦åˆ™è¿”å›false
 	*/
 	bool CreateOneService(ServiceIdType service_id,SessionCreatorSharedPtr session_creator);
 
@@ -68,10 +68,10 @@ private:
 private:
 	ControlMonitor control_monitor_;
 
-	// Ö´ĞĞ¼à¿ØÆ÷µÄÏß³Ì
+	// æ‰§è¡Œç›‘æ§å™¨çš„çº¿ç¨‹
 	ThreadBaseSharedPtr monitor_thread_;
 
-	// Ïß³Ì·ÖÅä²ßÂÔ
+	// çº¿ç¨‹åˆ†é…ç­–ç•¥
   std::map<uint32_t, NetThreadAllocateMgrSharedPtr> net_thread_allocate_map_;
 };
 

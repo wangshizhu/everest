@@ -1,6 +1,10 @@
 #ifndef OBJECT_POOL_H_
 #define OBJECT_POOL_H_
 
+// 本头文件依赖统一编译单元的包含顺序，但 std::list 在 libstdc++ 中不会被
+// 其他标准头间接引入（MSVC 的实现恰好会），因此必须显式包含。
+#include <list>
+
 NAMESPACE_EVEREST_BEGIN
 
 template<class T>
@@ -51,16 +55,16 @@ private:
 private:
 	std::mutex mutex_;
 
-	// ���ٿռ䲽��
+	// 开辟空间步长
 	uint32_t expand_step_;
 
-	// ����ؿռ��С
+	// 对象池空间大小
 	uint32_t space_;
 
-	// ��ʹ�õĶ��󼯺�
+	// 被使用的对象集合
 	std::set<T*> used_;
 
-	// δ��ʹ�õĶ����б�
+	// 未被使用的对象列表
 	std::list<T*> free_;
 };
 

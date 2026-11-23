@@ -10,16 +10,16 @@ public:
 	~ServiceNetThreadManager();
 
 public:
-	// Í£Ö¹
+	// åœæ­¢
 	void Stop();
 
-	// ¸ù¾İÅäÖÃ´´½¨Ïà¹ØÏß³Ì
+	// æ ¹æ®é…ç½®åˆ›å»ºç›¸å…³çº¿ç¨‹
 	bool CreateAndStartNetThreadByConfig();
 
-	// »ñÈ¡ÓÃÓÚ¼àÌıºÍÁ¬½ÓµÄÏß³Ì
+	// è·å–ç”¨äºç›‘å¬å’Œè¿æ¥çš„çº¿ç¨‹
 	ThreadBaseSharedPtr GetListenerConnectorThread();
 
-	// »ñÈ¡´¦ÀísessionµÄÏß³Ì
+	// è·å–å¤„ç†sessionçš„çº¿ç¨‹
 	ThreadBaseSharedPtr AllocateSessionThread();
 
 private:
