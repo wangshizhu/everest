@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -290,7 +290,6 @@
     <ClInclude Include="..\3rd\random\include\effolkronium\random.hpp" />
     <ClInclude Include="..\everest\buffer\buffer.h" />
     <ClInclude Include="..\everest\calculator\safe_integral_calculator.h" />
-    <ClInclude Include="..\everest\cmd_line\cmdline.h" />
     <ClInclude Include="..\everest\cmd_line\command_line_parser.h" />
     <ClInclude Include="..\everest\common\define.h" />
     <ClInclude Include="..\everest\common\helper.h" />

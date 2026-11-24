@@ -3,6 +3,11 @@
 /libs/*
 /test/**/x64/
 /test/**/bin/
+/build/
+/test/**/build/
+/linux_build/build/
+/doc/code-plan/
+everest.code-workspace
 *.log
 *.tlog
 *.obj

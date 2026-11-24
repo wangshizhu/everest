@@ -228,9 +228,6 @@
     <ClInclude Include="..\everest\timer\src\timer.ipp">
       <Filter>timer\src</Filter>
     </ClInclude>
-    <ClInclude Include="..\everest\cmd_line\cmdline.h">
-      <Filter>cmd_line\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\everest\cmd_line\command_line_parser.h">
       <Filter>cmd_line\include</Filter>
     </ClInclude>

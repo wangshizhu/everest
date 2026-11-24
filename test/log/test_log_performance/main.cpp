@@ -94,20 +94,22 @@ namespace {
 
 	void AddCmdLineParam()
 	{
-		CMD_LINE_SINGLETON->Add<int>("production_thread_num", 'p', "product log thread num", false, 1);
+						CMD_LINE_SINGLETON->Add<int>({"production_thread_num", 'p',
+			"product log thread num", false}, 1);
 
-		CMD_LINE_SINGLETON->Add<int>("consumer_thread_num", 'c', "consumer log thread num", false, 1);
+						CMD_LINE_SINGLETON->Add<int>({"consumer_thread_num", 'c',
+			"consumer log thread num", false}, 1);
 
-		CMD_LINE_SINGLETON->Add<int>("production_model", 'm',
-			"produce log model,0 is that single thread produce consistent num log,1 is that all production thread produce consistent num log", false, 0);
+						CMD_LINE_SINGLETON->Add<int>({"production_model", 'm',
+			"produce log model,0 is that single thread produce consistent num log,1 is that all production thread produce consistent num log", false}, 0);
 
-		CMD_LINE_SINGLETON->Add<int>("production_log_num", 'l',
-			"product log num,when is 0 model that mean single thread produce log num,when is 1 model that mean all production thread produce log num", false, 100000);
+						CMD_LINE_SINGLETON->Add<int>({"production_log_num", 'l',
+			"product log num,when is 0 model that mean single thread produce log num,when is 1 model that mean all production thread produce log num", false}, 100000);
 
-		CMD_LINE_SINGLETON->Add<bool>("async_model", 'a',
-			"product log message as async model,consumer_thread_num is invalid when async model,this param is invalid when use g3log", false, true);
+						CMD_LINE_SINGLETON->Add<bool>({"async_model", 'a',
+			"product log message as async model,consumer_thread_num is invalid when async model,this param is invalid when use g3log", false}, true);
 
-		CMD_LINE_SINGLETON->AddWithoutValueCommand("help", '?', "show usage");
+		CMD_LINE_SINGLETON->AddWithoutValueCommand({"help", '?', "show usage"});
 	}
 
 	void LogMessage(const size_t id)
