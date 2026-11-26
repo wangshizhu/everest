@@ -1,3 +1,6 @@
+// 统一编译单元按依赖顺序包含各组件实现，顺序不可被 clang-format 重排。
+// clang-format off
+
 #include "common/include.h"
 
 // helper
@@ -8,6 +11,9 @@
 
 // 命令行
 #include "cmd_line/src/command_line_parser.cpp"
+
+// 对象池
+#include "object_pool/src/object_pool.cpp"
 
 // 时间
 #include "timer/src/clock.cpp"
@@ -50,3 +56,5 @@
 
 // 进程
 #include "launcher/src/launcher_base.cpp"
+
+// clang-format on

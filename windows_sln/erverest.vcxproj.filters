@@ -300,9 +300,6 @@
     <ClInclude Include="..\everest\object_pool\object_pool.h">
       <Filter>object_pool\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\everest\object_pool\src\object_pool.ipp">
-      <Filter>object_pool\src</Filter>
-    </ClInclude>
     <ClInclude Include="..\everest\common\helper.h">
       <Filter>common\include</Filter>
     </ClInclude>
@@ -427,6 +424,9 @@
     </ClCompile>
     <ClCompile Include="..\everest\net\src\session_id.cpp">
       <Filter>net\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\object_pool\src\object_pool.cpp">
+      <Filter>object_pool\src</Filter>
     </ClCompile>
     <ClCompile Include="..\everest\packet\src\packet_serialize.cpp">
       <Filter>packet\src</Filter>

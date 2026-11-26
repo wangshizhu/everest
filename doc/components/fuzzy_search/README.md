@@ -168,9 +168,9 @@ cd test/fuzzy_search_test && bash build.sh
 
 测试链接 `libeverest.a` 时还会需要 protobuf 静态库（统一编译单元包含 `packet_serialize.cpp`）：Windows 使用 `libs/libprotobufd.lib`，Linux 使用 `libs/<构建类型>/libprotobuf.a`。
 
-测试源码：`test/fuzzy_search_test/fuzzy_search_test.cpp`；示例：`examples/fuzzy_search_example.cpp`；基准：`benchmarks/fuzzy_search_benchmark.cpp`（Windows 专用，手动运行）。
+测试源码：`test/fuzzy_search_test/fuzzy_search_test.cpp`；示例：`test/fuzzy_search_test/fuzzy_search_example.cpp`；基准：`benchmarks/fuzzy_search/fuzzy_search_benchmark.cpp`（Windows 专用，手动构建运行，见该目录的 `README.md`）。
 
-`benchmarks/report/` 与 `benchmarks/results/` 是历史基准快照，不随代码变更更新。
+`benchmarks/fuzzy_search/report/` 与 `benchmarks/fuzzy_search/results/` 是历史基准快照，不随代码变更更新。
 
 ## 12. License
 

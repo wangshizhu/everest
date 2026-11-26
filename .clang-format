@@ -12,4 +12,5 @@ PointerAlignment: Left
 DerivePointerAlignment: false
 IncludeBlocks: Preserve
 SortIncludes: true
+FixNamespaceComments: false
 AllowShortFunctionsOnASingleLine: Empty

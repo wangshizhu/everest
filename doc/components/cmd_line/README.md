@@ -2,8 +2,8 @@
 
 `everest::CommandLineParser` 是 `everest` 的命令行参数解析器，负责注册选项、解析 `argc/argv`、校验取值并生成 usage 文本。
 
-- 公共头文件：`cmd_line/command_line_parser.h`
-- 实现：`cmd_line/src/command_line_parser.cpp`（PImpl，实现不暴露在头文件）
+- 公共头文件：`everest/cmd_line/command_line_parser.h`
+- 实现：`everest/cmd_line/src/command_line_parser.cpp`（PImpl，实现不暴露在头文件）
 - 测试：`test/cmd_line_test/`
 
 ## 基本用法
@@ -226,7 +226,7 @@ void ParseGetOrSetBehavior(int argc, char** argv);
 
 ## 实现约束
 
-- 头文件只含声明与极薄的模板分派；选项存储、解析、校验、usage 全部在 `src/command_line_parser.cpp` 的 `CommandLineParser::Impl`。
+- 头文件只含声明与极薄的模板分派；选项存储、解析、校验、usage 全部在 `everest/cmd_line/src/command_line_parser.cpp` 的 `CommandLineParser::Impl`。
 - 不使用异常与 RTTI；数值解析使用 `std::from_chars`（解析前剥离一个前导 `+`），类型擦除使用 `std::variant` + 私有 `ValueKind`。
 - 与 `everest` 其他组件一样参与统一编译单元；新增 `.cpp` 时必须加入 `everest/common/src/include.cpp`。
 - 使用方链接 `everest` 静态库时需要同时链接 protobuf（统一编译单元包含 `packet_serialize.cpp`）。

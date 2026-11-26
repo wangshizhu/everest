@@ -94,9 +94,9 @@
 	
 2. 禁止在构造、析构函数内调用virtual函数
 	
-3. 如果对象表现出 non-copyable 语义，继承 `NonCopyable` 或显式 `= delete` 拷贝构造/赋值
+3. 如果对象表现出 non-copyable 语义，继承 `NonCopyable`（不可拷贝且不可移动）或显式 `= delete` 拷贝构造/赋值
 	
-4. 如果对象表现出 only-move-copyable 语义，使用 `= default` 的移动构造/赋值，并 `= delete` 拷贝构造/赋值
+4. 如果对象表现出 only-move 语义，继承 `MoveOnly`；派生类声明了析构或其他特殊成员时，才需显式提供 `= default` 的移动构造/赋值
 	
 5. 如果对象表现出single语义，则一定要实现single
 	

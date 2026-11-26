@@ -10,8 +10,9 @@
 - `everest/common/include.h` 是总头文件，按依赖顺序包含几乎所有组件。
 - `everest/` 下的代码通过 `NAMESPACE_EVEREST_BEGIN` / `NAMESPACE_EVEREST_END`（`everest/common/define.h`）使用 `namespace everest`。
 - `windows_sln/` 下的 Visual Studio 解决方案是当前维护的、主要的构建方式；CMake 文件较为单薄，属于次要路径。
-- 源码和注释以中文为主。搜索库的文档在 `everest/fuzzy_search/README.md` 和 `DESIGN.md`。
+- 源码和注释以中文为主。搜索库的文档在 `doc/components/fuzzy_search/README.md` 和 `DESIGN.md`。
 - `everest/fuzzy_search/` 使用扁平 `namespace everest`（`NAMESPACE_EVEREST_BEGIN/END`），仍是 header-only 库，只额外依赖 `common/define.h` 与 `spdlog_wrapper/everest_spdlog.h`（日志），因此使用方链接时需要 `everest.lib`。
+- 组件文档在 `doc/components/<组件>/`（`README.md` 为入口，`DESIGN.md` 为设计说明）；基准在仓库顶层 `benchmarks/<组件>/`；索引见 `doc/README.md` 与 `doc/components/README.md`。
 - 仓库根目录的 `README.md` 是空文件。
 
 ## 构建
@@ -71,7 +72,7 @@ bash build.sh                       # cmake ..; make
 
 ### fuzzy_search 测试/基准
 
-`test/fuzzy_search_test/` 是 GoogleTest 工程（`.cpp`、`CMakeLists.txt`、`build.sh`、`.vcxproj`、`.sln`），头文件包含路径为 `"fuzzy_search/fuzzy_search_system.h"`（include 根是 `everest`）。
+`test/fuzzy_search_test/` 是 GoogleTest 工程（`.cpp`、`CMakeLists.txt`、`build.sh`、`.vcxproj`、`.sln`），头文件包含路径为 `"fuzzy_search/fuzzy_search_system.h"`（include 根是 `everest`）。同目录的 `fuzzy_search_example.cpp` 是最小使用示例，自带 `main`，不编入测试可执行文件。
 
 ```powershell
 msbuild windows_sln\erverest.vcxproj /p:Configuration=Debug /p:Platform=x64 /m
@@ -87,7 +88,7 @@ wsl -d Ubuntu-24.04 -e bash -lc 'cd /mnt/f/my_src/everest/test/fuzzy_search_test
 
 测试通过 `EVEREST_LOG_*` 输出日志，需要链接 `everest.lib`；由于核心库是统一编译单元并包含 `packet_serialize.cpp`，链接时还需要 protobuf 静态库（Windows `libs/libprotobufd.lib`，Linux `libs/<构建类型>/libprotobuf.a`）。
 
-基准程序（`benchmarks/fuzzy_search_benchmark.cpp`）仅支持 Windows（依赖 `windows.h`、`psapi.h`），手动构建运行，不纳入自动测试。
+基准程序（`benchmarks/fuzzy_search/fuzzy_search_benchmark.cpp`）仅支持 Windows（依赖 `windows.h`、`psapi.h`），手动构建运行，不纳入自动测试，构建与参数说明见 `benchmarks/fuzzy_search/README.md`。
 
 ## 架构
 
