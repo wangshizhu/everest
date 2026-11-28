@@ -136,6 +136,15 @@
     <Filter Include="object_pool\src">
       <UniqueIdentifier>{445f19d2-4ba4-4347-8dd2-2df010ae0e48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lru">
+      <UniqueIdentifier>{3f0c5a20-9b1e-4c7d-8a2f-6d4e8b1c7a10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lru\include">
+      <UniqueIdentifier>{5b2d7c31-4e6f-4a8b-9c0d-1e3f5a7b9c20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lru\src">
+      <UniqueIdentifier>{8c4e1a52-7b3d-4f9e-a0c1-2b4d6f8a0e30}</UniqueIdentifier>
+    </Filter>
     <Filter Include="buffer">
       <UniqueIdentifier>{229f208a-b977-4d44-bd72-d5d4e664e841}</UniqueIdentifier>
     </Filter>
@@ -303,6 +312,9 @@
     <ClInclude Include="..\everest\object_pool\object_pool.h">
       <Filter>object_pool\include</Filter>
     </ClInclude>
+    <ClInclude Include="..\everest\lru\lru.h">
+      <Filter>lru\include</Filter>
+    </ClInclude>
     <ClInclude Include="..\everest\common\helper.h">
       <Filter>common\include</Filter>
     </ClInclude>
@@ -419,7 +431,7 @@
     <ClCompile Include="..\everest\net\src\listener.cpp">
       <Filter>net\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\everest\buffer\buffer.cpp">
+    <ClCompile Include="..\everest\buffer\src\buffer.cpp">
       <Filter>buffer\src</Filter>
     </ClCompile>
     <ClCompile Include="..\everest\common\src\helper.cpp">
@@ -430,6 +442,9 @@
     </ClCompile>
     <ClCompile Include="..\everest\object_pool\src\object_pool.cpp">
       <Filter>object_pool\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\lru\src\lru.cpp">
+      <Filter>lru\src</Filter>
     </ClCompile>
     <ClCompile Include="..\everest\multi_producer_multi_consumer\src\circular_queue.cpp">
       <Filter>multi_producer_multi_consumer\src</Filter>

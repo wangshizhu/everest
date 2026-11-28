@@ -63,6 +63,16 @@ void SessionBase::DoRead()
 		return;
 	}
 
+	// 消费只前移读位置，这里先回收已读前缀，保证有连续可写空间可供读取。
+	if (!read_data_.Reserve(1))
+	{
+		EVEREST_LOG_ERROR("SessionBase::DoRead read buffer no space, session_id:{}", GetSessionId());
+
+		DoClose();
+
+		return;
+	}
+
 	socket_->async_read_some(asio::buffer(read_data_.GetWritePos(),read_data_.CanWriteSize()),
 													 [this,self = shared_from_this()](const asio::error_code& error, std::size_t bytes_transferred)
 	{
@@ -83,15 +93,24 @@ void SessionBase::DoRead()
 			return;
 		}
 
+		if (!read_data_.CommitWrite(bytes_transferred))
+		{
+			EVEREST_LOG_ERROR("SessionBase::DoRead commit write failed, session_id:{} bytes:{}", GetSessionId(), bytes_transferred);
+
+			DoClose();
+
+			return;
+		}
+
+		lastest_read_time_ = TimeCapsule::Now();
+
 		// 读取
 		if (!OnRead())
 		{
-			return DoClose();
+			DoClose();
+
+			return;
 		}
-
-		read_data_.MoveWritePos(bytes_transferred);
-
-		lastest_read_time_ = TimeCapsule::Now();
 
 		EVEREST_LOG_DEBUG("SessionBase::DoRead can write size {}",read_data_.CanWriteSize());
 
@@ -100,11 +119,11 @@ void SessionBase::DoRead()
 	});
 }
 
-void SessionBase::Write(UniqueExpandBuffer packet_buffer)
+void SessionBase::Write(UniqueBuffer packet_buffer)
 {
   asio::post(socket_->get_executor(), [this,packet_buffer = std::move(packet_buffer),self = shared_from_this()]()
   {
-		if (!send_data_.ExpandWrite(packet_buffer->GetReadPos(),packet_buffer->Size()))
+		if (!send_data_.Write(packet_buffer->GetReadPos(),packet_buffer->Size()))
 		{
 			EVEREST_LOG_ERROR("SessionBase::Write send buffer is max session_id:{}",GetSessionId());
 
@@ -152,7 +171,14 @@ void SessionBase::DoWrite()
 			return;
 		}
 
-		send_data_.MoveReadPos(bytes_transferred);
+		if (!send_data_.ConsumeRead(bytes_transferred))
+		{
+			EVEREST_LOG_ERROR("SessionBase::DoWrite consume read failed, session_id:{} bytes:{}", GetSessionId(), bytes_transferred);
+
+			DoClose();
+
+			return;
+		}
 
 		EVEREST_LOG_DEBUG("SessionBase::DoWrite wait send size {}", send_data_.Size());
 

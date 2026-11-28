@@ -1,6 +1,8 @@
 #ifndef PACKET_H_
 #define PACKET_H_
 
+#include "buffer/buffer.h"
+
 NAMESPACE_EVEREST_BEGIN
 
 /*
@@ -24,9 +26,9 @@ public:
 
   virtual std::size_t Size() const = 0;
 
-  virtual void Serialize(BufferBase& buffer) const = 0;
+  virtual void Serialize(Buffer& buffer) const = 0;
 
-  virtual void Unserialize(BufferBase& buffer) const = 0;
+  virtual void Unserialize(Buffer& buffer) const = 0;
 
 };
 
@@ -59,12 +61,12 @@ public:
     return body_.ByteSize();
   }
 
-  void Serialize(BufferBase& buffer) const override
+  void Serialize(Buffer& buffer) const override
   {
     buffer << body_;
   }
 
-  void Unserialize(BufferBase& buffer) const override
+  void Unserialize(Buffer& buffer) const override
   {
     buffer >> body_;
   }

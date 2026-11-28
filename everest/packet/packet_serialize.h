@@ -12,11 +12,13 @@
 
 // message_pack
 
+#include "buffer/buffer.h"
+
 NAMESPACE_EVEREST_BEGIN
 
-void operator << (BufferBase& buffer, const ::google::protobuf::Message& msg);
+void operator << (Buffer& buffer, const ::google::protobuf::Message& msg);
 
-void operator >>(BufferBase& buffer, ::google::protobuf::Message& msg);
+void operator >>(Buffer& buffer, ::google::protobuf::Message& msg);
 
 void operator << (std::string& to, const ::google::protobuf::Message& msg);
 

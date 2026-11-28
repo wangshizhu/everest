@@ -9,10 +9,12 @@
 
 ## 组件文档
 
+- [buffer](components/buffer/README.md)：可扩容字节缓冲区
 - [calculator](components/calculator/README.md)：饱和整型运算
 - [circular_queue](components/circular_queue/README.md)：固定容量环形队列
 - [cmd_line](components/cmd_line/README.md)：命令行参数解析
 - [fuzzy_search](components/fuzzy_search/README.md)：UTF-8 子串索引，设计见 [DESIGN.md](components/fuzzy_search/DESIGN.md)
+- [lru](components/lru/README.md)：滑动 TTL 缓存与全局清扫器
 - [multi_producer_multi_consumer](components/multi_producer_multi_consumer/README.md)：多生产者多消费者队列（默认/无锁两种模式）
 
 ## 约定

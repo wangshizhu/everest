@@ -1,24 +1,69 @@
+#include <limits>
+
 NAMESPACE_EVEREST_BEGIN
 
-void operator << (BufferBase& buffer, const ::google::protobuf::Message& msg)
+void operator << (Buffer& buffer, const ::google::protobuf::Message& msg)
 {
-  auto&& buffer_stream = ::google::protobuf::io::ArrayOutputStream(buffer.GetWritePos(), buffer.RemainSize());
-  msg.SerializePartialToZeroCopyStream(&buffer_stream);
+  const std::size_t byte_size = static_cast<std::size_t>(msg.ByteSizeLong());
+  if (byte_size > static_cast<std::size_t>(std::numeric_limits<int>::max()))
+  {
+    EVEREST_LOG_ERROR("Packet Serialize size overflow {},type {}", byte_size, msg.GetTypeName());
 
-  buffer.MoveWritePos(std::size_t(buffer_stream.ByteCount()));
+    return;
+  }
+
+  if (!buffer.Reserve(byte_size))
+  {
+    EVEREST_LOG_ERROR("Packet Serialize no space, type {} size {} capacity {}", msg.GetTypeName(), byte_size, buffer.Capacity());
+
+    return;
+  }
+
+  ::google::protobuf::io::ArrayOutputStream buffer_stream(buffer.GetWritePos(), static_cast<int>(byte_size));
+  if (!msg.SerializePartialToZeroCopyStream(&buffer_stream))
+  {
+    EVEREST_LOG_ERROR("Packet Serialize failed, type {}", msg.GetTypeName());
+
+    return;
+  }
+
+  if (!buffer.CommitWrite(static_cast<std::size_t>(buffer_stream.ByteCount())))
+  {
+    EVEREST_LOG_ERROR("Packet Serialize commit failed, type {} bytes {}", msg.GetTypeName(), buffer_stream.ByteCount());
+
+    return;
+  }
 
   EVEREST_LOG_DEBUG("Packet Serialize to buffer {}",msg.ShortDebugString());
 }
 
-void operator >>(BufferBase& buffer, ::google::protobuf::Message& msg)
+void operator >>(Buffer& buffer, ::google::protobuf::Message& msg)
 {
-  if (!msg.ParseFromArray(buffer.GetReadPos(), buffer.Size()))
+  const std::size_t byte_size = buffer.Size();
+  if (byte_size > static_cast<std::size_t>(std::numeric_limits<int>::max()))
+  {
+    EVEREST_LOG_ERROR("Packet Unserialize size overflow {},type {}", byte_size, msg.GetTypeName());
+
+    if (!buffer.ConsumeRead(byte_size))
+    {
+      EVEREST_LOG_ERROR("Packet Unserialize consume read failed, type {} size {}", msg.GetTypeName(), byte_size);
+    }
+
+    return;
+  }
+
+  if (!msg.ParseFromArray(buffer.GetReadPos(), static_cast<int>(byte_size)))
   {
     EVEREST_LOG_ERROR("Unserialize failed from buffer {},failed msg {}",
                       msg.GetTypeName(),msg.InitializationErrorString());
   }
 
-  buffer.MoveReadPos(buffer.Size());
+  if (!buffer.ConsumeRead(byte_size))
+  {
+    EVEREST_LOG_ERROR("Packet Unserialize consume read failed, type {} size {}", msg.GetTypeName(), byte_size);
+
+    return;
+  }
 
   EVEREST_LOG_DEBUG("Packet Unserialize from buffer {}", msg.ShortDebugString());
 }

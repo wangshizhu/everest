@@ -61,6 +61,9 @@
 // 对象池
 #include "object_pool/object_pool.h"
 
+// 缓存
+#include "lru/lru.h"
+
 // log相关
 #include "spdlog_wrapper/logger_create_info.h"
 #include "spdlog_wrapper/everest_spdlog.h"

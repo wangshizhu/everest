@@ -35,7 +35,7 @@ public:
 	ServiceIdType GetServiceId() const;
 
 	void Read();
-	void Write(UniqueExpandBuffer packet_buffer);
+	void Write(UniqueBuffer packet_buffer);
 
 	void Close();
 	bool Closed() const;
@@ -61,8 +61,8 @@ private:
 	everest_tcp::endpoint remote_;
 	std::unique_ptr<everest_tcp::socket> socket_;
 	SessionId session_id_;
-	ExpandBuffer read_data_;
-	ExpandBuffer send_data_;
+	Buffer read_data_;
+	Buffer send_data_;
 	bool closed_;
 
 	// 最近的一次从网络中读取时间（单位：秒）

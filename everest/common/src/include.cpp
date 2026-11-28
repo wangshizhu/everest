@@ -7,13 +7,16 @@
 #include "common/src/helper.cpp"
 
 // buffer
-#include "buffer/buffer.cpp"
+#include "buffer/src/buffer.cpp"
 
 // 命令行
 #include "cmd_line/src/command_line_parser.cpp"
 
 // 对象池
 #include "object_pool/src/object_pool.cpp"
+
+// 缓存
+#include "lru/src/lru.cpp"
 
 // 环形队列
 #include "multi_producer_multi_consumer/src/circular_queue.cpp"
