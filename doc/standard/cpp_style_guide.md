@@ -101,7 +101,6 @@
 | 结构体成员 | 变量规则，不加 `_` | `num_entries` |
 | 常量 | `k` + 大驼峰（const/constexpr/全局/静态） | `kMaxSize` |
 | 函数 | 大驼峰 | `HandleAccept()` |
-| 存取器 | 与变量一致 | `count()` / `set_count()` |
 | 命名空间 | 小写下划线，扁平使用项目名 | `everest` |
 | 枚举值 | `k` + 大驼峰（新代码） | `kOK` |
 | 宏 | 全大写下划线 | `EVEREST_LOG_INFO` |

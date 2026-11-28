@@ -75,6 +75,8 @@ INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/fmt/include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/random/include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/date/include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/everest)
+# 无锁模式包含 3rd/lock-free-queue/... 中的头文件，需要 3rd 根目录。
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd)
 # packet_serialize.cpp 包含 protobuf 头文件，需要内置 protobuf 的 src 目录。
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/3rd/protobuf-3.18.0/src)
 

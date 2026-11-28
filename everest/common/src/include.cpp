@@ -15,6 +15,12 @@
 // 对象池
 #include "object_pool/src/object_pool.cpp"
 
+// 环形队列
+#include "multi_producer_multi_consumer/src/circular_queue.cpp"
+
+// 多生产者多消费者队列
+#include "multi_producer_multi_consumer/src/multi_producer_multi_consumer.cpp"
+
 // 时间
 #include "timer/src/clock.cpp"
 #include "time_capsule/src/time_capsule.cpp"

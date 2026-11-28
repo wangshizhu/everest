@@ -5,8 +5,10 @@
 | 组件 | 文档 | 内容 |
 | --- | --- | --- |
 | calculator | [README.md](calculator/README.md) | 饱和整型运算 |
+| circular_queue | [README.md](circular_queue/README.md) | 固定容量环形队列 |
 | cmd_line | [README.md](cmd_line/README.md) | 命令行参数解析 |
 | fuzzy_search | [README.md](fuzzy_search/README.md)、[DESIGN.md](fuzzy_search/DESIGN.md) | UTF-8 子串索引 |
+| multi_producer_multi_consumer | [README.md](multi_producer_multi_consumer/README.md) | 多生产者多消费者队列（默认/无锁两种模式） |
 
 ## 约定
 

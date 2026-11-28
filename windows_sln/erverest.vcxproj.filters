@@ -10,6 +10,9 @@
     <Filter Include="multi_producer_multi_consumer">
       <UniqueIdentifier>{71dd2edc-e620-4d3d-8b76-800d14415847}</UniqueIdentifier>
     </Filter>
+    <Filter Include="multi_producer_multi_consumer\src">
+      <UniqueIdentifier>{d7b1f3c5-2e4a-4b68-9f01-3a5c7e9d2b84}</UniqueIdentifier>
+    </Filter>
     <Filter Include="cmd_line">
       <UniqueIdentifier>{fb179446-9f56-44ab-826e-ace423bb8305}</UniqueIdentifier>
     </Filter>
@@ -427,6 +430,12 @@
     </ClCompile>
     <ClCompile Include="..\everest\object_pool\src\object_pool.cpp">
       <Filter>object_pool\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\multi_producer_multi_consumer\src\circular_queue.cpp">
+      <Filter>multi_producer_multi_consumer\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\everest\multi_producer_multi_consumer\src\multi_producer_multi_consumer.cpp">
+      <Filter>multi_producer_multi_consumer\src</Filter>
     </ClCompile>
     <ClCompile Include="..\everest\packet\src\packet_serialize.cpp">
       <Filter>packet\src</Filter>

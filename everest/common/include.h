@@ -49,6 +49,12 @@
 // 禁止拷贝相关
 #include "non_copyable/non_copyable.h"
 
+// 环形队列
+#include "multi_producer_multi_consumer/circular_queue.h"
+
+// 多生产者多消费者队列
+#include "multi_producer_multi_consumer/multi_producer_multi_consumer.h"
+
 // 单体
 #include "singleton/singleton.h"
 

@@ -98,7 +98,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>../3rd/date/include;%(AdditionalIncludeDirectories);../everest;../3rd/fmt/include;../3rd/asio-1.16.1/include;../3rd/spd/include;../3rd/random/include;../3rd/protobuf-3.18.0/src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../3rd/date/include;%(AdditionalIncludeDirectories);../everest;../3rd/fmt/include;../3rd/asio-1.16.1/include;../3rd/spd/include;../3rd/random/include;../3rd/protobuf-3.18.0/src;../3rd</AdditionalIncludeDirectories>
       <AdditionalModuleDependencies>%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -117,7 +117,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;SPDLOG_COMPILED_LIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>../3rd/date/include;../everest;../3rd/fmt/include;../3rd/asio-1.16.1/include;../3rd/spd/include;../3rd/random/include;../3rd/protobuf-3.18.0/src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../3rd/date/include;../everest;../3rd/fmt/include;../3rd/asio-1.16.1/include;../3rd/spd/include;../3rd/random/include;../3rd/protobuf-3.18.0/src;../3rd</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -135,7 +135,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>../3rd/date/include;%(AdditionalIncludeDirectories);../everest;../3rd/fmt/include;../3rd/asio-1.16.1/include;../3rd/spd/include;../3rd/random/include;../3rd/protobuf-3.18.0/src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../3rd/date/include;%(AdditionalIncludeDirectories);../everest;../3rd/fmt/include;../3rd/asio-1.16.1/include;../3rd/spd/include;../3rd/random/include;../3rd/protobuf-3.18.0/src;../3rd</AdditionalIncludeDirectories>
       <AdditionalModuleDependencies>%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -155,7 +155,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>../3rd/date/include;../everest;../3rd/fmt/include;../3rd/asio-1.16.1/include;../3rd/spd/include;../3rd/random/include;../3rd/protobuf-3.18.0/src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../3rd/date/include;../everest;../3rd/fmt/include;../3rd/asio-1.16.1/include;../3rd/spd/include;../3rd/random/include;../3rd/protobuf-3.18.0/src;../3rd</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -236,6 +236,18 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
 </ClCompile>
     <ClCompile Include="..\everest\object_pool\src\object_pool.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+</ClCompile>
+    <ClCompile Include="..\everest\multi_producer_multi_consumer\src\circular_queue.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+</ClCompile>
+    <ClCompile Include="..\everest\multi_producer_multi_consumer\src\multi_producer_multi_consumer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
